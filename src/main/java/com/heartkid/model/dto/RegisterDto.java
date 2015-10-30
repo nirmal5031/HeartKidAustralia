@@ -19,11 +19,12 @@ public class RegisterDto {
       @Id
 	  @GeneratedValue(strategy = GenerationType.AUTO)
       private long id;
-	  @Column(name = "USERTYPE")
+	private String referencenumber;
+	 @Column(name = "USERTYPE")
 	private String usertype;   
 	  @Column(name = "FIRSTNAME")
 	private String firstname; 
-	  @Column(name = "LASTNAME")
+	 @Column(name = "LASTNAME")
 	private String lastname;                    
 	private String title;                                 
 	private String heartkidbirthdate;                 
@@ -922,6 +923,20 @@ public class RegisterDto {
 	public void setDesccommentsany(String desccommentsany) {
 		this.desccommentsany = desccommentsany;
 	}
+	
+	 public String getReferencenumber() {
+			return referencenumber;
+		}
+
+
+
+		public void setReferencenumber(String referencenumber) {
+			this.referencenumber = referencenumber;
+		}
+
+
+
+		
 	  
 	/*  public RegisterPojo(String lname) {
 		    this.lname = lname;
