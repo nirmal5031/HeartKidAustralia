@@ -1,5 +1,12 @@
 package com.heartkid.model.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
@@ -11,15 +18,26 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @author TCS
  * @version 1.0
  */
+@Entity
+@Table(name="tbl_adminuser_details")
 @AutoProperty
-@JsonInclude(Include.NON_NULL)
 public class LoginDetail {
 
-	
+	 @Id
+	  @GeneratedValue(strategy = GenerationType.AUTO)
+        private long id;
+	    @Column(name = "USERNAME")
 	    private String heartkidNumber;
 	    private int loginAttempts;
+	    @Column(name = "PASSWORD")
 	    private String password;
 	    private String status;
+	    private String userrole;
+	    private String name;
+	    private String address;
+	    private String emailid;
+	    private String phone;
+	    
 	    
 
 	    /**
@@ -31,20 +49,21 @@ public class LoginDetail {
 	    /**
 	     * Constructor for domain class LoginDetail
 	     * 
-	     * @param staffNumber
-	     * @param adminNumber
-	     * @param loginAttempts
-	     * @param password
-	     * @param status
-	     * @param operationDetail
+	    
 	     */
 	    public LoginDetail(final String heartkidNumber,
 	            final int loginAttempts, final String password,
-	            final String status) {
+	            final String status, final String name, final String address, final String userrole,final String emailid, final String phone) {
 	        this.heartkidNumber = heartkidNumber;
 	        this.loginAttempts = loginAttempts;
 	        this.password = password;
 	        this.status = status;
+	        this.name = name;
+	        this.address=address;
+	        this.userrole=userrole;
+	        this.emailid=emailid;
+	        this.phone=phone;
+	        
 	    }
 
 	   
@@ -77,6 +96,46 @@ public class LoginDetail {
 
 		public String getHeartkidNumber() {
 			return heartkidNumber;
+		}
+
+		public String getUserrole() {
+			return userrole;
+		}
+
+		public void setUserrole(String userrole) {
+			this.userrole = userrole;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getEmailid() {
+			return emailid;
+		}
+
+		public void setEmailid(String emailid) {
+			this.emailid = emailid;
+		}
+
+		public String getPhone() {
+			return phone;
+		}
+
+		public void setPhone(String phone) {
+			this.phone = phone;
 		}
 
 		

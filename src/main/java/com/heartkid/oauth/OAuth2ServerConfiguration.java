@@ -138,7 +138,7 @@ public class OAuth2ServerConfiguration {
         public void configure(WebSecurity web) throws Exception {
             web
                 .ignoring()
-                    .antMatchers("/heartkid/**");
+                    .antMatchers("/heartkid/register/**");
         }
 
         @Override

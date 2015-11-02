@@ -57,33 +57,44 @@ ObjectMapper mapper = new ObjectMapper();
 		      return "Error  the entry: " + ex.toString();
 		    }
 		 
-		    return "User record edited successfully ! (reference Id is = " +jsonInString  + ")";
+		    return "User record edited successfully ! (reference Id is = " +jsonInString  +""+registrdto.getId()+ ")";
 		  }
 	
 @RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
 	
 	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDto registration){
-		
-		 String jsonInString = null;
-		 int updtequery1;
-		 try{
-			 System.out.println("updated registration ---->"+registration.getFirstname()+updaterecordref);
-			 updtequery1 = edituserrecord.updateByreferenceNum(registration.getFirstname(),registration.getLastname(),updaterecordref);	
-			 if(updtequery1 == 1)
-			 {
-			 jsonInString = mapper.writeValueAsString(updtequery1);
-		 }
-		 else
-		 {
-			 System.out.println("edit failed for the user referenc3e ID --"+updaterecordref);
-		 }
-		 }
-		 catch (Exception ex) {
-		      return "Error  the entry: " + ex.toString();
-		    }
-		 
-		    return "User record edited successfully ! (reference Id is = " +   updaterecordref+ ")";
+			 try{
+			        if (registration != null){
+			        	repository.save(registration);
+	                    System.out.println("SUCCESS");
+			        }
+			        else
+			        	System.out.println("registration is null");
+			 }
+			 catch (Exception ex) {
+			      return "Error creating the entry: " + ex.toString();
+			    }
+			 
+			 	    return "User record edited successfully ! (reference Id is = " +   updaterecordref+ ")";
 		  }
+
+
+
+
+@RequestMapping(value="heartkid/deleterecord", method=RequestMethod.GET)
+	
+	public  String deleteUsersByRefNumber(@RequestParam(value="deleterecordref", defaultValue="") String deleterecordref){
+			 try{
+				 System.out.println("delete record---"+deleterecordref);
+				 repository.deleteUsersByRefNumber(deleterecordref);   
+			 }
+			 catch (Exception ex) {
+			      return "Error creating the entry: " + ex.toString();
+			    }
+			 
+			 	    return "User record Deleted successfully ! (reference Id is = " +   deleterecordref+ ")";
+		  }
+
 	}
 	 
 

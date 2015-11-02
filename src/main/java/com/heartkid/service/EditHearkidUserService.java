@@ -27,13 +27,13 @@ public class EditHearkidUserService {
 		return udpatedquery;
 		
 	}*/
-	public int updateByreferenceNum(String firstname, String lastname, String updaterecordref) {
+	/*public int updateByreferenceNum(String firstname, String lastname, String updaterecordref) {
 		// TODO Auto-generated method stub
 		System.out.println("Inside updateheartkiduser  service----"+firstname+"------------referencenumber-------------"+updaterecordref);
 		int udpatedquery = registerrepo.updateByreferenceNum(firstname,lastname,updaterecordref);
 		System.out.println("registration first name ---->"+udpatedquery);
 		return udpatedquery;
 	
-	}
+	}*/
 
 }
