@@ -1,0 +1,248 @@
+.headervalue
+{
+    border: medium none;
+    display: block;
+    margin: 25px 2% 15px;
+    padding: 0 0 3px;
+    position: relative;
+    white-space: normal;
+    width: 100%;
+    word-wrap: break-word;
+
+    color: #000000;
+    font-size: medium;
+    font-style: normal;
+    font-weight: 700;
+    text-decoration: none;
+
+
+}
+.clearfix::after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+.text-input-group .text-input-container {
+    margin: 0 0 7px;
+}
+.clearfix {
+    display: block;
+}
+.clearfix {
+    display: inline-block;
+}
+
+
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+}
+.partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+}
+table.bs-example
+{
+
+    margin-left: 0px;
+    margin-top: 5%;
+    border-collapse: separate;
+    background-color: #F5DEB3;
+
+}
+.onclickrate
+{
+    color: red;
+    background-color: green;
+}
+.mousehover {
+    background-color: #BDBDBD;
+}
+.highlight
+{
+    background-color: #BDBDBD;
+}
+
+.bluebarrating {
+    /* background-color: #333;*/
+    background-color: #026ab3;
+    color: #fff;
+}
+.bluebarrating:hover
+{
+
+    background-color: #026ab3;
+    color: #fff;
+}
+.barstyle
+{
+    padding: 4px;
+    border: 2px solid #989898;
+    font-weight: bold;
+    border-collapse: separate;
+    text-align: center;
+
+    line-height: 1.429;
+}
+.redclass
+{
+    background-color: #d6d6d6;
+
+}
+
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+.txtcntnt{
+
+    margin-left:2%;
+}
+.hearticon
+{
+    color:  	#FF0000 ;
+}
+p.conctfrmt {
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+.arrowupdown
+{
+	position:relative;
+    background-color: white;
+	background-image:url('../images/arrow_dropdown.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+    border: 1px solid #989898;
+    border-radius: 2px;
+    font-family: Calibri,Arial,sans-serif;
+    font-size: 17px;
+}
+
+
+/*Checkbox Addition */
+
+
+input[type=checkbox].css-checkbox {
+    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:30px;
+    height:25px;
+    display:inline-block;
+    line-height:25px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+
+    vertical-align:middle;
+    cursor:pointer;
+    margin-right: 20%;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -25px;
+}
+label.css-label {
+    background-image:url("../images/checkbox-teal2.png");
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+input[type=checkbox].css-checkbox + label.css-label2 {
+    padding-left:30px;
+    height:25px;
+    display:inline-block;
+    line-height:25px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    margin-right: 20%;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label2 {
+    background-position: 0 -25px;
+}
+label.css-label2 {
+    background-image:url("../images/checkbox-box.png");
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input[type=radio].css-checkbox {
+    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=radio].css-checkbox + label.css-label-radio {
+    padding-left:26px;
+    height:21px;
+    display:inline-block;
+    line-height:21px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+
+    vertical-align:middle;
+    cursor:pointer;
+
+}
+
+input[type=radio].css-checkbox:checked + label.css-label-radio {
+    background-position: 0 -21px;
+}
+label.css-label-radio {
+    background-image:url("../images/radibuttonimg.png");
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+table.radiobuttonstyling td
+{
+    padding: 0px 15px 3px 5px;
+}
+
+
+/*Radio buittons */
+
+.progress {
+    position: relative;
+    animation: 2s linear 0s normal none infinite running progress-bar-stripes;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+    font-weight: bolder;
+}
