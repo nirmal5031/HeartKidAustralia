@@ -3,12 +3,12 @@ package com.heartkid.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.heartkid.model.dto.LoginDetail;
+import com.heartkid.model.entity.*;
 
 
 @Transactional
 @Repository
-public interface HeartkidLoginRepository extends CrudRepository<LoginDetail, Long> {
+public interface HeartkidLoginRepository extends CrudRepository<LoginEntity, String> {
 	
 	
 
