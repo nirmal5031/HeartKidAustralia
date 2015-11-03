@@ -16,34 +16,45 @@ public class LoginService {
 
 	 LoginEntity loginentity =  new LoginEntity();
 	
-	 public String validateUser(LoginDetail loginDetail) {
-		 try
-		 {
+	 
+	 public LoginEntity validateUser(LoginDetail loginDetail) {
 		 String  heartkidUsername = loginDetail.getHeartkidNumber();
 		 String errorMessage;
+		 try
+		 {
 		 loginentity = repository.findOne(heartkidUsername);
-		 if(loginentity.getHeartkidNumber() == null){
-			 System.out.println("Username is not found");
+		 if(loginentity == null){
 			 errorMessage = "Username is not found";
-		 }
-		 if(loginentity.getPassword().equals(loginDetail.getPassword()))
-				 {
-			 System.out.println("Sucess"+loginentity.getPassword());
-			 errorMessage = "Success";
+			 loginentity.setErrorMessage(errorMessage);
 			
+		 }
+		 else if(loginentity.getPassword().equals(loginDetail.getPassword()))
+				 {
+			 errorMessage = "Success";
+			 loginentity.setErrorMessage(errorMessage);		
 		 }else
 				 {
-			 System.out.println("failure credentials");
 			 errorMessage = "Username or Password is wrong ! Please try again";
+			 loginentity.setErrorMessage(errorMessage);
+			
 			 }
 		 
 		 }
+		 catch (NullPointerException nullPointer)
+		 {
+			 errorMessage = "Username is not registered ! Please try with valid credentials ! ";
+				
+			System.out.println("Empty value-- not found"+errorMessage);
+			/*	loginentity.setHeartkidNumber(heartkidUsername);
+			loginentity.setErrorMessage(errorMessage);*/
+		 }
+		 
 		 catch(Exception e)
 		 {
 			 e.printStackTrace();
 			 
 		 }
 
-		 return errorMessage;
+		 return loginentity;
 	 }
 }

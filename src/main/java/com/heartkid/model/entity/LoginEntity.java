@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -38,10 +39,14 @@ public class LoginEntity {
 	    private String address;
 	    private String emailid;
 	    private String phone;
+	    @Transient
+	    private String errorMessage;
 	    
 	    
 
-	    /**
+	   
+
+		/**
 	     * Default constructor for domain class LoginDetail
 	     */
 	    public LoginEntity() {
@@ -54,7 +59,7 @@ public class LoginEntity {
 	     */
 	    public LoginEntity(final String heartkidNumber,
 	            final String loginAttempts, final String password,
-	            final String status, final String name, final String address, final String userrole,final String emailid, final String phone) {
+	            final String status, final String name, final String address, final String userrole,final String emailid, final String phone, final String errorMessage) {
 	    
 	    	this.heartkidNumber = heartkidNumber;
 	        this.loginAttempts = loginAttempts;
@@ -65,9 +70,16 @@ public class LoginEntity {
 	        this.userrole=userrole;
 	        this.emailid=emailid;
 	        this.phone=phone;
+	        this.errorMessage = errorMessage;
 	        
 	    }
+	    public String getErrorMessage() {
+			return errorMessage;
+		}
 
+		public void setErrorMessage(String errorMessage) {
+			this.errorMessage = errorMessage;
+		}
 	    public void setHeartkidNumber(String heartkidNumber) {
 			this.heartkidNumber = heartkidNumber;
 		}
