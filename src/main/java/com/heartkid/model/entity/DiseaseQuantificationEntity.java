@@ -30,10 +30,10 @@ public class DiseaseQuantificationEntity {
 		
 	}
 	
-	public DiseaseQuantificationEntity(String conditioncalld,String heartconds,String surgeryHeld  ,String surgerydelay,String Surgerydelaycount,String trvlsurg)
+	public DiseaseQuantificationEntity(String conditioncalld,String heartconds,String surgeryHeld  ,String surgerydelay,String surgerydelaycount,String trvlsurg)
 	{
 		super();
-		this.conditioncalld=  conditioncalld;             
+		  this.conditioncalld=  conditioncalld;             
 		  this.heartconds =    heartconds;             
 		  this.surgeryHeld =    surgeryHeld;            
 		  this.surgerydelay=surgerydelay;                

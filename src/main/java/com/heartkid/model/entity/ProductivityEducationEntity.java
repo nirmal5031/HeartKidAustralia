@@ -12,8 +12,7 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class ProductivityEducationEntity {
 	  @Id
-	  private long id;
-	
+private long id;
 	private String curntwork ;                        
 	private String worktime ;                         
 	private String disabilityben  ;                     

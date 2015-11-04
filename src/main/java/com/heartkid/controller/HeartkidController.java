@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heartkid.model.dto.RegisterDto;
 import com.heartkid.model.entity.BurdenDiseaseEntity;
@@ -22,17 +21,23 @@ import com.heartkid.repository.PersonalInfoRepository;
 import com.heartkid.repository.ProductivityEduRepository;
 import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
+import com.heartkid.util.RandomNumGenerator;
+import com.heartkid.util.ReferenceNumGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
 
 public class HeartkidController {
 
+	private static final Logger LOGGER = LoggerFactory
+            .getLogger(HeartkidController.class);
 @Autowired
 private  HeartkidRepository repository;
 
 @Autowired
 private  PersonalInfoRepository personalrepository;
-
 
 @Autowired
 private  DiseaseQuantRepository diseaserepository;
@@ -40,10 +45,8 @@ private  DiseaseQuantRepository diseaserepository;
 @Autowired
 private  BurdenDiseaseRepository burdenrepository;
 
-
 @Autowired
 private EditHearkidUserService edituserrecord;
-
 
 @Autowired
 private ProductivityEduRepository prodedurepository;
@@ -51,40 +54,52 @@ private ProductivityEduRepository prodedurepository;
 @Autowired
 QualityCareRepository qualitycarerepository;
 
-
 @Autowired
 OutHospitalRepository outhospitalrepository;
+@Autowired
+ReferenceNumGenerator refnumber;
+@Autowired
+RandomNumGenerator randomnumber;
 
 RegisterDto registrdto = new RegisterDto ();
-PersonalInfoEntity personalinfo = new PersonalInfoEntity();
 ObjectMapper mapper = new ObjectMapper();
 @RequestMapping(value="heartkid/personalinfo", method=RequestMethod.POST)
 public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
 	 try{
-	        if (personalinfo != null){
-	        	personalrepository.save(personalinfo);
-                System.out.println("SUCCESS"+ personalinfo.getId());
-	        }
-	        else
-	        	System.out.println("personalinfo is null");
+		 int randomCount = randomnumber.randomcountgenerator();
+		 String referenceNumb = randomnumber.generateRandomString(randomCount);
+		//Long refnumbervalue = refnumber.generateRandomPin();
+		 LOGGER.info("Reference Number for the request"+referenceNumb);
+		 LOGGER.info("Name of the request"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
+		
+		if(personalinfo.getReferencenumber() == null)
+			personalinfo.setReferencenumber(referenceNumb); 
+		    personalrepository.save(personalinfo);
+	 }
+	 catch (NullPointerException nullpointer)
+	 {
+		 return "No values present in the personal info object: " + nullpointer.toString();
 	 }
 	 catch (Exception ex) {
 	      return "Error creating the entry: " + ex.toString();
 	    }
 	 
-	    return "User succesfully created! (id = " + personalinfo.getId() + ")";
+	    return "User succesfully created! (id = " + personalinfo.getId() +"& ReferenceNumber= "+personalinfo.getReferencenumber()+ ")";
 	  }
 
 @RequestMapping(value="heartkid/diseasequant", method=RequestMethod.POST)
 public  String savediseasequant(@RequestBody DiseaseQuantificationEntity diseasequant){
 	 try{
 	        if (diseasequant != null){
-	        	System.out.println("Suregery details ---->"+diseasequant.getSurgeryHeld()+diseasequant.getTrvlsurg());
 	        	diseaserepository.save(diseasequant);
-                System.out.println("SUCCESS");
+              LOGGER.info("disease quantification added SUCCESS");
 	        }
 	        else
-	        	System.out.println("personalinfo is null");
+	        	System.out.println("Disease quantification is null");
+	 }
+	 catch (NullPointerException nullpointer)
+	 {
+		 return "No values present in the diserase quantification object: " + nullpointer.toString();
 	 }
 	 catch (Exception ex) {
 	      return "Error creating the entry: " + ex.toString();
@@ -92,6 +107,9 @@ public  String savediseasequant(@RequestBody DiseaseQuantificationEntity disease
 	 
 	    return "User succesfully created! (id ="+diseasequant.getId()+")";
 	  }
+
+
+
 
 @RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
 public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease){
@@ -136,7 +154,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
                 System.out.println("SUCCESS");
 	        }
 	        else
-	        	System.out.println("burden disease is null");
+	        	LOGGER.info("quality care is null");
 	 }
 	 catch (Exception ex) {
 	      return "Error creating the entry: " + ex.toString();
@@ -146,7 +164,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 	  }
 
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
-public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentity){
+	public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentity){
 	 try{
 	        if (outhospitalentity != null){
 	        	outhospitalrepository.save(outhospitalentity);
@@ -162,9 +180,7 @@ public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentit
 	    return "User succesfully created! (id ="+outhospitalentity.getId()+")";
 	  }
 
-
-	@RequestMapping(value="heartkid/getrecord", method=RequestMethod.GET)
-	
+@RequestMapping(value="heartkid/getrecord", method=RequestMethod.GET)
 	public  String getrecordheartkid(@RequestParam(value="getrecordref", defaultValue="") String getrecordref){
 		
 		 String jsonInString = null;
@@ -181,8 +197,10 @@ public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentit
 		    return "User record edited successfully ! (reference Id is = " +jsonInString  +""+registrdto.getId()+ ")";
 		  }
 	
-@RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
 	
+	
+	
+@RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
 	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDto registration){
 			 try{
 			        if (registration != null){
@@ -190,7 +208,7 @@ public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentit
 	                    System.out.println("SUCCESS");
 			        }
 			        else
-			        	System.out.println("registration is null");
+			        	LOGGER.info("registration is null");
 			 }
 			 catch (Exception ex) {
 			      return "Error creating the entry: " + ex.toString();
@@ -203,10 +221,9 @@ public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentit
 
 
 @RequestMapping(value="heartkid/deleterecord", method=RequestMethod.GET)
-	
 	public  String deleteUsersByRefNumber(@RequestParam(value="deleterecordref", defaultValue="") String deleterecordref){
 			 try{
-				 System.out.println("delete record---"+deleterecordref);
+				 LOGGER.info("delete record---"+deleterecordref);
 				 repository.deleteUsersByRefNumber(deleterecordref);   
 			 }
 			 catch (Exception ex) {
@@ -215,7 +232,6 @@ public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentit
 			 
 			 	    return "User record Deleted successfully ! (reference Id is = " +   deleterecordref+ ")";
 		  }
-
 	}
 	 
 
