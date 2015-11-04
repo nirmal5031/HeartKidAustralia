@@ -8,7 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heartkid.model.dto.RegisterDto;
+import com.heartkid.model.entity.BurdenDiseaseEntity;
+import com.heartkid.model.entity.DiseaseQuantificationEntity;
+import com.heartkid.model.entity.OutHospitalEntity;
+import com.heartkid.model.entity.PersonalInfoEntity;
+import com.heartkid.model.entity.ProductivityEducationEntity;
+import com.heartkid.model.entity.QualityCareEntity;
+import com.heartkid.repository.BurdenDiseaseRepository;
+import com.heartkid.repository.DiseaseQuantRepository;
 import com.heartkid.repository.HeartkidRepository;
+import com.heartkid.repository.OutHospitalRepository;
+import com.heartkid.repository.PersonalInfoRepository;
+import com.heartkid.repository.ProductivityEduRepository;
+import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
 
 @RestController
@@ -17,31 +29,140 @@ public class HeartkidController {
 
 @Autowired
 private  HeartkidRepository repository;
+
+@Autowired
+private  PersonalInfoRepository personalrepository;
+
+
+@Autowired
+private  DiseaseQuantRepository diseaserepository;
+
+@Autowired
+private  BurdenDiseaseRepository burdenrepository;
+
+
 @Autowired
 private EditHearkidUserService edituserrecord;
 
-RegisterDto registrdto = new RegisterDto ();
-ObjectMapper mapper = new ObjectMapper();
 
-	@RequestMapping(value="heartkid/register", method=RequestMethod.POST)
-	public  String registraUtente(@RequestBody RegisterDto registration){
-		 System.out.println("creating!");
-		 try{
-		        if (registration != null){
-		        	repository.save(registration);
-                    System.out.println("SUCCESS");
-		        }
-		        else
-		        	System.out.println("registration is null");
-		 }
-		 catch (Exception ex) {
-		      return "Error creating the entry: " + ex.toString();
-		    }
-		 
-		    return "User succesfully created! (id = " + registration.getId() + ")";
-		  }
-	
-	
+@Autowired
+private ProductivityEduRepository prodedurepository;
+
+@Autowired
+QualityCareRepository qualitycarerepository;
+
+
+@Autowired
+OutHospitalRepository outhospitalrepository;
+
+RegisterDto registrdto = new RegisterDto ();
+PersonalInfoEntity personalinfo = new PersonalInfoEntity();
+ObjectMapper mapper = new ObjectMapper();
+@RequestMapping(value="heartkid/personalinfo", method=RequestMethod.POST)
+public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
+	 try{
+	        if (personalinfo != null){
+	        	personalrepository.save(personalinfo);
+                System.out.println("SUCCESS"+ personalinfo.getId());
+	        }
+	        else
+	        	System.out.println("personalinfo is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id = " + personalinfo.getId() + ")";
+	  }
+
+@RequestMapping(value="heartkid/diseasequant", method=RequestMethod.POST)
+public  String savediseasequant(@RequestBody DiseaseQuantificationEntity diseasequant){
+	 try{
+	        if (diseasequant != null){
+	        	System.out.println("Suregery details ---->"+diseasequant.getSurgeryHeld()+diseasequant.getTrvlsurg());
+	        	diseaserepository.save(diseasequant);
+                System.out.println("SUCCESS");
+	        }
+	        else
+	        	System.out.println("personalinfo is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id ="+diseasequant.getId()+")";
+	  }
+
+@RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
+public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease){
+	 try{
+	        if (burdendisease != null){
+	        	burdenrepository.save(burdendisease);
+                System.out.println("SUCCESS");
+	        }
+	        else
+	        	System.out.println("burden disease is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id ="+burdendisease.getId()+")";
+	  }
+
+@RequestMapping(value="heartkid/producteducation", method=RequestMethod.POST)
+public  String saveburdendisease(@RequestBody ProductivityEducationEntity producteduentity){
+	 try{
+	        if (producteduentity != null){
+	        	prodedurepository.save(producteduentity);
+                System.out.println("SUCCESS");
+	        }
+	        else
+	        	System.out.println("burden disease is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id ="+producteduentity.getId()+")";
+	  }
+
+
+@RequestMapping(value="heartkid/qualitycare", method=RequestMethod.POST)
+public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentity){
+	 try{
+	        if (qualitycareentity != null){
+	        	qualitycarerepository.save(qualitycareentity);
+                System.out.println("SUCCESS");
+	        }
+	        else
+	        	System.out.println("burden disease is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id ="+qualitycareentity.getId()+")";
+	  }
+
+@RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
+public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentity){
+	 try{
+	        if (outhospitalentity != null){
+	        	outhospitalrepository.save(outhospitalentity);
+                System.out.println("SUCCESS");
+	        }
+	        else
+	        	System.out.println("burden disease is null");
+	 }
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	 
+	    return "User succesfully created! (id ="+outhospitalentity.getId()+")";
+	  }
+
+
 	@RequestMapping(value="heartkid/getrecord", method=RequestMethod.GET)
 	
 	public  String getrecordheartkid(@RequestParam(value="getrecordref", defaultValue="") String getrecordref){

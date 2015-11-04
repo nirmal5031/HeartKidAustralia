@@ -9,8 +9,6 @@ import javax.persistence.Table;
 
 import org.pojomatic.annotations.AutoProperty;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name="heartkidregistration")

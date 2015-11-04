@@ -8,9 +8,9 @@ com\heartkid\oauth\OAuth2ServerConfiguration$AuthorizationServerConfiguration.cl
 com\heartkid\controller\HeartkidController.class
 com\heartkid\exception\HeartkidBadRequestException.class
 com\heartkid\oauth\OAuth2ServerConfiguration$ResourceServerConfiguration.class
-com\heartkid\oauth\RevokeTokenController.class
-com\heartkid\oauth\WebSecurityConfiguration.class
 com\heartkid\service\EditHearkidUserService.class
+com\heartkid\oauth\WebSecurityConfiguration.class
+com\heartkid\oauth\RevokeTokenController.class
 com\heartkid\repository\HeartkidRepository.class
 com\heartkid\oauth\OAuth2ServerConfiguration$CustomAuthenticator.class
 com\heartkid\util\UserValidation.class
