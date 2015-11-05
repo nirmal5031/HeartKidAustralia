@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 
@@ -54,37 +55,6 @@ public class PersonalInfoEntity {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-
-
-
-	public PersonalInfoEntity(long id, String usertype,String firstname,String lastname,String title,String heartkidbirthdate,String postcode,String state,String conctagree,String contctviaphone ,String contctviaemail ,String phone,String email,String ethnicity,String countrybirth,String language) {
-		  
-		  
-		  super();
-		   this.id =id;
-		  this.usertype=  usertype;                   
-		  this.firstname=  firstname;                  
-		  this.lastname=  lastname;                   
-		  this.title=  title;                         
-		  this.heartkidbirthdate = heartkidbirthdate;           
-		  this.postcode=   postcode;                  
-		  this.state =  state;                       
-		  this.conctagree =       conctagree;          
-		  this.contctviaphone =contctviaphone;           
-		  this.contctviaemail=   contctviaemail ;          
-		  this.phone= phone ;                      
-		  this.email =email;                         
-		  this.ethnicity =   ethnicity;                 
-		  this.countrybirth =  countrybirth;              
-		  this.language = language;                   
-		 
-		  
-		  
-		 
-	  }
-
-
 
 	public String getUsertype() {
 		return usertype;
@@ -278,7 +248,15 @@ public class PersonalInfoEntity {
 			this.referencenumber = referencenumber;
 		}
 
+		 @Override
+		    public boolean equals(final Object obj) {
+		        return Pojomatic.equals(this, obj);
+		    }
 
+		    @Override
+		    public int hashCode() {
+		        return Pojomatic.hashCode(this);
+		    }
 
 		
 	  

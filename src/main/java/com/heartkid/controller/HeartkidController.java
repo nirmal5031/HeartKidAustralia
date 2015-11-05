@@ -25,14 +25,13 @@ import com.heartkid.util.RandomNumGenerator;
 import com.heartkid.util.ReferenceNumGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
-
 public class HeartkidController {
 
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(HeartkidController.class);
+	
 @Autowired
 private  HeartkidRepository repository;
 
@@ -56,35 +55,45 @@ QualityCareRepository qualitycarerepository;
 
 @Autowired
 OutHospitalRepository outhospitalrepository;
+
 @Autowired
 ReferenceNumGenerator refnumber;
+
 @Autowired
 RandomNumGenerator randomnumber;
 
 RegisterDto registrdto = new RegisterDto ();
-ObjectMapper mapper = new ObjectMapper();
+@Autowired
+ObjectMapper mapper;
+
 @RequestMapping(value="heartkid/personalinfo", method=RequestMethod.POST)
 public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
+	String personalinfoJSON = null;
 	 try{
+		 
 		 int randomCount = randomnumber.randomcountgenerator();
 		 String referenceNumb = randomnumber.generateRandomString(randomCount);
-		//Long refnumbervalue = refnumber.generateRandomPin();
-		 LOGGER.info("Reference Number for the request"+referenceNumb);
-		 LOGGER.info("Name of the request"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
+		 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
+		 LOGGER.info("Name of the request ::"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
 		
 		if(personalinfo.getReferencenumber() == null)
 			personalinfo.setReferencenumber(referenceNumb); 
 		    personalrepository.save(personalinfo);
+		  
+		    if(personalinfo!= null)
+		    	personalinfoJSON = mapper.writeValueAsString(personalinfo);
+			System.out.println(personalinfoJSON);
+		   
 	 }
 	 catch (NullPointerException nullpointer)
 	 {
-		 return "No values present in the personal info object: " + nullpointer.toString();
+		 return "{'value':'failure'}";
 	 }
 	 catch (Exception ex) {
 	      return "Error creating the entry: " + ex.toString();
 	    }
 	 
-	    return "User succesfully created! (id = " + personalinfo.getId() +"& ReferenceNumber= "+personalinfo.getReferencenumber()+ ")";
+	    return personalinfoJSON;
 	  }
 
 @RequestMapping(value="heartkid/diseasequant", method=RequestMethod.POST)
@@ -108,9 +117,6 @@ public  String savediseasequant(@RequestBody DiseaseQuantificationEntity disease
 	    return "User succesfully created! (id ="+diseasequant.getId()+")";
 	  }
 
-
-
-
 @RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
 public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease){
 	 try{
@@ -127,6 +133,7 @@ public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease)
 	 
 	    return "User succesfully created! (id ="+burdendisease.getId()+")";
 	  }
+
 
 @RequestMapping(value="heartkid/producteducation", method=RequestMethod.POST)
 public  String saveburdendisease(@RequestBody ProductivityEducationEntity producteduentity){
@@ -163,6 +170,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 	    return "User succesfully created! (id ="+qualitycareentity.getId()+")";
 	  }
 
+
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
 	public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentity){
 	 try{
@@ -179,6 +187,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 	 
 	    return "User succesfully created! (id ="+outhospitalentity.getId()+")";
 	  }
+
 
 @RequestMapping(value="heartkid/getrecord", method=RequestMethod.GET)
 	public  String getrecordheartkid(@RequestParam(value="getrecordref", defaultValue="") String getrecordref){
@@ -197,9 +206,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 		    return "User record edited successfully ! (reference Id is = " +jsonInString  +""+registrdto.getId()+ ")";
 		  }
 	
-	
-	
-	
+		
 @RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
 	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDto registration){
 			 try{
@@ -218,8 +225,6 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 		  }
 
 
-
-
 @RequestMapping(value="heartkid/deleterecord", method=RequestMethod.GET)
 	public  String deleteUsersByRefNumber(@RequestParam(value="deleterecordref", defaultValue="") String deleterecordref){
 			 try{
@@ -233,6 +238,3 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 			 	    return "User record Deleted successfully ! (reference Id is = " +   deleterecordref+ ")";
 		  }
 	}
-	 
-
-

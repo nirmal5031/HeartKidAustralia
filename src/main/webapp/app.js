@@ -46,6 +46,10 @@ angular.module('formApp', ['ui.router'])
                 url: '/research',
                 templateUrl: 'views/form-burdendisease-additional.html'
             })
+            .state('form.burden-2', {
+                url: '/research',
+                templateUrl: 'views/form-burdendisease2.html'
+            })
             .state('form.burden-3', {
                 url: '/research',
                 templateUrl: 'views/form-burdendisease3.html'
@@ -86,7 +90,7 @@ angular.module('formApp', ['ui.router'])
 
     })
 
-    .controller('personalInfoContrler', function ($scope) {
+    .controller('personalInfoContrler', function ($scope, $http) {
 
         var progress = setInterval(function () {
             var $bar = $('.bar');
@@ -183,7 +187,29 @@ angular.module('formApp', ['ui.router'])
                 $scope.showcontactviaemail = 'false' ;
             }
         }
+        $scope.personalInfoSubmit = function(){
+            $http({
+                url: 'http://localhost:8080/heartkid/personalinfo',
+                method: "POST",
+                data: $scope.formData
+            })
+                .then(function(response) {
+                        // success
+                       var data = response.data;
+                       var obj1 = angular.toJson(data);
+                        var result = $.parseJSON(obj1);
+                      var id =   result['id']; // return 'John'
+                        var ref = result['referencenumber'];  //
+                    $scope.formData.referencenum = ref;
+                        $scope.formData.id = id;
 
+
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
+        }
 
 
 
@@ -527,44 +553,100 @@ angular.module('formApp', ['ui.router'])
             }
         }
 
-        $scope.SubmitHeartKidForm = function()
-        {
-                $http({
-                    url: 'http://localhost:8080/heartkid/register',
-                    method: "POST",
-                    data:
+        $scope.savetreatmentform = function(){
 
-                    {
-                    }
-                })
-                    .then(function(response) {
-                            // success
-                        alert("SUCESS");
-                        },
-                        function(response) { // optional
-                            // failed
-
-                        });
-
+            $http({
+                url: 'http://localhost:8080/heartkid/diseasequant',
+                method: "POST",
+                data:$scope.formData
+            })
+                .then(function(response) {
+                        // success
+                        alert("Sucess"+response.data);
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
         }
-        /*  $scope.getClass = function (node) {
-              return {
-                  blue: node.name.substr(0,1) === 'S'
-              }};*/
-       /* $scope.nodeclick = function(val) {
-            $scope.formData.heartdoc = val;
-            $scope.myClass.push('highlight');
-            alert("onclick value"+val);
 
-        }*/
-      /*  $scope.highlightedItem = 0;
-        $scope.onMouseover = function(i) {
 
-            $scope.highlightedItem = i;
-        };
-        $scope.$watch('highlightedItem', function(n, o) {
+        $scope.saveburdendiseaseform = function(){
+            $http({
+                url: 'http://localhost:8080/heartkid/burdendisease',
+                method: "POST",
+                data:$scope.formData
+            })
+                .then(function(response) {
+                        // success
+                        alert("Sucess"+response);
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
+        }
 
-        });*/
+
+        $scope.saveprodeductionform = function(){
+            $http({
+                url: 'http://localhost:8080/heartkid/producteducation',
+                method: "POST",
+                data:$scope.formData
+            })
+                .then(function(response) {
+                        // success
+                        alert("Sucess"+response);
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
+        }
+
+
+        $scope.savequalitycareform = function(){
+
+            $http({
+                url: 'http://localhost:8080/heartkid/qualitycare',
+                method: "POST",
+                data:$scope.formData
+            })
+                .then(function(response) {
+                        // success
+                        alert("Sucess"+response);
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
+        }
+
+
+
+        $scope.saveouthospitalform = function(){
+
+           
+            $http({
+                url: 'http://localhost:8080/heartkid/outhospital',
+                method: "POST",
+                data:$scope.formData
+            })
+                .then(function(response) {
+                        // success
+                        alert("Sucess"+response);
+
+                        var data = response.data;
+                        var obj1 = angular.toJson(data);
+                        var result = $.parseJSON(obj1);
+                       alert("result final ---"+result);
+
+                    },
+                    function(response) { // optional
+                        // failed
+                        alert("Failure"+response);
+                    });
+        }
 
     });
 

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: HeartKidAustralia
+Implementation-Version: 1.0-SNAPSHOT
+Implementation-Vendor-Id: com.heartkid
+Build-Jdk: 1.7.0_76
+Built-By: 535222
+Created-By: Maven Integration for Eclipse
+
