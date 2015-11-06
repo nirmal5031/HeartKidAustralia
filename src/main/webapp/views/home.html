@@ -31,7 +31,7 @@
 </div></div>
 <!--Start MainContaineform section  -->
 
-		<div class="col-lg-12 personalborder">
+		<div class="col-lg-12 personalborder" ng-controller="homepagecontroller">
 			<div class="healthheading"><p>First time ever more adults and kids who need</p></div>
 
 			<!--healthriskfactor Start here-->
@@ -56,7 +56,7 @@
 						</ul>
 						</br>
 						<a ui-sref="form.profile" >
-							<button class="btn btn-primary" type="button" style=" float: right;margin-right: 13%;width: 90px;">Register</button>
+							<button class="btn btn-primary" type="button" ng-click="proceedtosurvey()" style=" float: right;margin-right: 13%;width: 190px;">Proceed to survey</button>
 						</a>
                         </br></br>
 
@@ -79,7 +79,12 @@
 								<div style=" font-size:11px; font-family:Arial, Helvetica, sans-serif; background:#293f78; color:#CCCCCC; padding-left:10px;">©2005-2015 HeartKids Health Record System. All rights reserved.</div>
 							</div>
 						</div>
-					<!--Start MainContaineform section  -->
+					</div>
+				</div>
+			</div>
+
+</div>
+	</section><!--Start MainContaineform section  -->
 
 </body>
 </html>

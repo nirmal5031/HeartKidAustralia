@@ -25,6 +25,7 @@ public class QualityCareEntity {
 	private String familysuprt ;                       
 	private String dedicatednurse ;                 
 	private String dedicatedCHDnurse ;       
+	private String surveystatus;   
 	
 	public QualityCareEntity(){
 		
@@ -36,6 +37,15 @@ public class QualityCareEntity {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
 	}
 
 	public String getMoneyspentinyear() {

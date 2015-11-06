@@ -24,7 +24,7 @@ public class DiseaseQuantificationEntity {
 	@Column(name="Surgerydelaycount")
 	private String surgerydelaycount;          
 	private String trvlsurg; 
-	
+	private String surveystatus;   
 	public DiseaseQuantificationEntity()
 	{
 		
@@ -76,6 +76,15 @@ public class DiseaseQuantificationEntity {
 
 	public String getSurgerydelay() {
 		return surgerydelay;
+	}
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
 	}
 
 	public void setSurgerydelay(String surgerydelay) {

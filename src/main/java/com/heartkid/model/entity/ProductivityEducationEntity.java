@@ -27,11 +27,22 @@ private long id;
 	private String impactQol;                         
 	private String condimpactschl;                  
 	private String condimpactschooldesc ;
+	private String surveystatus;   
 	
 	public ProductivityEducationEntity()
 	{
 		
 	}
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
+	}
+
 	public long getId() {
 		return id;
 	}

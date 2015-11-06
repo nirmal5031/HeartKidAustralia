@@ -21,11 +21,22 @@ public class BurdenDiseaseEntity {
 	private String careage16 ;                       
 	private String childtoadultdoc;                   
 	private String anxietycond;                      
-	private String anxietycondimpact;   
+	private String anxietycondimpact;
+	private String surveystatus;   
 	
 	public BurdenDiseaseEntity()
 	{
 		
+	}
+	
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
 	}
 
 	public long getId() {

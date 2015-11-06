@@ -41,7 +41,7 @@ public class LoginEntity {
 	    private String phone;
 	    @Transient
 	    private String errorMessage;
-	    
+	    private String surveystatus;   
 	    
 
 	   

@@ -19,9 +19,19 @@ public class OutHospitalEntity {
 	private String memberheartkid ;                 
 	private String supportheartkid ;                 
 	private String useheartkid ;                      
-	private String desccommentsany ;     
+	private String desccommentsany ;  
+	private String surveystatus;   
 	public OutHospitalEntity(){
 		
+	}
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
 	}
 
 	public long getId() {

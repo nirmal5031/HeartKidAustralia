@@ -5,8 +5,8 @@ angular.module('formApp', ['ui.router'])
 
 // configuring our routes
 // =============================================================================
-    .config(['$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
-        $httpProvider.interceptors.push('errorInterceptor');
+    .config(function($stateProvider, $urlRouterProvider) {
+       // $httpProvider.interceptors.push('errorInterceptor');
         $stateProvider
             // route to show our basic form (/form)
             .state('form', {
@@ -62,7 +62,24 @@ angular.module('formApp', ['ui.router'])
         // catch all route
         // send users to the form page
         $urlRouterProvider.otherwise('/form/research');
-    }])
+    })
+
+    .factory('mySharedService', function($rootScope) {
+        var sharedService = {};
+
+        sharedService.message = '';
+
+        sharedService.prepForBroadcast = function(msg) {
+            this.message = msg;
+            this.broadcastItem();
+        };
+
+        sharedService.broadcastItem = function() {
+            $rootScope.$broadcast('handleBroadcast');
+        };
+
+        return sharedService;
+    })
 
     /*.factory('errorInterceptor',['$q','$window','removeSessionCookies',function($q,$window,removeSessionCookies) {
         return {
@@ -113,8 +130,44 @@ angular.module('formApp', ['ui.router'])
 
     })
 
-    .controller('personalInfoContrler', function ($scope, $http) {
+    .controller('homepagecontroller', function($scope,$http,$sharedService) {
+var empty = "";
+        $scope.proceedtosurvey = function() {
 
+                $http({
+                    url: 'http://localhost:8080/heartkid/referencegen',
+                    method: "GET",
+                    data:empty
+
+                })
+                    .then(function(response) {
+                            // success
+
+
+                            var data = $.parseJSON(angular.toJson(response.data));
+                            sharedService.prepForBroadcast(data);
+                        $scope.$on('handleBroadcast', function() {
+                            var message = sharedService.message;
+
+                        alert(message);
+                        })
+
+                        },
+                        function(status) { // optional
+                            // failed
+                            var statuscode = $.parseJSON(angular.toJson(response.status));
+                            alert("ERROR---->"+statuscode);
+
+                        })
+            }
+
+
+    })
+
+
+
+    .controller('personalInfoContrler', function ($scope, $http) {
+alert("shared message"+ sharedService.message);
         var progress = setInterval(function () {
             var $bar = $('.bar');
             if ($bar.width() >= 400) {
@@ -211,6 +264,8 @@ angular.module('formApp', ['ui.router'])
             }
         }
         $scope.personalInfoSubmit = function(){
+            var formstatus = "incomplete";
+            $scope.formData.surveystatus = formstatus;
             $http({
                 url: 'http://localhost:8080/heartkid/personalinfo',
                 method: "POST",
@@ -575,24 +630,25 @@ angular.module('formApp', ['ui.router'])
         }
 
         $scope.savetreatmentform = function(){
-
+            var formstatus = "incomplete";
+            $scope.formData.surveystatus = formstatus;
             $http({
                 url: 'http://localhost:8080/heartkid/diseasequant',
                 method: "POST",
                 data:$scope.formData
             })
                 .then(function(response) {
-                        // success
-                        alert("Sucess"+response.data);
                     },
                     function(response) { // optional
-                        // failed
-                        alert("Failure"+response);
+
+                        alert("Failure"+response.status);
                     });
         }
 
 
         $scope.saveburdendiseaseform = function(){
+            var formstatus = "incomplete";
+            $scope.formData.surveystatus = formstatus;
             $http({
                 url: 'http://localhost:8080/heartkid/burdendisease',
                 method: "POST",
@@ -604,12 +660,14 @@ angular.module('formApp', ['ui.router'])
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response);
+                        alert("Failure"+response.status);
                     });
         }
 
 
         $scope.saveprodeductionform = function(){
+            var formstatus = "incomplete";
+            $scope.formData.surveystatus = formstatus;
             $http({
                 url: 'http://localhost:8080/heartkid/producteducation',
                 method: "POST",
@@ -621,12 +679,14 @@ angular.module('formApp', ['ui.router'])
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response);
+                        alert("Failure"+response.status);
                     });
         }
 
 
         $scope.savequalitycareform = function(){
+            var formstatus = "incomplete";
+            $scope.formData.surveystatus = formstatus;
 
             $http({
                 url: 'http://localhost:8080/heartkid/qualitycare',
@@ -639,7 +699,7 @@ angular.module('formApp', ['ui.router'])
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response);
+                        alert("Failure"+response.status);
                     });
         }
 
@@ -647,7 +707,8 @@ angular.module('formApp', ['ui.router'])
 
         $scope.saveouthospitalform = function(){
 
-
+            var formstatus = "success";
+            $scope.formData.surveystatus = formstatus;
             $http({
                 url: 'http://localhost:8080/heartkid/outhospital',
                 method: "POST",
@@ -655,8 +716,6 @@ angular.module('formApp', ['ui.router'])
             })
                 .then(function(response) {
                         // success
-                        alert("Sucess"+response);
-
                         var data = response.data;
                         var obj1 = angular.toJson(data);
                         var result = $.parseJSON(obj1);
@@ -665,7 +724,7 @@ angular.module('formApp', ['ui.router'])
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response);
+                        alert("Failure"+response.status);
                     });
         }
 

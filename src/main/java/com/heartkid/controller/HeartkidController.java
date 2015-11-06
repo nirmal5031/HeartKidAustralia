@@ -66,18 +66,26 @@ RegisterDto registrdto = new RegisterDto ();
 @Autowired
 ObjectMapper mapper;
 
+@RequestMapping(value="heartkid/referencegen", method=RequestMethod.GET)
+public  String generatereference(){
+	 int randomCount = randomnumber.randomcountgenerator();
+	 String referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
+	 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
+	
+	return referenceNumb;
+	
+}
+
+
 @RequestMapping(value="heartkid/personalinfo", method=RequestMethod.POST)
 public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
 	String personalinfoJSON = null;
 	 try{
 		 
-		 int randomCount = randomnumber.randomcountgenerator();
-		 String referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
-		 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
+	
 		 LOGGER.info("Name of the request ::"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
 		
-		if(personalinfo.getReferencenumber() == null)
-			personalinfo.setReferencenumber(referenceNumb); 
+		if(personalinfo != null)
 		    personalrepository.save(personalinfo);
 		  
 		    if(personalinfo!= null)
@@ -221,7 +229,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 			      return "Error creating the entry: " + ex.toString();
 			    }
 			 
-			 	    return "User record edited successfully ! (reference Id is = " +updaterecordref+ ")";
+			 	    return "User record edited successfully ! (reference Id is = " +updaterecordref+")";
 		  }
 
 

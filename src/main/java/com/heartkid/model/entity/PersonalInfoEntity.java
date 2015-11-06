@@ -36,7 +36,8 @@ public class PersonalInfoEntity {
 	private String email ;                              
 	private String ethnicity;                           
 	private String countrybirth ;                     
-	private String language ;                          
+	private String language ;  
+	private String surveystatus;
 	          
 	  
 	public PersonalInfoEntity() { 
@@ -64,6 +65,18 @@ public class PersonalInfoEntity {
 
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
+	}
+
+
+
+	public String getSurveystatus() {
+		return surveystatus;
+	}
+
+
+
+	public void setSurveystatus(String surveystatus) {
+		this.surveystatus = surveystatus;
 	}
 
 
