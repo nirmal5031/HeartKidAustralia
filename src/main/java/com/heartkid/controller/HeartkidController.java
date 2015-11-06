@@ -72,7 +72,7 @@ public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
 	 try{
 		 
 		 int randomCount = randomnumber.randomcountgenerator();
-		 String referenceNumb = randomnumber.generateRandomString(randomCount);
+		 String referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
 		 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
 		 LOGGER.info("Name of the request ::"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
 		
@@ -82,7 +82,7 @@ public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
 		  
 		    if(personalinfo!= null)
 		    	personalinfoJSON = mapper.writeValueAsString(personalinfo);
-			System.out.println(personalinfoJSON);
+				System.out.println(personalinfoJSON);
 		   
 	 }
 	 catch (NullPointerException nullpointer)
@@ -221,7 +221,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 			      return "Error creating the entry: " + ex.toString();
 			    }
 			 
-			 	    return "User record edited successfully ! (reference Id is = " +   updaterecordref+ ")";
+			 	    return "User record edited successfully ! (reference Id is = " +updaterecordref+ ")";
 		  }
 
 

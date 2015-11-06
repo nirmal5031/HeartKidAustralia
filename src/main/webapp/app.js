@@ -5,10 +5,9 @@ angular.module('formApp', ['ui.router'])
 
 // configuring our routes
 // =============================================================================
-    .config(function($stateProvider, $urlRouterProvider) {
-
+    .config(['$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
+        $httpProvider.interceptors.push('errorInterceptor');
         $stateProvider
-
             // route to show our basic form (/form)
             .state('form', {
                 url: '/form',
@@ -63,8 +62,32 @@ angular.module('formApp', ['ui.router'])
         // catch all route
         // send users to the form page
         $urlRouterProvider.otherwise('/form/research');
-    })
-//directivessss
+    }])
+
+    /*.factory('errorInterceptor',['$q','$window','removeSessionCookies',function($q,$window,removeSessionCookies) {
+        return {
+            response: function (response) {
+                if (response.status === 401) {
+                    removeSessionCookies();
+                    $window.location.href = "errorPageWithoutRedirection.html";
+                }
+                return response || $q.when(response);
+            },
+            responseError: function (rejection) {
+                if (rejection.status == "401") {
+                    removeSessionCookies();
+                    $window.location.href = "401_error.html";
+                }
+
+                if (rejection.status == "400") {
+                    removeSessionCookies();
+                    $window.location.href = "400_error.html";
+                }
+                return $q.reject(rejection);
+            }
+        }
+    }])*/
+//directives
 
     .directive('ngHover', function() {
         return {
@@ -195,20 +218,19 @@ angular.module('formApp', ['ui.router'])
             })
                 .then(function(response) {
                         // success
-                       var data = response.data;
-                       var obj1 = angular.toJson(data);
-                        var result = $.parseJSON(obj1);
-                      var id =   result['id']; // return 'John'
-                        var ref = result['referencenumber'];  //
-                    $scope.formData.referencenum = ref;
-                        $scope.formData.id = id;
+                       var data = $.parseJSON(angular.toJson(response.data));
+                        $scope.formData.id =   data['id'];
+                        $scope.formData.referencenum = data['referencenumber'];
+
 
 
                     },
-                    function(response) { // optional
+                    function(status) { // optional
                         // failed
-                        alert("Failure"+response);
-                    });
+                        var statuscode = $.parseJSON(angular.toJson(response.status));
+                        alert("ERROR---->"+statuscodea);
+
+                    })
         }
 
 
@@ -217,6 +239,9 @@ angular.module('formApp', ['ui.router'])
 
     .controller('burdendiseaseController', function ($scope, $http) {
         var usertype = $scope.formData.usertype;
+        var ref = $scope.formData.referencenum;
+        alert(ref);
+
        if(usertype =="Patient" )
        {
         $scope.showcarerdetails = 'false';
@@ -452,7 +477,6 @@ angular.module('formApp', ['ui.router'])
             $scope.getClassfrstsurgerysel = function (nodeclass) {
                 return {
                     bluebarrating: node === nodeclass
-
                 }
 
 
@@ -467,11 +491,8 @@ angular.module('formApp', ['ui.router'])
                     bluebarrating: node === nodeclass
 
                 }
-
-
             }
         }
-
 
         $scope.hosptlsurgerysel = function(node) {
             $scope.formData.hosptlsurgery = node;
@@ -626,7 +647,7 @@ angular.module('formApp', ['ui.router'])
 
         $scope.saveouthospitalform = function(){
 
-           
+
             $http({
                 url: 'http://localhost:8080/heartkid/outhospital',
                 method: "POST",
