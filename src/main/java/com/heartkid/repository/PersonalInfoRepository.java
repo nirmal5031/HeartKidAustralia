@@ -10,7 +10,7 @@ import com.heartkid.model.entity.*;
 
 @Transactional
 @Repository
-public interface PersonalInfoRepository extends CrudRepository<PersonalInfoEntity, String> {
+public interface PersonalInfoRepository extends CrudRepository<RegisterDtoEntity, String> {
 	
 	
 	

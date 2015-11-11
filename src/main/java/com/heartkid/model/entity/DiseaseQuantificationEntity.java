@@ -14,7 +14,6 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class DiseaseQuantificationEntity {
 	  @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String conditioncalld;                    
 	private String heartconds;   
@@ -44,10 +43,6 @@ public class DiseaseQuantificationEntity {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getConditioncalld() {

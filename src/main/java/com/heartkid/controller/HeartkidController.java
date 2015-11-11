@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heartkid.model.dto.RegisterDto;
 import com.heartkid.model.entity.BurdenDiseaseEntity;
@@ -13,6 +14,7 @@ import com.heartkid.model.entity.OutHospitalEntity;
 import com.heartkid.model.entity.PersonalInfoEntity;
 import com.heartkid.model.entity.ProductivityEducationEntity;
 import com.heartkid.model.entity.QualityCareEntity;
+import com.heartkid.model.entity.RegisterDtoEntity;
 import com.heartkid.repository.BurdenDiseaseRepository;
 import com.heartkid.repository.DiseaseQuantRepository;
 import com.heartkid.repository.HeartkidRepository;
@@ -23,6 +25,7 @@ import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
 import com.heartkid.util.RandomNumGenerator;
 import com.heartkid.util.ReferenceNumGenerator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,20 +54,22 @@ private EditHearkidUserService edituserrecord;
 private ProductivityEduRepository prodedurepository;
 
 @Autowired
-QualityCareRepository qualitycarerepository;
+private QualityCareRepository qualitycarerepository;
 
 @Autowired
-OutHospitalRepository outhospitalrepository;
+private OutHospitalRepository outhospitalrepository;
 
 @Autowired
-ReferenceNumGenerator refnumber;
+private ReferenceNumGenerator refnumber;
 
 @Autowired
-RandomNumGenerator randomnumber;
+private RandomNumGenerator randomnumber;
 
 RegisterDto registrdto = new RegisterDto ();
+
 @Autowired
 ObjectMapper mapper;
+
 
 @RequestMapping(value="heartkid/referencegen", method=RequestMethod.GET)
 public  String generatereference(){
@@ -72,18 +77,18 @@ public  String generatereference(){
 	 String referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
 	 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
 	
-	return referenceNumb;
-	
+	return referenceNumb;	
 }
 
 
 @RequestMapping(value="heartkid/personalinfo", method=RequestMethod.POST)
-public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
+public  String savepersonalInfo(@RequestBody RegisterDtoEntity personalinfo){
 	String personalinfoJSON = null;
 	 try{
 		 
 	
 		 LOGGER.info("Name of the request ::"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
+		 LOGGER.info("Referencenumber of the request :::::::::::"+personalinfo.getReferencenumber());
 		
 		if(personalinfo != null)
 		    personalrepository.save(personalinfo);
@@ -104,9 +109,12 @@ public  String savepersonalInfo(@RequestBody PersonalInfoEntity personalinfo){
 	    return personalinfoJSON;
 	  }
 
+
 @RequestMapping(value="heartkid/diseasequant", method=RequestMethod.POST)
-public  String savediseasequant(@RequestBody DiseaseQuantificationEntity diseasequant){
+public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 	 try{
+		 LOGGER.info("Referencenumber of the request :::::::::::"+diseasequant.getId());
+		
 	        if (diseasequant != null){
 	        	diseaserepository.save(diseasequant);
               LOGGER.info("disease quantification added SUCCESS");
@@ -125,8 +133,9 @@ public  String savediseasequant(@RequestBody DiseaseQuantificationEntity disease
 	    return "User succesfully created! (id ="+diseasequant.getId()+")";
 	  }
 
+
 @RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
-public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease){
+public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 	 try{
 	        if (burdendisease != null){
 	        	burdenrepository.save(burdendisease);
@@ -143,8 +152,9 @@ public  String saveburdendisease(@RequestBody BurdenDiseaseEntity burdendisease)
 	  }
 
 
+
 @RequestMapping(value="heartkid/producteducation", method=RequestMethod.POST)
-public  String saveburdendisease(@RequestBody ProductivityEducationEntity producteduentity){
+public  String producteducation(@RequestBody RegisterDtoEntity producteduentity){
 	 try{
 	        if (producteduentity != null){
 	        	prodedurepository.save(producteduentity);
@@ -162,7 +172,7 @@ public  String saveburdendisease(@RequestBody ProductivityEducationEntity produc
 
 
 @RequestMapping(value="heartkid/qualitycare", method=RequestMethod.POST)
-public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentity){
+public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	 try{
 	        if (qualitycareentity != null){
 	        	qualitycarerepository.save(qualitycareentity);
@@ -180,7 +190,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 
 
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
-	public  String saveburdendisease(@RequestBody OutHospitalEntity outhospitalentity){
+	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity){
 	 try{
 	        if (outhospitalentity != null){
 	        	outhospitalrepository.save(outhospitalentity);
@@ -197,22 +207,7 @@ public  String saveburdendisease(@RequestBody QualityCareEntity qualitycareentit
 	  }
 
 
-@RequestMapping(value="heartkid/getrecord", method=RequestMethod.GET)
-	public  String getrecordheartkid(@RequestParam(value="getrecordref", defaultValue="") String getrecordref){
-		
-		 String jsonInString = null;
-		 try{
-			 registrdto = edituserrecord.editheartkiduser(getrecordref);	
-			 
-			 if(registrdto!= null)
-			 jsonInString = mapper.writeValueAsString(registrdto);
-		 }
-		 catch (Exception ex) {
-		      return "Error  the entry: " + ex.toString();
-		    }
-		 
-		    return "User record edited successfully ! (reference Id is = " +jsonInString  +""+registrdto.getId()+ ")";
-		  }
+
 	
 		
 @RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)

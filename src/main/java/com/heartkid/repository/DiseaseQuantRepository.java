@@ -8,7 +8,7 @@ import com.heartkid.model.entity.*;
 
 @Transactional
 @Repository
-public interface DiseaseQuantRepository extends CrudRepository<DiseaseQuantificationEntity, String> {
+public interface DiseaseQuantRepository extends CrudRepository<RegisterDtoEntity, String> {
 	
 	
 

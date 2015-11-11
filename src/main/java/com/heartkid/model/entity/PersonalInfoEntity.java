@@ -16,7 +16,7 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class PersonalInfoEntity {
       @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
       private long id;
 	private String referencenumber;
 	 @Column(name = "USERTYPE")

@@ -24,17 +24,17 @@ public class LoginService {
 		 {
 		 loginentity = repository.findOne(heartkidUsername);
 		 if(loginentity == null){
-			 errorMessage = "Username is not found";
+			 errorMessage = "NOUSER";
 			 loginentity.setErrorMessage(errorMessage);
 			
 		 }
 		 else if(loginentity.getPassword().equals(loginDetail.getPassword()))
 				 {
-			 errorMessage = "Success";
+			 errorMessage = "SUCCESS";
 			 loginentity.setErrorMessage(errorMessage);		
 		 }else
 				 {
-			 errorMessage = "Username or Password is wrong ! Please try again";
+			 errorMessage = "FAILURE";
 			 loginentity.setErrorMessage(errorMessage);
 			
 			 }
@@ -45,13 +45,16 @@ public class LoginService {
 			 errorMessage = "Username is not registered ! Please try with valid credentials ! ";
 				
 			System.out.println("Empty value-- not found"+errorMessage);
-			/*	loginentity.setHeartkidNumber(heartkidUsername);
-			loginentity.setErrorMessage(errorMessage);*/
+			/*	loginentity.setHeartkidNumber(heartkidUsername);*/
+			loginentity.setErrorMessage(errorMessage);
 		 }
 		 
 		 catch(Exception e)
 		 {
 			 e.printStackTrace();
+			 errorMessage = "OtherError";
+				
+			 loginentity.setErrorMessage(errorMessage);
 			 
 		 }
 

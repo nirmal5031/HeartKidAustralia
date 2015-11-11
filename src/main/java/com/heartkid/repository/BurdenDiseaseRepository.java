@@ -8,7 +8,7 @@ import com.heartkid.model.entity.*;
 
 @Transactional
 @Repository
-public interface BurdenDiseaseRepository extends CrudRepository<BurdenDiseaseEntity, String> {
+public interface BurdenDiseaseRepository extends CrudRepository<RegisterDtoEntity, String> {
 	
 	
 

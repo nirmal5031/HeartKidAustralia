@@ -16,7 +16,7 @@ import org.pojomatic.annotations.AutoProperty;
 public class RegisterDto {
       @Id
 	  @GeneratedValue(strategy = GenerationType.AUTO)
-      private long id;
+    private long id;
 	private String referencenumber;
 	 @Column(name = "USERTYPE")
 	private String usertype;   

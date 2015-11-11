@@ -63,49 +63,18 @@ angular.module('formApp', ['ui.router'])
         // send users to the form page
         $urlRouterProvider.otherwise('/form/research');
     })
+    .directive('myDirective', function() {
+        return function($window) {
+            var myEvent = $window.attachEvent || $window.addEventListener,
+                chkevent = $window.attachEvent ? 'onbeforeunload' : 'beforeunload';
 
-    .factory('mySharedService', function($rootScope) {
-        var sharedService = {};
-
-        sharedService.message = '';
-
-        sharedService.prepForBroadcast = function(msg) {
-            this.message = msg;
-            this.broadcastItem();
-        };
-
-        sharedService.broadcastItem = function() {
-            $rootScope.$broadcast('handleBroadcast');
-        };
-
-        return sharedService;
-    })
-
-    /*.factory('errorInterceptor',['$q','$window','removeSessionCookies',function($q,$window,removeSessionCookies) {
-        return {
-            response: function (response) {
-                if (response.status === 401) {
-                    removeSessionCookies();
-                    $window.location.href = "errorPageWithoutRedirection.html";
-                }
-                return response || $q.when(response);
-            },
-            responseError: function (rejection) {
-                if (rejection.status == "401") {
-                    removeSessionCookies();
-                    $window.location.href = "401_error.html";
-                }
-
-                if (rejection.status == "400") {
-                    removeSessionCookies();
-                    $window.location.href = "400_error.html";
-                }
-                return $q.reject(rejection);
-            }
+            myEvent(chkevent, function(e) {
+                var confirmationMessage = ' ';
+                (e || $window.event).returnValue = "Are you sure that you'd like to close the browser?";
+                return confirmationMessage;
+            });
         }
-    }])*/
-//directives
-
+    })
     .directive('ngHover', function() {
         return {
             link: function(scope, element) {
@@ -130,10 +99,18 @@ angular.module('formApp', ['ui.router'])
 
     })
 
-    .controller('homepagecontroller', function($scope,$http,$sharedService) {
+    //services
+    .service('dataService', function() {
+
+        // private variable
+        var _dataObj;
+
+        this.dataObj = _dataObj;
+    })
+
+    .controller('homepagecontroller', function($scope,$http,dataService) {
 var empty = "";
         $scope.proceedtosurvey = function() {
-
                 $http({
                     url: 'http://localhost:8080/heartkid/referencegen',
                     method: "GET",
@@ -141,33 +118,25 @@ var empty = "";
 
                 })
                     .then(function(response) {
-                            // success
+                                var data = $.parseJSON(angular.toJson(response.data));
+                        dataService.dataObj = data;
 
-
-                            var data = $.parseJSON(angular.toJson(response.data));
-                            sharedService.prepForBroadcast(data);
-                        $scope.$on('handleBroadcast', function() {
-                            var message = sharedService.message;
-
-                        alert(message);
-                        })
 
                         },
-                        function(status) { // optional
+                        function(response) { // optional
                             // failed
+                            alert("ERROR---->"+response.status);
                             var statuscode = $.parseJSON(angular.toJson(response.status));
-                            alert("ERROR---->"+statuscode);
 
                         })
             }
-
-
     })
 
+    .controller('personalInfoContrler', function ($scope, $http, dataService) {
+
+        $scope.formData.referencenumber = dataService.dataObj;
 
 
-    .controller('personalInfoContrler', function ($scope, $http) {
-alert("shared message"+ sharedService.message);
         var progress = setInterval(function () {
             var $bar = $('.bar');
             if ($bar.width() >= 400) {
@@ -265,8 +234,9 @@ alert("shared message"+ sharedService.message);
         }
         $scope.personalInfoSubmit = function(){
             var formstatus = "incomplete";
+
             $scope.formData.surveystatus = formstatus;
-            $http({
+                       $http({
                 url: 'http://localhost:8080/heartkid/personalinfo',
                 method: "POST",
                 data: $scope.formData
@@ -274,16 +244,14 @@ alert("shared message"+ sharedService.message);
                 .then(function(response) {
                         // success
                        var data = $.parseJSON(angular.toJson(response.data));
-                        $scope.formData.id =   data['id'];
-                        $scope.formData.referencenum = data['referencenumber'];
+                               $scope.formData.id=data.id;
 
-
-
-                    },
+                },
                     function(status) { // optional
                         // failed
                         var statuscode = $.parseJSON(angular.toJson(response.status));
-                        alert("ERROR---->"+statuscodea);
+                        alert("ERROR---->"+statuscode);
+
 
                     })
         }
@@ -292,11 +260,9 @@ alert("shared message"+ sharedService.message);
 
     })
 
-    .controller('burdendiseaseController', function ($scope, $http) {
-        var usertype = $scope.formData.usertype;
-        var ref = $scope.formData.referencenum;
-        alert(ref);
+    .controller('burdendiseaseController', function ($scope, $http,dataService) {
 
+        var usertype = $scope.formData.usertype;
        if(usertype =="Patient" )
        {
         $scope.showcarerdetails = 'false';
@@ -312,6 +278,7 @@ alert("shared message"+ sharedService.message);
         $scope.rating = 5;
         $scope.costinvolvedArray= ["< 100","200 – 300","400 – 500","> 500"];
         $scope.heartcondsArray = ["Atrial septal defect","Ventricular septal defect","Atrioventricular septal defect","Patent ductus arteriosus","Pulmonary vein anomaly","Tricuspid atresia","Ebstein’s anomaly ","Dysplastic tricuspid valve","Pulmonary stenosis","Pulmonary atresia","Tetralogy of Fallot","Abnormal mitral valve","Aortic stenosis","Coarctation of the aorta or interrupted aorta","Truncus arteriosus","Bicuspid aortic valve","Hypoplastic left heart syndrome","Transposition of the great arteries","Congenitally corrected transposition of the great arteries","Double-outlet right ventricle","Double-inlet left ventricle","Double-inlet right ventricle","Atrial isomerism (left or right)","None of the above"];
+
         $scope.change_condition = function() {
                 var selectd = $scope.formData.conditioncalld;
                 if(selectd == 'Yes')
@@ -441,8 +408,6 @@ alert("shared message"+ sharedService.message);
                     bluebarrating: node === nodeclass
 
                 }
-
-
             }
         }
         $scope.emergdept = function(emergnode) {
@@ -650,7 +615,7 @@ alert("shared message"+ sharedService.message);
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url: 'http://localhost:8080/heartkid/burdendisease',
+                url:'http://localhost:8080/heartkid/burdendisease',
                 method: "POST",
                 data:$scope.formData
             })
@@ -729,18 +694,4 @@ alert("shared message"+ sharedService.message);
         }
 
     });
-
-
-
-
-
-
-
-/*global angular */
-/*
- jQuery UI Datepicker plugin wrapper
-
- @note If ? IE8 make sure you have a polyfill for Date.toISOString()
- @param [ui-date] {object} Options to pass to $.fn.datepicker() merged onto uiDateConfig
- */
 
