@@ -25,11 +25,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
            auth.authenticationProvider(customAuthenticationProvider);
 
     }
-    @Override
+   /* @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/heartkid");
     }
-
+*/
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

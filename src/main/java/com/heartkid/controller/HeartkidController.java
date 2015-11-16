@@ -38,18 +38,19 @@ public class HeartkidController {
 @Autowired
 private  HeartkidRepository repository;
 
+
 @Autowired
 private  PersonalInfoRepository personalrepository;
-
+/*
 @Autowired
 private  DiseaseQuantRepository diseaserepository;
 
 @Autowired
 private  BurdenDiseaseRepository burdenrepository;
-
+*/
 @Autowired
 private EditHearkidUserService edituserrecord;
-
+/*
 @Autowired
 private ProductivityEduRepository prodedurepository;
 
@@ -58,7 +59,7 @@ private QualityCareRepository qualitycarerepository;
 
 @Autowired
 private OutHospitalRepository outhospitalrepository;
-
+*/
 @Autowired
 private ReferenceNumGenerator refnumber;
 
@@ -91,7 +92,7 @@ public  String savepersonalInfo(@RequestBody RegisterDtoEntity personalinfo){
 		 LOGGER.info("Referencenumber of the request :::::::::::"+personalinfo.getReferencenumber());
 		
 		if(personalinfo != null)
-		    personalrepository.save(personalinfo);
+			personalrepository.save(personalinfo);
 		  
 		    if(personalinfo!= null)
 		    	personalinfoJSON = mapper.writeValueAsString(personalinfo);
@@ -116,7 +117,7 @@ public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 		 LOGGER.info("Referencenumber of the request :::::::::::"+diseasequant.getId());
 		
 	        if (diseasequant != null){
-	        	diseaserepository.save(diseasequant);
+	        	personalrepository.save(diseasequant);
               LOGGER.info("disease quantification added SUCCESS");
 	        }
 	        else
@@ -138,7 +139,7 @@ public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 	 try{
 	        if (burdendisease != null){
-	        	burdenrepository.save(burdendisease);
+	        	personalrepository.save(burdendisease);
                 System.out.println("SUCCESS");
 	        }
 	        else
@@ -157,7 +158,7 @@ public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 public  String producteducation(@RequestBody RegisterDtoEntity producteduentity){
 	 try{
 	        if (producteduentity != null){
-	        	prodedurepository.save(producteduentity);
+	        	personalrepository.save(producteduentity);
                 System.out.println("SUCCESS");
 	        }
 	        else
@@ -175,7 +176,7 @@ public  String producteducation(@RequestBody RegisterDtoEntity producteduentity)
 public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	 try{
 	        if (qualitycareentity != null){
-	        	qualitycarerepository.save(qualitycareentity);
+	        	personalrepository.save(qualitycareentity);
                 System.out.println("SUCCESS");
 	        }
 	        else
@@ -193,7 +194,7 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity){
 	 try{
 	        if (outhospitalentity != null){
-	        	outhospitalrepository.save(outhospitalentity);
+	        	personalrepository.save(outhospitalentity);
                 System.out.println("SUCCESS");
 	        }
 	        else

@@ -5,6 +5,7 @@
         .module('app')
         .controller('HomeController', HomeController)
 
+
         .filter('isEmpty', function () {
             var bar;
             return function (obj) {
@@ -18,6 +19,19 @@
         })
 
     .controller('heartkidadminhome',['$scope', '$http', function($scope,$http) {
+
+            $scope.showModal = false;
+            $scope.buttonClicked = "";
+            $scope.toggleModal = function(btnClicked){
+                $scope.buttonClicked = btnClicked;
+                $scope.showModal = !$scope.showModal;
+            };
+                         $scope.sort = function(keyname){
+                $scope.sortKey = keyname;   //set the sortKey to the param passed
+                $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+            }
+
+
             $scope.exportData = function () {
 $scope.searchHeartKid = false;
 var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFullYear();
@@ -40,57 +54,10 @@ var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFull
                             //upload failed
                         })
 
-                /*
-                        .then(function (response) {
-                            // success
-
-                           // var data = angular.fromJson(response.data);
-
-                            var data1 = angular.toJson(response.data);
-
-                            alert(data1);
-                            var type = response.headers('Content-Type');
-                            var blob = new Blob([data1], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            saveAs(blob, 'helloAgain' + '.xls');
-                        },
-                        function (response) { // optional
-                            // failed
-                            alert("Failure" + response.status);
-                        })*/
 
             }
 
             $scope.statusArray = ["incomplete", "success"];
-           /* $scope.personalfieldvalues =
-            [{
-                id: '1',
-                question: 'Please select who you are?',
-                scope:'formAdminData.usertype'
-            }, {
-                id: '2',
-                question: 'First Name',
-                scope:'formAdminData.firstname'
-            }, {
-                id: '3',
-                question: 'Last Name',
-                scope:'formAdminData.lastname'
-            }, {
-                id: '4',
-                question: 'Title',
-                scope:'formAdminData.title'
-            }, {
-                id: '5',
-                question: 'Date of birth',
-                scope:'formAdminData.dob'
-            }, {
-                id: '6',
-                question: 'PostCode',
-                scope:'formAdminData.postcode'
-            }];
-
-           */
 
             $scope.modifyuser = function(a){
                 alert("value of a is"+a);
@@ -106,7 +73,7 @@ var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFull
 
 
             $scope.searchheartkid = function() {
-$scope.searchHeartKid = true;
+            $scope.searchHeartKid = true;
                 $http({
                     url: 'http://localhost:8080/heartkid/getrecord',
                     method: "POST",

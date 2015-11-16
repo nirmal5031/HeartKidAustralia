@@ -135,17 +135,17 @@ public class OAuth2ServerConfiguration {
             // @formatter:on
         }
         
-        public void configure(WebSecurity web) throws Exception {
+      /*  public void configure(WebSecurity web) throws Exception {
             web
                 .ignoring()
                     .antMatchers("/heartkid/register/**");
-        }
+        }*/
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                    .antMatchers("/hearkid")
+                 .antMatchers("/**/**")
                     .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
