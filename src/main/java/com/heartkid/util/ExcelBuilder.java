@@ -167,7 +167,7 @@ public class ExcelBuilder extends AbstractExcelView {
            aRow.createCell(15).setCellValue(searchreport.getLanguage());
            aRow.createCell(16).setCellValue(searchreport.getConditioncalld());
            aRow.createCell(17).setCellValue(searchreport.getHeartconds());
-           aRow.createCell(18).setCellValue(searchreport.getSurgeryHeld());
+           aRow.createCell(18).setCellValue(searchreport.getSurgeryheld());
            aRow.createCell(19).setCellValue(searchreport.getSurgerydelay());
            aRow.createCell(20).setCellValue(searchreport.getSurgerydelaycount());
            aRow.createCell(21).setCellValue(searchreport.getTraveldistdoc());

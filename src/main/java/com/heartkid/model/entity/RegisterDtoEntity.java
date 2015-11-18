@@ -46,19 +46,16 @@ public class RegisterDtoEntity {
 		private String carerbirthdate  ; 
 		private String carerphone       ;
 		private String careremail     ;
-	
-
-
 	private String conditioncalld;                    
-	private String heartconds;                       
-	private String surgeryHeld;                       
-	private String surgerydelay;                      
-	private String Surgerydelaycount;          
+	private String heartconds;
+	private String surgeryheld;                       
+	private String surgerydelay;     
+	private String surgerydelaycount;          
 	private String trvlsurg;                            
 	private String heartdoc;                     
 	private String localdoctorvisit ;                  
 	private String emergdeptvisit;                   
-	private String careage16 ;                       
+	private String careage16 ;    
 	private String childtoadultdoc;                   
 	private String anxietycond;                      
 	private String anxietycondimpact;              
@@ -73,7 +70,7 @@ public class RegisterDtoEntity {
 	private String schoolgrd ;                        
 	private String formalassess;
 	  @Column(name = "IMPACTQOL")
-	private String impactQol;                         
+	private String impactqol;                         
 	private String condimpactschl;                  
 	private String condimpactschooldesc ;        
 	private String moneyspentinyear;               
@@ -212,9 +209,9 @@ public class RegisterDtoEntity {
 		  this.language = language;                   
 		  this.conditioncalld=  conditioncalld;             
 		  this.heartconds =    heartconds;             
-		  this.surgeryHeld =    surgeryHeld;            
+		  this.surgeryheld =    surgeryheld;            
 		  this.surgerydelay=surgerydelay;                
-		  this.Surgerydelaycount  =Surgerydelaycount;
+		  this.surgerydelaycount  =surgerydelaycount;
 		  this.trvlsurg=trvlsurg;                       
 		  this.heartdoc=  heartdoc;              
 		  this.localdoctorvisit=  localdoctorvisit ;          
@@ -233,7 +230,7 @@ public class RegisterDtoEntity {
 		  this.eductnchallng  =   eductnchallng;          
 		  this.schoolgrd   =        schoolgrd ;        
 		  this.formalassess =formalassess;               
-		  this.impactQol =    impactQol;               
+		  this.impactqol =    impactqol;               
 		  this.condimpactschl  =  condimpactschl  ;       
 		  this.condimpactschooldesc =  condimpactschooldesc;
 		  this.moneyspentinyear =moneyspentinyear ;       
@@ -470,19 +467,6 @@ public class RegisterDtoEntity {
 	}
 
 
-
-	public String getSurgeryHeld() {
-		return surgeryHeld;
-	}
-
-
-
-	public void setSurgeryHeld(String surgeryHeld) {
-		this.surgeryHeld = surgeryHeld;
-	}
-
-
-
 	public String getSurgerydelay() {
 		return surgerydelay;
 	}
@@ -494,16 +478,6 @@ public class RegisterDtoEntity {
 	}
 
 
-
-	public String getSurgerydelaycount() {
-		return Surgerydelaycount;
-	}
-
-
-
-	public void setSurgerydelaycount(String surgerydelaycount) {
-		Surgerydelaycount = surgerydelaycount;
-	}
 
 
 
@@ -723,17 +697,29 @@ public class RegisterDtoEntity {
 
 
 
-	public String getImpactQol() {
-		return impactQol;
+	public String getSurgeryheld() {
+		return surgeryheld;
 	}
 
-
-
-	public void setImpactQol(String impactQol) {
-		this.impactQol = impactQol;
+	public void setSurgeryheld(String surgeryheld) {
+		this.surgeryheld = surgeryheld;
 	}
 
+	public String getSurgerydelaycount() {
+		return surgerydelaycount;
+	}
 
+	public void setSurgerydelaycount(String surgerydelaycount) {
+		this.surgerydelaycount = surgerydelaycount;
+	}
+
+	public String getImpactqol() {
+		return impactqol;
+	}
+
+	public void setImpactqol(String impactqol) {
+		this.impactqol = impactqol;
+	}
 
 	public String getCondimpactschl() {
 		return condimpactschl;

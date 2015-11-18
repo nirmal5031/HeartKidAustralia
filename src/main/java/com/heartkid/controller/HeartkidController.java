@@ -7,13 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.heartkid.model.dto.RegisterDto;
-import com.heartkid.model.entity.BurdenDiseaseEntity;
-import com.heartkid.model.entity.DiseaseQuantificationEntity;
-import com.heartkid.model.entity.OutHospitalEntity;
-import com.heartkid.model.entity.PersonalInfoEntity;
-import com.heartkid.model.entity.ProductivityEducationEntity;
-import com.heartkid.model.entity.QualityCareEntity;
 import com.heartkid.model.entity.RegisterDtoEntity;
 import com.heartkid.repository.BurdenDiseaseRepository;
 import com.heartkid.repository.DiseaseQuantRepository;
@@ -53,7 +46,6 @@ private ReferenceNumGenerator refnumber;
 @Autowired
 private RandomNumGenerator randomnumber;
 
-RegisterDto registrdto = new RegisterDto ();
 
 @Autowired
 ObjectMapper mapper;
@@ -164,6 +156,7 @@ public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 @RequestMapping(value="heartkid/producteducation", method=RequestMethod.POST)
 public  String producteducation(@RequestBody RegisterDtoEntity producteduentity){
 	 try{
+		 producteduentity.setRegistrationdate(dategenerator.dategenerator());
 	        if (producteduentity != null){
 	        	personalrepository.save(producteduentity);
                 System.out.println("SUCCESS");
@@ -182,7 +175,10 @@ public  String producteducation(@RequestBody RegisterDtoEntity producteduentity)
 @RequestMapping(value="heartkid/qualitycare", method=RequestMethod.POST)
 public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	 try{
+		 
 	        if (qualitycareentity != null){
+	        	qualitycareentity.setRegistrationdate(dategenerator.dategenerator());
+	   	     
 	        	personalrepository.save(qualitycareentity);
                 System.out.println("SUCCESS");
 	        }
@@ -201,6 +197,8 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity){
 	 try{
 	        if (outhospitalentity != null){
+	        	outhospitalentity.setRegistrationdate(dategenerator.dategenerator());
+	   	     
 	        	personalrepository.save(outhospitalentity);
                 System.out.println("SUCCESS");
 	        }
@@ -219,7 +217,7 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	
 		
 @RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
-	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDto registration){
+	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDtoEntity registration){
 			 try{
 			        if (registration != null){
 			        	repository.save(registration);

@@ -2,20 +2,19 @@ package com.heartkid.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.heartkid.model.dto.RegisterDto;
+import com.heartkid.model.entity.RegisterDtoEntity;
 import com.heartkid.repository.HeartkidRepository;
 @Service
 public class EditHearkidUserService {
 
-	RegisterDto registerdto =new RegisterDto();
 	
 	@Autowired
 	HeartkidRepository registerrepo;
 	
-	public  RegisterDto editheartkiduser(String referencenumber)
+	public  RegisterDtoEntity editheartkiduser(String referencenumber)
 	{
 		System.out.println("Inside edituser service----");
-		RegisterDto registereditdto = registerrepo.findByreferenceNum(referencenumber);
+		RegisterDtoEntity registereditdto = registerrepo.findByreferenceNum(referencenumber);
 		return registereditdto;
 		
 	}

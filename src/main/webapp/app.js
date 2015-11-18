@@ -91,6 +91,35 @@ angular.module('formApp', ['ui.router'])
             }
         };
     })
+/*
+    .factory('myHttpResponseInterceptor',['$q','$location',function($q,$location){
+        return {
+            response: function(response){
+                return $q(
+                    function success(response) {
+                        return response;
+                    },
+                    function error(response) {
+                        if(response.status === 302){
+                            alert("302");
+                            $location.path('/signin');
+                            return $q.reject(response);
+                        }
+                        else{
+                            alert("other ");
+                            return $q.reject(response);
+                        }
+                    });
+            }
+        }
+    }])
+
+
+//Http Intercpetor to check auth failures for xhr requests
+    .config(['$httpProvider',function($httpProvider) {
+        $httpProvider.interceptors.push('myHttpResponseInterceptor');
+    }])*/
+
 // our controller for the form
 // =============================================================================
     .controller('formController', function($scope) {
@@ -334,8 +363,8 @@ angular.module('formApp', ['ui.router'])
                     $scope.knowncondition = 'false' ;
                 }
             }
-        $scope.surgeryheld = function() {
-            var selectd = $scope.formData.surgeryHeld;
+        $scope.surgeryheldchange = function() {
+            var selectd = $scope.formData.surgeryheld;
             if(selectd == 'Yes')
             {  $scope.surgerydelayed = 'true' ; }
             else
@@ -530,6 +559,17 @@ angular.module('formApp', ['ui.router'])
                 return {
                     bluebarrating: node === nodeclass
 
+                }
+
+
+            }
+        }
+
+        $scope.Surgerydelaycount = function(node) {
+            $scope.formData.surgerydelaycount = node;
+            $scope.SurgerydelaycountClass = function (nodeclass) {
+                return {
+                    bluebarrating: node === nodeclass
                 }
 
 
