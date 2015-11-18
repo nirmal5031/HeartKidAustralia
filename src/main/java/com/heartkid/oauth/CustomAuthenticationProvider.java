@@ -23,11 +23,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-System.out.println("username--->"+authentication.getName());
         Authentication auth = null;
         String heartkidnumber = authentication.getName();
         String password = authentication.getCredentials().toString();
-        System.out.println("Login Credential : " + heartkidnumber + password);
         boolean loginState = directoryService.con(heartkidnumber, password);
         if (loginState) {
             List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();

@@ -49,7 +49,7 @@
     function config($routeProvider, $locationProvider,$stateProvider) {
         $routeProvider
 
-            .when('/', {
+            .when('/home', {
                 controller: 'HomeController',
                 templateUrl: 'admin-views/home/home.view.html',
                 controllerAs: 'vm'

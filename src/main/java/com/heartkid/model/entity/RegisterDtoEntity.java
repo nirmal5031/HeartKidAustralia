@@ -1,5 +1,7 @@
 package com.heartkid.model.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ public class RegisterDtoEntity {
 	 @Column(name = "LASTNAME")
 	private String lastname;                    
 	private String title;                                 
-	private String heartkidbirthdate;                 
+	private String birthdate;                 
 	private String postcode;                          
 	private String state;                               
 	private String conctagree;                       
@@ -37,7 +39,16 @@ public class RegisterDtoEntity {
 	private String email ;                              
 	private String ethnicity;                           
 	private String countrybirth ;                     
-	private String language ;                          
+	private String language ;
+	    private String carerfirstname  ; 
+		private String carerlastname ;   
+		private String carertitle     ;  
+		private String carerbirthdate  ; 
+		private String carerphone       ;
+		private String careremail     ;
+	
+
+
 	private String conditioncalld;                    
 	private String heartconds;                       
 	private String surgeryHeld;                       
@@ -87,19 +98,89 @@ public class RegisterDtoEntity {
 	private String useheartkid ;                      
 	private String desccommentsany ;   
 	private String surveystatus;
+	private String registrationdate;
 	                             
 	  
+
+	public String getBirthdate() {
+			return birthdate;
+		}
+
+		public void setBirthdate(String birthdate) {
+			this.birthdate = birthdate;
+		}
+
+		public String getCarerfirstname() {
+			return carerfirstname;
+		}
+
+		public void setCarerfirstname(String carerfirstname) {
+			this.carerfirstname = carerfirstname;
+		}
+
+		public String getCarerlastname() {
+			return carerlastname;
+		}
+
+		public void setCarerlastname(String carerlastname) {
+			this.carerlastname = carerlastname;
+		}
+
+		public String getCarertitle() {
+			return carertitle;
+		}
+
+		public void setCarertitle(String carertitle) {
+			this.carertitle = carertitle;
+		}
+
+		public String getCarerbirthdate() {
+			return carerbirthdate;
+		}
+
+		public void setCarerbirthdate(String carerbirthdate) {
+			this.carerbirthdate = carerbirthdate;
+		}
+
+		public String getCarerphone() {
+			return carerphone;
+		}
+
+		public void setCarerphone(String carerphone) {
+			this.carerphone = carerphone;
+		}
+
+		public String getCareremail() {
+			return careremail;
+		}
+
+		public void setCareremail(String careremail) {
+			this.careremail = careremail;
+		}
+
+	
+	
 	public RegisterDtoEntity() { 
 	  
 	  }
 	  
-	
-	
 	  public long getId() {
 		return id;
 	}
 
+	  public String getRegistrationdate() {
+			return registrationdate;
+		}
 
+
+
+		public void setRegistrationdate(String registrationdate) {
+			this.registrationdate = registrationdate;
+		}
+
+
+
+		
 
 
 	public void setId(long id) {
@@ -118,7 +199,7 @@ public class RegisterDtoEntity {
 		  this.firstname=  firstname;                  
 		  this.lastname=  lastname;                   
 		  this.title=  title;                         
-		  this.heartkidbirthdate = heartkidbirthdate;           
+		  this.birthdate = birthdate;           
 		  this.postcode=   postcode;                  
 		  this.state =  state;                       
 		  this.conctagree =       conctagree;          
@@ -231,15 +312,6 @@ public class RegisterDtoEntity {
 
 
 
-	public String getHeartkidbirthdate() {
-		return heartkidbirthdate;
-	}
-
-
-
-	public void setHeartkidbirthdate(String heartkidbirthdate) {
-		this.heartkidbirthdate = heartkidbirthdate;
-	}
 
 
 

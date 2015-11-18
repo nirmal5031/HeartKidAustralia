@@ -24,5 +24,6 @@ public interface HeartkidRepository extends CrudRepository<RegisterDto, Long> {
 	    @Query("delete from RegisterDto u where  u.referencenumber = :deleterecordref")
 	void deleteUsersByRefNumber( @Param(value = "deleterecordref") final String deleterecordref);
 
+	
 
 }

@@ -1,4 +1,4 @@
-<div class="col-lg-12" ng-controller="personalInfoContrler">
+<div class="col-lg-12" ng-controller="personalInfoContrler"  window-exit>
     <div class="col-md-12 formborder">
 
         <div id="personal_details">
@@ -15,18 +15,18 @@
             <fieldset>
                  <h4 class="headervalue">Please select who you are?</h4>
 
-                    <select  name="userType" ng-model="formData.usertype" class="textfeildname yellow arrowupdown"  style="width:47%; margin-left:15px; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="user for user in usertypeArray" >
+                    <select  name="userType" ng-model="formData.usertype" required  ng-change="usertypesel()" class="textfeildname yellow arrowupdown"  style="width:47%; margin-left:15px; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="user for user in usertypeArray" >
                         <option value="">--Select--</option> <!-- not selected / blank option -->
 
                     </select>
                 <h4 class="headervalue">Please enter the details below</h4>
                 <div class="control">
                     <label class=" col-sm-2">First Name <em>*</em></label>
-                    <input type="text" name="firstname" id="frstname"  value="" class="textfeildname yellow" ng-model="formData.firstname"/>
+                    <input type="text" name="firstname" id="frstname" ng-pattern="[a-zA-Z]" value="" class="textfeildname yellow" ng-model="formData.firstname"/>
                 </div>
                 <div class="control">
                     <label class=" col-sm-2">Last Name</label>
-                    <input type="text"  name="lastname" value="" class="textfeildname yellow" ng-model="formData.lastname"/>
+                    <input type="text"  name="lastname" value="" ng-pattern="[a-zA-Z]" class="textfeildname yellow" ng-model="formData.lastname"/>
                 </div>
                 <div class="control">
                     <label class=" col-sm-2">Title</label>
@@ -37,7 +37,7 @@
                  <div class="control">
                     <label class=" col-sm-2">Date of Birth<em>*</em></label>
 
-                    <input type="text" id="datepicker" readonly="true" class="textfeildname yellow" ng-model="formData.birthdate" style="width:12%;" >
+                    <input type="text" id="" readonly="true" class="textfeildname yellow datepicker" ng-model="formData.birthdate" style="width:12%;" >
                  </div>
                 <div class="control">
                     <label class=" col-sm-2">PostCode<em>*</em></label>
@@ -51,6 +51,12 @@
                     </select>
                 </div>
                 <h4 class="headervalue">Contact Details</h4>
+
+                <div class="control">
+                    <label class=" col-sm-2">eMail</label>
+                    <input type="email"  name="email" value=""   class="textfeildname yellow" ng-model="formData.email" style="width: 50%;"/>
+                </div>
+
                 <div class="control">
                    <table><tr><td><input type="checkbox" name="checkboxG4" id="checkboxG3" ng-change="conctagree()" ng-model="formData.conctagree" ng-true-value="yes" ng-false-value="no" class="css-checkbox" />
                         <label for="checkboxG3" class="css-label2" style="width: 100%;"><b>Do you agree to be contacted ?</b></label></td></tr></table>
@@ -69,10 +75,6 @@
                 <div class="control" ng-show="showcontactviaphone">
                     <label class=" col-sm-2">Phone</label>
                     <input type="text"  name="phone" value=""   class="textfeildname yellow" ng-model="formData.phone" style="width: 25%;"/>
-                </div>
-                <div class="control" ng-show="showcontactviaemail">
-                    <label class=" col-sm-2">eMail</label>
-                    <input type="text"  name="email" value=""   class="textfeildname yellow" ng-model="formData.email" style="width: 50%;"/>
                 </div>
 
 
@@ -98,7 +100,39 @@
                     <select  name="language" ng-model="formData.language" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="lang for lang in languageArray" >
                         <option value="">--Select--</option> <!-- not selected / blank option -->
                     </select>   </div>
+<div  ng-show="showcarerdetails">
+    <h4 class="headervalue">Carer Details:</h4>
+    <div class="control">
+        <label class=" col-sm-2">First Name <em>*</em></label>
+        <input type="text" name="firstname" id="carerfrstname"  value="" class="textfeildname yellow" ng-model="formData.carerfirstname"/>
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">Last Name</label>
+        <input type="text"  name="carerlastname" value="" class="textfeildname yellow" ng-model="formData.carerlastname"/>
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">Title</label>
+        <select  name="titleselect" ng-model="formData.carertitle" class="textfeildname yellow arrowupdown"  style="width:12%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="title for title in titleArray">
+            <option value="">--Select--</option> <!-- not selected / blank option -->
+        </select>
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">Date of Birth<em>*</em></label>
 
+        <input type="text" id="carerdatepicker" readonly="true" class="textfeildname yellow datepicker" ng-model="formData.carerbirthdate" style="width:12%;cursor: hand" >
+    </div>
+
+    <div class="control">
+        <label class=" col-sm-2">Phone</label>
+        <input type="text"  name="carerphone" value=""   class="textfeildname yellow" ng-model="formData.carerphone" style="width: 25%;"/>
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">eMail</label>
+        <input type="email"  name="careremail"  required class="textfeildname yellow" ng-model="formData.careremail" style="width: 50%;"/>
+    </div>
+
+
+    </div>
 
 
                 <div style="margin-bottom: 5%;"></div>
@@ -123,7 +157,7 @@
 </div>
 <script>
     $( document ).ready(function() {
-        $("#datepicker").datepicker({
+        $(".datepicker").datepicker({
             dateFormat: "dd/mm/yy",
             yearRange: "1950:2015",
             changeMonth: true,

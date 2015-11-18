@@ -63,18 +63,7 @@ angular.module('formApp', ['ui.router'])
         // send users to the form page
         $urlRouterProvider.otherwise('/form/research');
     })
-    .directive('myDirective', function() {
-        return function($window) {
-            var myEvent = $window.attachEvent || $window.addEventListener,
-                chkevent = $window.attachEvent ? 'onbeforeunload' : 'beforeunload';
 
-            myEvent(chkevent, function(e) {
-                var confirmationMessage = ' ';
-                (e || $window.event).returnValue = "Are you sure that you'd like to close the browser?";
-                return confirmationMessage;
-            });
-        }
-    })
     .directive('ngHover', function() {
         return {
             link: function(scope, element) {
@@ -84,6 +73,23 @@ angular.module('formApp', ['ui.router'])
                 })
             }
         }
+    })
+
+    .directive('windowExit', function($window) {
+        return {
+            restrict: 'AE',
+            //performance will be improved in compile
+            compile: function(element, attrs){
+                var myEvent = $window.attachEvent || $window.addEventListener,
+                    chkevent = $window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compatable
+
+                myEvent(chkevent, function (e) { // For >=IE7, Chrome, Firefox
+                    var confirmationMessage = ' ';  // a space
+                    (e || $window.event).returnValue = "Please complete the survey before exiting. You may just need 10-15 minutes of time. Thank You";
+                    return confirmationMessage;
+                });
+            }
+        };
     })
 // our controller for the form
 // =============================================================================
@@ -109,8 +115,30 @@ angular.module('formApp', ['ui.router'])
     })
 
     .controller('homepagecontroller', function($scope,$http,dataService) {
-var empty = "";
-        $scope.proceedtosurvey = function() {
+
+
+        $scope.$watch('$viewContentLoaded', function(){
+
+
+            $http({
+                url: 'http://localhost:8080/heartkid/regcount',
+                method: "GET"
+                         })
+                .then(function(response) {
+                    var data = $.parseJSON(angular.toJson(response.data));
+
+                    $scope.regcount = data;
+
+                },
+                function(response) { // optional
+                    // failed
+                    alert("ERROR---->"+response.status);
+                    var statuscode = $.parseJSON(angular.toJson(response.status));
+
+                })
+        });
+        var empty = "";
+                $scope.proceedtosurvey = function() {
                 $http({
                     url: 'http://localhost:8080/heartkid/referencegen',
                     method: "GET",
@@ -135,7 +163,7 @@ var empty = "";
     .controller('personalInfoContrler', function ($scope, $http, dataService) {
 
         $scope.formData.referencenumber = dataService.dataObj;
-
+        $scope.showcarerdetails = 'false';
 
         var progress = setInterval(function () {
             var $bar = $('.bar');
@@ -245,6 +273,7 @@ var empty = "";
                         // success
                        var data = $.parseJSON(angular.toJson(response.data));
                                $scope.formData.id=data.id;
+                               alert("data------------------>"+data);
 
                 },
                     function(status) { // optional
@@ -256,6 +285,17 @@ var empty = "";
                     })
         }
 
+        $scope.usertypesel = function()
+        {
+            var selectdusertyp = $scope.formData.usertype;
+
+            if(selectdusertyp =="Carer")
+            {
+
+                $scope.showcarerdetails = 'true';
+            }
+        }
+
 
 
     })
@@ -263,14 +303,18 @@ var empty = "";
     .controller('burdendiseaseController', function ($scope, $http,dataService) {
 
         var usertype = $scope.formData.usertype;
-       if(usertype =="Patient" )
+        $scope.showcarerdetails = 'false';
+
+
+      /* if(usertype =="Patient" )
        {
         $scope.showcarerdetails = 'false';
        }
         else if(usertype =="Carer")
        {
+           alert("carer");
            $scope.showcarerdetails = 'true';
-       }
+       }*/
         $scope.scale1to5 = ["0","1", "2","3","4","5"];
         $scope.scale1to10 = ["1", "2","3","4","5","6","7","8","9","10",">10"];
         $scope.scale1to20 = ["1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20",">20"];

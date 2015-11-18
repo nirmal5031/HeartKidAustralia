@@ -23,6 +23,7 @@ import com.heartkid.repository.PersonalInfoRepository;
 import com.heartkid.repository.ProductivityEduRepository;
 import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
+import com.heartkid.util.Dategenerator;
 import com.heartkid.util.RandomNumGenerator;
 import com.heartkid.util.ReferenceNumGenerator;
 
@@ -38,28 +39,14 @@ public class HeartkidController {
 @Autowired
 private  HeartkidRepository repository;
 
+@Autowired
+private Dategenerator dategenerator;
 
 @Autowired
 private  PersonalInfoRepository personalrepository;
-/*
-@Autowired
-private  DiseaseQuantRepository diseaserepository;
 
-@Autowired
-private  BurdenDiseaseRepository burdenrepository;
-*/
 @Autowired
 private EditHearkidUserService edituserrecord;
-/*
-@Autowired
-private ProductivityEduRepository prodedurepository;
-
-@Autowired
-private QualityCareRepository qualitycarerepository;
-
-@Autowired
-private OutHospitalRepository outhospitalrepository;
-*/
 @Autowired
 private ReferenceNumGenerator refnumber;
 
@@ -70,6 +57,25 @@ RegisterDto registrdto = new RegisterDto ();
 
 @Autowired
 ObjectMapper mapper;
+
+
+
+
+
+
+@RequestMapping(value="heartkid/regcount", method=RequestMethod.GET)
+public  String registrationcount(){
+	String regcount;
+	try
+	{
+	 int regcountnumber = personalrepository.registationcount();
+	 regcount = Integer.toString(regcountnumber);
+	}
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	return regcount;	
+}
 
 
 @RequestMapping(value="heartkid/referencegen", method=RequestMethod.GET)
@@ -86,8 +92,7 @@ public  String generatereference(){
 public  String savepersonalInfo(@RequestBody RegisterDtoEntity personalinfo){
 	String personalinfoJSON = null;
 	 try{
-		 
-	
+		 personalinfo.setRegistrationdate(dategenerator.dategenerator());
 		 LOGGER.info("Name of the request ::"+personalinfo.getFirstname()+" "+personalinfo.getLastname());
 		 LOGGER.info("Referencenumber of the request :::::::::::"+personalinfo.getReferencenumber());
 		
@@ -115,7 +120,7 @@ public  String savepersonalInfo(@RequestBody RegisterDtoEntity personalinfo){
 public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 	 try{
 		 LOGGER.info("Referencenumber of the request :::::::::::"+diseasequant.getId());
-		
+		 diseasequant.setRegistrationdate(dategenerator.dategenerator());
 	        if (diseasequant != null){
 	        	personalrepository.save(diseasequant);
               LOGGER.info("disease quantification added SUCCESS");
@@ -138,6 +143,8 @@ public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 @RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
 public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 	 try{
+		 burdendisease.setRegistrationdate(dategenerator.dategenerator());
+	     
 	        if (burdendisease != null){
 	        	personalrepository.save(burdendisease);
                 System.out.println("SUCCESS");

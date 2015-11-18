@@ -34,12 +34,12 @@ public class RevokeTokenController {
     @RequestMapping(value = "token/revoke", method = RequestMethod.DELETE)
     public void revoke(@RequestHeader(value = "Authorization") String authToken) {
         String token = authToken.substring(authToken.indexOf(" ")).trim();
-        System.out.println("Revoking token..." + tokenServices());
+       /* System.out.println("Revoking token..." + tokenServices());
         System.out.println("Revoking token..." + tokenStore);
         System.out.println("Revoking token..." + dataSource);
 
         System.out.println("Revoking token...token=" + token);
-
+*/
         boolean success = tokenServices().revokeToken(token);
         if (!success) {
             throw new InvalidTokenException("Invalid access token: " + token);

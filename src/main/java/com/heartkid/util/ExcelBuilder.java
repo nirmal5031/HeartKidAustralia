@@ -154,7 +154,7 @@ public class ExcelBuilder extends AbstractExcelView {
             aRow.createCell(2).setCellValue(searchreport.getTitle());
             aRow.createCell(3).setCellValue(searchreport.getFirstname());
             aRow.createCell(4).setCellValue(searchreport.getLastname());
-            aRow.createCell(5).setCellValue(searchreport.getHeartkidbirthdate());
+            aRow.createCell(5).setCellValue(searchreport.getBirthdate());
             aRow.createCell(6).setCellValue(searchreport.getPostcode());
             aRow.createCell(7).setCellValue(searchreport.getState());
             aRow.createCell(8).setCellValue(searchreport.getEmail());

@@ -145,7 +145,7 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                 .antMatchers("/**/**")
+                 .antMatchers("heartkid/login")
                     .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
@@ -183,33 +183,23 @@ public class OAuth2ServerConfiguration {
             Authentication authentication = SecurityContextHolder.getContext()
                     .getAuthentication();
 
-            System.out.println("CustomAuthenticator.........................."
+          /*  System.out.println("CustomAuthenticator.........................."
                     + authentication);
-
+*/
             /*
              * System.out.println(
              * "          filterChainProxy.getFilterChainMap().........................."
              * + filterChainProxy.getFilterChainMap().values());
              */
 
-            System.out
-                    .println("CustomAuthenticator-------tokenStore--------------------->"
-                            + tokenStore);
-            System.out
-                    .println("CustomAuthenticator- dataSource--------------------------->"
-                            + dataSource);
-
-            /*
-             * if(null == authentication){ throw new
+         
+             /* if(null == authentication){ throw new
              * InvalidTokenException("Invalid Session or Session Expired! "); }
              */
 
             if (authentication instanceof OAuth2Authentication) {
 
-                System.out
-                        .println("authentication instanceof OAuth2Authentication..........................");
-                System.out.println("tokenStore.........................."
-                        + tokenStore);
+              
                 /*
                  * System.out.println("tokenServices.........................."
                  * + tokenServices);
@@ -224,14 +214,14 @@ public class OAuth2ServerConfiguration {
                     OAuth2AccessToken accessToken = tokenStore
                             .getAccessToken(oAuth);
 
-                    System.out.println("isExpired.........................."
+                  /*  System.out.println("isExpired.........................."
                             + accessToken.isExpired());
                     System.out.println("isExpired.........................."
                             + accessToken.getValue());
                     System.out.println("isExpired.........................."
                             + accessToken.getExpiresIn());
 
-                    DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
+                    */DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
                             accessToken);
 
                     df.setExpiration(new Date(System.currentTimeMillis()
