@@ -16,6 +16,7 @@ import com.heartkid.repository.PersonalInfoRepository;
 import com.heartkid.repository.ProductivityEduRepository;
 import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
+import com.heartkid.service.HeartkidMailingService;
 import com.heartkid.util.Dategenerator;
 import com.heartkid.util.RandomNumGenerator;
 import com.heartkid.util.ReferenceNumGenerator;
@@ -48,10 +49,11 @@ private RandomNumGenerator randomnumber;
 
 
 @Autowired
-ObjectMapper mapper;
+private ObjectMapper mapper;
 
 
-
+@Autowired
+private HeartkidMailingService mailingclass;
 
 
 
@@ -195,21 +197,23 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
 	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity){
+	String response = null;
 	 try{
 	        if (outhospitalentity != null){
 	        	outhospitalentity.setRegistrationdate(dategenerator.dategenerator());
 	   	     
 	        	personalrepository.save(outhospitalentity);
-                System.out.println("SUCCESS");
+                response = "success";
 	        }
 	        else
 	        	System.out.println("burden disease is null");
 	 }
 	 catch (Exception ex) {
-	      return "Error creating the entry: " + ex.toString();
+		 response = "failure";
+	    LOGGER.info(ex.toString());
 	    }
 	 
-	    return "User succesfully created! (id ="+outhospitalentity.getId()+")";
+	    return response;
 	  }
 
 
@@ -246,4 +250,13 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 			 
 			 	    return "User record Deleted successfully ! (reference Id is = " +   deleterecordref+ ")";
 		  }
+
+
+@RequestMapping(value="heartkid/sendmail", method=RequestMethod.GET)
+public  String sendmail(){
+	
+	String response = mailingclass.mailingservice();
+	
+	return response;
+}
 	}

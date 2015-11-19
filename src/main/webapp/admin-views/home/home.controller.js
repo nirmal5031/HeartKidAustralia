@@ -40,7 +40,7 @@ $scope.searchHeartKid = false;
 var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFullYear();
 
                     $http({
-                        url: 'http://localhost:8080/heartkid/downloadExcel',
+                        url: 'heartkid/downloadExcel',
                         method: "POST",
                         data:$scope.formAdminData,
                         headers: {
@@ -78,7 +78,7 @@ var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFull
             $scope.searchheartkid = function() {
             $scope.searchHeartKid = true;
                 $http({
-                    url: 'http://localhost:8080/heartkid/getrecord',
+                    url: 'heartkid/getrecord',
                     method: "POST",
                     data:$scope.formAdminData
                 })
