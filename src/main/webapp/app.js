@@ -57,7 +57,16 @@ angular.module('formApp', ['ui.router'])
             .state('form.thankyou', {
                 url: '/research',
                 templateUrl: 'views/confirmation.html'
+            })
+            .state('form.generror', {
+                url: '/error',
+                templateUrl: 'error/error.html'
+            })
+            .state('form.incompletesurvey', {
+                url: '/research',
+                templateUrl: 'views/incompleteconfirm.html'
             });
+
 
         // catch all route
         // send users to the form page
@@ -143,33 +152,40 @@ angular.module('formApp', ['ui.router'])
         this.dataObj = _dataObj;
     })
 
-    .controller('homepagecontroller', function($scope,$http,dataService) {
-
+    .controller('homepagecontroller', function($scope,$http,dataService,$state,$location) {
+        function isNumber(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
 
         $scope.$watch('$viewContentLoaded', function(){
 
 
             $http({
-                url: 'http://localhost:8080/heartkid/regcount',
+                url: 'heartkid/regcount',
                 method: "GET"
                          })
                 .then(function(response) {
                     var data = $.parseJSON(angular.toJson(response.data));
-
-                    $scope.regcount = data;
-
+                    var value = isNumber(data);
+                    if(value==false)
+                   {
+                       $state.go('form.generror');
+                   }
+                    else {
+                       $scope.regcount = data;
+                   }
                 },
                 function(response) { // optional
                     // failed
-                    alert("ERROR---->"+response.status);
-                    var statuscode = $.parseJSON(angular.toJson(response.status));
+                    $state.go('form.generror');
+
 
                 })
         });
         var empty = "";
                 $scope.proceedtosurvey = function() {
                 $http({
-                    url: 'http://localhost:8080/heartkid/referencegen',
+                    url: 'heartkid/referencegen',
                     method: "GET",
                     data:empty
 
@@ -182,17 +198,17 @@ angular.module('formApp', ['ui.router'])
                         },
                         function(response) { // optional
                             // failed
-                            alert("ERROR---->"+response.status);
-                            var statuscode = $.parseJSON(angular.toJson(response.status));
+                            $state.go('form.generror');
 
                         })
             }
     })
 
-    .controller('personalInfoContrler', function ($scope, $http, dataService) {
+    .controller('personalInfoContrler', function ($scope, $http, dataService,$state) {
 
         $scope.formData.referencenumber = dataService.dataObj;
         $scope.showcarerdetails = 'false';
+
 
         var progress = setInterval(function () {
             var $bar = $('.bar');
@@ -292,9 +308,10 @@ angular.module('formApp', ['ui.router'])
         $scope.personalInfoSubmit = function(){
             var formstatus = "incomplete";
 
+
             $scope.formData.surveystatus = formstatus;
                        $http({
-                url: 'http://localhost:8080/heartkid/personalinfo',
+                url: 'heartkid/personalinfo',
                 method: "POST",
                 data: $scope.formData
             })
@@ -302,14 +319,12 @@ angular.module('formApp', ['ui.router'])
                         // success
                        var data = $.parseJSON(angular.toJson(response.data));
                                $scope.formData.id=data.id;
-                               alert("data------------------>"+data);
+
 
                 },
                     function(status) { // optional
                         // failed
-                        var statuscode = $.parseJSON(angular.toJson(response.status));
-                        alert("ERROR---->"+statuscode);
-
+                        $state.go('form.generror');
 
                     })
         }
@@ -324,16 +339,61 @@ angular.module('formApp', ['ui.router'])
                 $scope.showcarerdetails = 'true';
             }
         }
+  })
 
-
-
-    })
-
-    .controller('burdendiseaseController', function ($scope, $http,dataService) {
+    .controller('burdendiseaseController', function ($scope, $http,dataService,$state) {
 
         var usertype = $scope.formData.usertype;
+        var conditioncalldelectd = $scope.formData.conditioncalld;
         $scope.showcarerdetails = 'false';
+        var surgeryheldselectd = $scope.formData.surgeryheld;
+        if(surgeryheldselectd == 'Yes')
+        {  $scope.surgerydelayed = 'true' ; }
 
+        var careage16selectd = $scope.formData.careage16;
+
+        if(careage16selectd == 'Yes')
+        {
+            $scope.showchildtoheartdoc = 'true' ;
+        }
+        var anxietycondselectd = $scope.formData.anxietycond;
+        if(anxietycondselectd == 'Yes')
+        {
+            $scope.anxietycondimpact = 'true' ;
+        }
+
+        var curntwork = $scope.formData.curntwork;
+        if(curntwork == 'Yes')
+        {
+            $scope.currentworkdetails = 'true' ;
+        }
+
+        var eductnchallng = $scope.formData.eductnchallng;
+        if(eductnchallng == 'Yes')
+        {
+            $scope.showschoolgrdchal = 'true' ;
+        }
+        var condimpactschl = $scope.formData.condimpactschl;
+        if(condimpactschl == 'Yes')
+        {
+            $scope.showcondimpactschooldesc = 'true' ;
+        }
+        var siblingcount = $scope.formData.siblingcount;
+
+        if (siblingcount == '0') {
+            $scope.showimpactsiblingwitchd = 'false';
+        }
+        var surgdel = $scope.formData.surgerydelay ;
+
+        if(surgdel == 'Yes')
+        {
+            $scope.surgerydelayedcount = 'true';
+
+        }
+        if(conditioncalldelectd == 'Yes')
+        {
+            $scope.knowncondition = 'true' ;
+        }
 
       /* if(usertype =="Patient" )
        {
@@ -682,7 +742,7 @@ angular.module('formApp', ['ui.router'])
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url: 'http://localhost:8080/heartkid/diseasequant',
+                url: 'heartkid/diseasequant',
                 method: "POST",
                 data:$scope.formData
             })
@@ -690,7 +750,7 @@ angular.module('formApp', ['ui.router'])
                     },
                     function(response) { // optional
 
-                        alert("Failure"+response.status);
+                        $state.go('form.generror');
                     });
         }
 
@@ -699,17 +759,17 @@ angular.module('formApp', ['ui.router'])
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url:'http://localhost:8080/heartkid/burdendisease',
+                url:'heartkid/burdendisease',
                 method: "POST",
                 data:$scope.formData
             })
                 .then(function(response) {
                         // success
-                        alert("Sucess"+response);
+
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response.status);
+                        $state.go('form.generror');
                     });
         }
 
@@ -718,17 +778,17 @@ angular.module('formApp', ['ui.router'])
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url: 'http://localhost:8080/heartkid/producteducation',
+                url: 'heartkid/producteducation',
                 method: "POST",
                 data:$scope.formData
             })
                 .then(function(response) {
                         // success
-                        alert("Sucess"+response);
+                      
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response.status);
+                        $state.go('form.generror');
                     });
         }
 
@@ -738,17 +798,17 @@ angular.module('formApp', ['ui.router'])
             $scope.formData.surveystatus = formstatus;
 
             $http({
-                url: 'http://localhost:8080/heartkid/qualitycare',
+                url: 'heartkid/qualitycare',
                 method: "POST",
                 data:$scope.formData
             })
                 .then(function(response) {
                         // success
-                        alert("Sucess"+response);
+
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response.status);
+                        $state.go('form.generror');
                     });
         }
 
@@ -759,7 +819,7 @@ angular.module('formApp', ['ui.router'])
             var formstatus = "success";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url: 'http://localhost:8080/heartkid/outhospital',
+                url: 'heartkid/outhospital',
                 method: "POST",
                 data:$scope.formData
             })
@@ -768,12 +828,23 @@ angular.module('formApp', ['ui.router'])
                         var data = response.data;
                         var obj1 = angular.toJson(data);
                         var result = $.parseJSON(obj1);
-                       alert("result final ---"+result);
+
+
+
+                    if(data== "success")
+                    {
+
+                        $state.go('form.thankyou');                    }
+                    else
+                    {
+                        $state.go('form.incompletesurvey');
+                    }
+
 
                     },
                     function(response) { // optional
                         // failed
-                        alert("Failure"+response.status);
+                        $state.go('form.generror');
                     });
         }
 

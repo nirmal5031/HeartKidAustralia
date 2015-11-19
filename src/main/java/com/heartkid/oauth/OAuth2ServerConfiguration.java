@@ -97,15 +97,7 @@ public class OAuth2ServerConfiguration {
         @Override
         public void configure(ClientDetailsServiceConfigurer clients)
                 throws Exception {
-            // @formatter:off
-            /*
-             * clients.jdbc(oauthDataSource()).withClient("clientapp")
-             * .authorizedGrantTypes("password", "refresh_token")
-             * .authorities("USER").scopes("read", "write")
-             * .resourceIds(RESOURCE_ID).secret("123456");
-             */
-            clients.jdbc(dataSource);
-            // @formatter:on
+            clients.jdbc(dataSource);         
         }
 
     }
@@ -145,19 +137,14 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                 .antMatchers("heartkid/login")
+                 .antMatchers("/heartkid/login")
                     .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
                     .and()
                     .addFilterAfter(customFilter,
                             AbstractPreAuthenticatedProcessingFilter.class);
-            // .anyRequest().authenticated()
-            // .antMatchers("/**/**").authenticated();
-
-            // .antMatchers("/login").permitAll().antMatchers("/menu/**")
-            // .authenticated();
-            // @formatter:on
+          
         }
 
     }
@@ -183,31 +170,9 @@ public class OAuth2ServerConfiguration {
             Authentication authentication = SecurityContextHolder.getContext()
                     .getAuthentication();
 
-          /*  System.out.println("CustomAuthenticator.........................."
-                    + authentication);
-*/
-            /*
-             * System.out.println(
-             * "          filterChainProxy.getFilterChainMap().........................."
-             * + filterChainProxy.getFilterChainMap().values());
-             */
-
-         
-             /* if(null == authentication){ throw new
-             * InvalidTokenException("Invalid Session or Session Expired! "); }
-             */
-
             if (authentication instanceof OAuth2Authentication) {
 
-              
-                /*
-                 * System.out.println("tokenServices.........................."
-                 * + tokenServices);
-                 */
-
                 OAuth2Authentication oAuth = (OAuth2Authentication) authentication;
-
-                // tokenStore = resources.getTokenStore();
 
                 if (tokenStore != null) {
 
