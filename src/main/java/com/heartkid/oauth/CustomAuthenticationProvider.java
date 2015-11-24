@@ -23,11 +23,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-        Authentication auth = null;
+    	Authentication auth = null;
+        List<GrantedAuthority> grantedAuths = null;
         String heartkidnumber = authentication.getName();
         String password = authentication.getCredentials().toString();
-        boolean loginState = directoryService.con(heartkidnumber, password);
-        if (loginState) {
+        //boolean loginState = directoryService.con(heartkidnumber, password);
+        /*if (loginState) {
             List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
             auth = new UsernamePasswordAuthenticationToken(heartkidnumber,
@@ -35,7 +36,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             return auth;
         } else {
             return auth;
-        }
+        }*/
+        
+        grantedAuths = new ArrayList<GrantedAuthority>();
+        grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+        auth = new UsernamePasswordAuthenticationToken(heartkidnumber, password, grantedAuths);
+
+        System.out.println("Login Credential : " + heartkidnumber + password);
+
+        return auth;
     }
 
     public boolean supports(Class<?> authentication) {

@@ -1,6 +1,7 @@
 package com.heartkid.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +19,15 @@ public class LoginController {
     private LoginService loginService;
     LoginEntity loginEntity =new LoginEntity();
 
-	 @RequestMapping(value = Constants.LOGIN_REST_API, method = RequestMethod.POST)
-	    public LoginEntity validateUser(@RequestBody LoginDetail loginDetail) {
-	       System.out.println("loginDetail.getHeartkidNumber()------->"+loginDetail.getHeartkidNumber());
-	      //  UserValidation.validateUser(loginDetail.getHeartkidNumber());
-	        return loginService.validateUser(loginDetail);
+	 @RequestMapping(value = Constants.LOGIN_REST_API+"/{staffnumber}/{password}", method = RequestMethod.POST)
+	    public LoginEntity validateUser(/*@RequestBody LoginDetail loginDetail)*/
+	    		 @PathVariable("staffnumber") final String staffnumber,
+	             @PathVariable("password") final String password){
+	      
+	       loginEntity = loginService.validateUser(staffnumber, password);
+	       System.out.println("login status--->"+loginEntity.getStatus()+"-----ERROR MESSAGE-----"+loginEntity.getErrorMessage());
+	       //  UserValidation.validateUser(loginDetail.getHeartkidNumber());
+	        return loginEntity;
 	    }
 	 
 }

@@ -16,25 +16,25 @@ public class LoginService {
 
 	 LoginEntity loginentity =  new LoginEntity();
 	
-	 
-	 public LoginEntity validateUser(LoginDetail loginDetail) {
-		 String  heartkidUsername = loginDetail.getHeartkidNumber();
+	
+	 public LoginEntity validateUser(String staffnumber, String password) {
+		 String  heartkidUsername = staffnumber;
 		 String errorMessage;
 		 try
 		 {
 		 loginentity = repository.findOne(heartkidUsername);
-		 if(loginentity == null){
-			 errorMessage = "NOUSER";
-			 loginentity.setErrorMessage(errorMessage);
-			
-		 }
-		 else if(loginentity.getPassword().equals(loginDetail.getPassword()))
+		 
+		  if((loginentity.getHeartkidNumber().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword().equals(password)))
 				 {
+			  loginentity.setStatus(true);
 			 errorMessage = "SUCCESS";
 			 loginentity.setErrorMessage(errorMessage);		
-		 }else
-				 {
-			 errorMessage = "FAILURE";
+		 }
+		  else if((loginentity.getHeartkidNumber().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword() != password))
+				
+			{
+			 loginentity.setStatus(false);
+			 errorMessage = "INVALID CREDENTIALS";
 			 loginentity.setErrorMessage(errorMessage);
 			
 			 }
@@ -42,21 +42,21 @@ public class LoginService {
 		 }
 		 catch (NullPointerException nullPointer)
 		 {
-			 errorMessage = "Username is not registered ! Please try with valid credentials ! ";
+			 errorMessage = "USER NOT REGISTERED";
 				
 			System.out.println("Empty value-- not found"+errorMessage);
 			/*	loginentity.setHeartkidNumber(heartkidUsername);*/
-			loginentity.setErrorMessage(errorMessage);
-		 }
+			
+			}
 		 
-		 catch(Exception e)
+		/* catch(Exception e)
 		 {
 			 e.printStackTrace();
 			 errorMessage = "OtherError";
 				
 			 loginentity.setErrorMessage(errorMessage);
 			 
-		 }
+		 }*/
 
 		 return loginentity;
 	 }

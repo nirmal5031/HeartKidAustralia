@@ -10,7 +10,7 @@ angular.module('formApp', ['ui.router'])
         $stateProvider
             // route to show our basic form (/form)
             .state('form', {
-                url: '/form',
+                    url: '/form',
                 templateUrl: 'form.html',
                 controller: 'formController'
             })
@@ -137,9 +137,9 @@ angular.module('formApp', ['ui.router'])
         $scope.formData = {};
 
         // function to process the form
-        $scope.processForm = function() {
-            alert('You have subitted the form!');
-        };
+       $scope.submit = function(){
+       
+       };
 
     })
 
@@ -307,8 +307,6 @@ angular.module('formApp', ['ui.router'])
         }
         $scope.personalInfoSubmit = function(){
             var formstatus = "incomplete";
-
-
             $scope.formData.surveystatus = formstatus;
                        $http({
                 url: 'heartkid/personalinfo',
@@ -319,7 +317,6 @@ angular.module('formApp', ['ui.router'])
                         // success
                        var data = $.parseJSON(angular.toJson(response.data));
                                $scope.formData.id=data.id;
-
 
                 },
                     function(status) { // optional
@@ -816,8 +813,8 @@ angular.module('formApp', ['ui.router'])
 
         $scope.saveouthospitalform = function(){
 
-            var formstatus = "success";
-            $scope.formData.surveystatus = formstatus;
+           /* var formstatus = "success";
+            $scope.formData.surveystatus = formstatus;*/
             $http({
                 url: 'heartkid/outhospital',
                 method: "POST",
@@ -829,12 +826,11 @@ angular.module('formApp', ['ui.router'])
                         var obj1 = angular.toJson(data);
                         var result = $.parseJSON(obj1);
 
-
-
                     if(data== "success")
                     {
 
-                        $state.go('form.thankyou');                    }
+                        $state.go('form.thankyou');
+                    }
                     else
                     {
                         $state.go('form.incompletesurvey');

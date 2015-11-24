@@ -33,7 +33,7 @@ public class LoginEntity {
 	    private String password;
 	    @Column(name = "LOGIN_ATTEMPTS")
 	    private String loginAttempts;
-	    private String status;
+	    private Boolean status;
 	    private String userrole;
 	    private String name;
 	    private String address;
@@ -59,7 +59,7 @@ public class LoginEntity {
 	     */
 	    public LoginEntity(final String heartkidNumber,
 	            final String loginAttempts, final String password,
-	            final String status, final String name, final String address, final String userrole,final String emailid, final String phone, final String errorMessage) {
+	            final Boolean status, final String name, final String address, final String userrole,final String emailid, final String phone, final String errorMessage) {
 	    
 	    	this.heartkidNumber = heartkidNumber;
 	        this.loginAttempts = loginAttempts;
@@ -91,7 +91,7 @@ public class LoginEntity {
 	        this.password = password;
 	    }
 
-	    public void setStatus(String status) {
+	    public void setStatus(Boolean status) {
 	        this.status = status;
 	    }
 
@@ -103,7 +103,7 @@ public class LoginEntity {
 	        return password;
 	    }
 
-	    public String getStatus() {
+	    public Boolean getStatus() {
 	        return status;
 	    }
 

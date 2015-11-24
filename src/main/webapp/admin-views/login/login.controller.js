@@ -1,11 +1,60 @@
-﻿(function () {
-    'use strict';
+﻿'use strict';
+angular.module('loginApp')
+        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$location', function ($scope, AuthenticationService, LoginService,$location) {
+         var accessToken = sessionStorage.getItem('tokenId');
+        if(accessToken == null){
+            sessionStorage.clear();
+            $scope.isValidUser = false;
+            $location.path('/login');
+            }
+        else{
+            $location.path('/home');
+        }
 
-    angular
-        .module('app')
-        .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
+            $scope.login = function () {
+
+                alert("Scope VM value-->"+$scope.vm.heartkidusername);
+                var request = "/" + $scope.vm.heartkidusername + "/" + $scope.vm.heartkidpassword;
+
+                LoginService.loginCustomer(request).then(function (successData) {
+                    alert("Login service Success data"+successData.status);
+                    if (successData.status === true) {
+                        alert("suceess data true");
+                        sessionStorage.setItem('menuItems', JSON.stringify(successData));
+                        $scope.getAuthentionToken();
+                    }
+                    else {
+                        $scope.isValidUser = true;
+                        alert("ERROR MESSAGE IS " + successData.errorMessage);
+                        if (successData.errorMessage == "INVALID CREDENTIALS") {
+                            $scope.vm.error = "Invalid Credentials. Please try again";
+                        }
+                        else if (successData.errorMessage == "USER NOT REGISTERED") {
+                            $scope.vm.error = "User is not registered. Please try again with valid user"
+                        }
+
+                        else {
+                            $scope.vm.error = "Error . Please try again later";
+                        }
+                    }
+                });
+
+            };
+
+            $scope.getAuthentionToken = function () {
+                var requestOauth = 'password=' + btoa($scope.vm.heartkidpassword) + '&username=' + $scope.vm.heartkidusername + '&grant_type=password';
+                AuthenticationService.getAuthention(requestOauth).then(function (successData) {
+                    if (successData.access_token) {
+                        sessionStorage.setItem('tokenId', successData.access_token);
+                      //  $state.go('menu');
+                        alert("token is--->"+successData.access_token);
+                       $location.path('/home');
+                    }
+                });
+            };
+        }]);
+   /* LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
     function LoginController($location, AuthenticationService, FlashService) {
         var vm = this;
 
@@ -30,4 +79,4 @@
         };
     }
 
-})();
+})();*/

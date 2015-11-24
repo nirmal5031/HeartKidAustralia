@@ -1,4 +1,6 @@
 package com.heartkid.controller;
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -196,17 +198,35 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 
 
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
-	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity){
+	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity) throws MessagingException{
 	String response = null;
 	 try{
 	        if (outhospitalentity != null){
 	        	outhospitalentity.setRegistrationdate(dategenerator.dategenerator());
-	   	     
-	        	personalrepository.save(outhospitalentity);
-                response = "success";
+	        	outhospitalentity.setSurveystatus("success");
+	        	RegisterDtoEntity resp = personalrepository.save(outhospitalentity);
+	        	
+	        	if(resp.getSurveystatus() == "success")
+	        	{
+	        		
+	        		
+	        		response = "success";
+	        		try
+	        		{
+	        			
+	        		}catch (Exception mex) {
+	        	         mex.printStackTrace();
+	        	      }
+	        	}
+	        	else
+	        	{
+	        		 response = "failure";
+	        		   
+	        	}
+	        	
 	        }
 	        else
-	        	System.out.println("burden disease is null");
+	        	 LOGGER.info("burden disease is null");
 	 }
 	 catch (Exception ex) {
 		 response = "failure";
@@ -255,7 +275,7 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 @RequestMapping(value="heartkid/sendmail", method=RequestMethod.GET)
 public  String sendmail(){
 	
-	String response = mailingclass.mailingservice();
+	String response=null;
 	
 	return response;
 }

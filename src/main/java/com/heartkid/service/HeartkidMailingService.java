@@ -8,38 +8,35 @@ import javax.activation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.heartkid.controller.HeartkidController;
+import com.heartkid.util.Constants;
+
 
 @Service
 public class HeartkidMailingService {
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(HeartkidMailingService.class);
-	
-	
-	public String mailingservice()
+
+	public String mailingservice(String to, String from)
 	{
+		
 		String response;
-	// Recipient's email ID needs to be mentioned.
-    String to = "nirmal5031@gmail.com";
-
-    // Sender's email ID needs to be mentioned
-    String from = "nirmal.k1@tcs.com";
-
     // Assuming you are sending email from localhost
-    String host = "mailhost.qantas.com.au";
+    //String host = "mailhost.qantas.com.au";
 
     // Get system properties
     Properties props = System.getProperties();
     // Setup mail server
    // properties.setProperty("mail.smtp.host", host);
-    props.put("mail.smtp.host", host);
+    props.put("mail.smtp.host", Constants.MAILHOST);
     props.put("mail.smtp.socketFactory.port", "8080");
     props.put("mail.smtp.socketFactory.class",
             "javax.net.ssl.SSLSocketFactory");
     props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.port", "8080");
+    props.put("mail.smtp.port", "Constants.MAILPORT");
     // Get the default Session object.
     Session session = Session.getDefaultInstance(props);
 

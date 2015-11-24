@@ -4,10 +4,7 @@
 (function () {
     'use strict';
 
-    angular
-        .module('app')
-        .controller('HomeController', HomeController)
-
+    angular.module('loginApp')
 
         .filter('isEmpty', function () {
             var bar;
@@ -21,28 +18,38 @@
             };
         })
 
-    .controller('heartkidadminhome',['$scope', '$http', function($scope,$http) {
+    .controller('HomeController',['$scope', '$http','$location', function($scope,$http,$location) {
 
-            $scope.showModal = false;
-            $scope.buttonClicked = "";
-            $scope.toggleModal = function(btnClicked){
-                $scope.buttonClicked = btnClicked;
-                $scope.showModal = !$scope.showModal;
-            };
-                         $scope.sort = function(keyname){
-                $scope.sortKey = keyname;   //set the sortKey to the param passed
-                $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+            var accessToken = sessionStorage.getItem('tokenId');
+            //alert("inside home sontroler"+accessToken);
+            if(accessToken == null){
+                //alert("Null please go to login page");
+              //  $state.go('/login');
+              $location.path('/login');
+               // $location.path('http://localhost:8080/heartkidaustralia/adminindex.html#/login');
             }
+            else {
+
+                $scope.showModal = false;
+                $scope.buttonClicked = "";
+                $scope.toggleModal = function (btnClicked) {
+                    $scope.buttonClicked = btnClicked;
+                    $scope.showModal = !$scope.showModal;
+                };
+                $scope.sort = function (keyname) {
+                    $scope.sortKey = keyname;   //set the sortKey to the param passed
+                    $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+                }
 
 
-            $scope.exportData = function () {
-$scope.searchHeartKid = false;
-var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFullYear();
+                $scope.exportData = function () {
+                    $scope.searchHeartKid = false;
+                    var date = new Date().getDate() + "_" + new Date().getMonth() + "_" + new Date().getFullYear();
 
                     $http({
-                        url: 'heartkid/downloadExcel',
+                        url: 'heartkid/downloadExcel'   ,
                         method: "POST",
-                        data:$scope.formAdminData,
+                        data: $scope.formAdminData,
                         headers: {
                             'Content-type': 'application/json'
                         },
@@ -50,58 +57,104 @@ var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFull
                     })
 
                         .success(function (data, status, headers, config) {
-                            alert("SUCESS"+data);
+                            alert("SUCESS" + data);
                             var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-                            saveAs(blob, 'HeartKid_Results'+date+'.xls');
+                            saveAs(blob, 'HeartKid_Results' + date + '.xls');
                         }).error(function (data, status, headers, config) {
                             //upload failed
                         })
 
 
+                }
+
+                $scope.statusArray = ["incomplete", "success"];
+
+                $scope.modifyuser = function (a) {
+                    alert("value of a is" + a);
+                    var b = $.parseJSON(angular.fromJson(a));
+                    alert("bbbbb" + b);
+
+                    $scope.formAdminData = a;
+
+
+                }
+
+                // the dialog is injected in the specified controller
+
+
+                $scope.searchheartkid = function () {
+                    alert("inside search heaartkid");
+                    $scope.searchHeartKid = true;
+                    $http({
+                        url: 'heartkid/getrecord',
+                        method: "POST",
+                        data: $scope.formAdminData
+                    })
+                        .then(function (response) {
+                            // success
+                            var data = angular.fromJson(response.data);
+
+                            var data1 = angular.toJson(response.data);
+                            alert("result data1  ---" + data1);
+                            $scope.users = data;
+
+
+                        },
+                        function (response) { // optional
+                            // failed
+                            alert("Failure" + response.status);
+                        });
+                }
+
+                $scope.logoutadmin = function() {
+
+                    alert("logging out admin fucntion");
+
+                    $http({
+                        url: 'heartkid/getrecord',
+                        method: "POST",
+                        data: $scope.formAdminData
+                    })
+                        .then(function (response) {
+                            // success
+                            var data = angular.fromJson(response.data);
+
+                            var data1 = angular.toJson(response.data);
+                            alert("result data1  ---" + data1);
+                            $scope.users = data;
+
+
+                        },
+                        function (response) { // optional
+                            // failed
+                            alert("Failure" + response.status);
+                        });
+
+
+                }
+
             }
+            $scope.showview = function(id)
+            {
+                alert("Show view---"+id);
 
-            $scope.statusArray = ["incomplete", "success"];
-
-            $scope.modifyuser = function(a){
-                alert("value of a is"+a);
-                var b = $.parseJSON(angular.fromJson(a));
-                alert("bbbbb"+b);
-
-                $scope.formAdminData = a;
-
-
-            }
-
-            // the dialog is injected in the specified controller
-
-
-            $scope.searchheartkid = function() {
-            $scope.searchHeartKid = true;
-                $http({
-                    url: 'heartkid/getrecord',
-                    method: "POST",
-                    data:$scope.formAdminData
-                })
-                    .then(function(response) {
-                        // success
-                        var data = angular.fromJson(response.data);
-
-                        var data1 = angular.toJson(response.data);
-                        alert("result data1  ---"+data1);
-                        $scope.users = data;
-
-
-                    },
-                    function(response) { // optional
-                        // failed
-                        alert("Failure"+response.status);
-                    });
+                if(id=='search')
+                {
+                    $scope.searchuser = true;
+                    $scope.modifyuser = true;
+                }
+                if(id=='modify')
+                {
+                    $scope.modifyuser = false;
+                    $scope.searchuser = false;
+                }
             }
 
     }])
 
+})();
 
-    HomeController.$inject = ['UserService', '$rootScope'];
+   /* HomeController.$inject = ['UserService', '$rootScope'];
     function HomeController(UserService, $rootScope) {
         var vm = this;
 
@@ -137,6 +190,5 @@ var date = new Date().getDate()+"_"+new Date().getMonth()+"_"+new Date().getFull
             });
         }
     }
+*/
 
-
-})();

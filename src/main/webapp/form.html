@@ -2,14 +2,14 @@
 <div id="form-container"  >
 
         <div id="header">
-            <a href="index.html"><img  class="headerlogo" id="logo" title="" alt="HeartKids Australia" src="images/logo.png"></a>
+            <a href="index.html"><img  class="headerlogo" id="logo" title="" alt="HeartKids Australia" src="images/logo.png" /></a>
 
             <p class="text-left"> Research</p>
             <p><b>Reference Number : {{formData.referencenumber }}</b></p>
         </div>
 
         <!-- use ng-submit to catch the form submission and use our Angular function -->
-        <form id="signup-form" ng-submit="processForm()">
+        <form id="signup-form" name="userForm" ng-submit="submit()" novalidate>
 
             <!-- our nested state views will be injected here -->
             <div id="form-views" ui-view></div>
