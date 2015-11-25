@@ -27,8 +27,10 @@ D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\service\LoginS
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\repository\QualityCareRepository.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\service\DirectoryService.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\controller\AdminController.java
+D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\model\entity\CreateAdminUser.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\service\HeartkidMailingService.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\util\ReferenceNumGenerator.java
+D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\repository\CreateAdminRepository.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\repository\HeartkidRepository.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\repository\HeartkidLoginRepository.java
 D:\HeartkidAustralia\HeartKidAustralia\src\main\java\com\heartkid\repository\ProductivityEduRepository.java

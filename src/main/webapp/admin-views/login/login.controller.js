@@ -19,18 +19,16 @@ angular.module('loginApp')
 
                 LoginService.loginCustomer(request).then(function (successData) {
                     alert("Login service Success data"+successData.status);
-                    if (successData.status === true) {
-                        alert("suceess data true");
+                    if (successData.status === "success") {
                         sessionStorage.setItem('menuItems', JSON.stringify(successData));
                         $scope.getAuthentionToken();
                     }
                     else {
                         $scope.isValidUser = true;
-                        alert("ERROR MESSAGE IS " + successData.errorMessage);
-                        if (successData.errorMessage == "INVALID CREDENTIALS") {
+                        if (successData.status == "INVALIDCREDENTIALS") {
                             $scope.vm.error = "Invalid Credentials. Please try again";
                         }
-                        else if (successData.errorMessage == "USER NOT REGISTERED") {
+                        else if (successData.status == "NOUSER") {
                             $scope.vm.error = "User is not registered. Please try again with valid user"
                         }
 

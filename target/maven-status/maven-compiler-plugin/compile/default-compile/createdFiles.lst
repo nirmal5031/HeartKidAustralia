@@ -3,6 +3,7 @@ com\heartkid\model\dto\LoginDetail.class
 com\heartkid\model\entity\LoginEntity.class
 com\heartkid\controller\LoginController.class
 com\heartkid\exception\HeartkidException.class
+com\heartkid\model\entity\CreateAdminUser.class
 com\heartkid\oauth\OAuth2ServerConfiguration.class
 com\heartkid\App.class
 com\heartkid\util\ExcelBuilder.class
@@ -24,6 +25,7 @@ com\heartkid\repository\ProductivityEduRepository.class
 com\heartkid\repository\PersonalInfoRepository.class
 com\heartkid\oauth\OAuth2ServerConfiguration$CustomAuthenticator.class
 com\heartkid\util\UserValidation.class
+com\heartkid\repository\CreateAdminRepository.class
 com\heartkid\util\RandomNumGenerator.class
 com\heartkid\model\entity\RegisterProfileEntity.class
 com\heartkid\repository\DiseaseQuantRepository.class

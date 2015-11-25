@@ -17,25 +17,24 @@ public class LoginService {
 	 LoginEntity loginentity =  new LoginEntity();
 	
 	
-	 public LoginEntity validateUser(String staffnumber, String password) {
-		 String  heartkidUsername = staffnumber;
+	 public LoginEntity validateUser(String heartkidUsername, String password) {
+		
 		 String errorMessage;
 		 try
 		 {
 		 loginentity = repository.findOne(heartkidUsername);
 		 
-		  if((loginentity.getHeartkidNumber().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword().equals(password)))
+		  if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword().equals(password)))
 				 {
-			  loginentity.setStatus(true);
-			 errorMessage = "SUCCESS";
-			 loginentity.setErrorMessage(errorMessage);		
+			  loginentity.setStatus("success");
+			// loginentity.setErrorMessage(errorMessage);		
 		 }
-		  else if((loginentity.getHeartkidNumber().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword() != password))
+		  else if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword() != password))
 				
 			{
-			 loginentity.setStatus(false);
-			 errorMessage = "INVALID CREDENTIALS";
-			 loginentity.setErrorMessage(errorMessage);
+			 loginentity.setStatus("INVALIDCREDENTIALS");
+			// errorMessage = "INVALID CREDENTIALS";
+			// loginentity.setErrorMessage(errorMessage);
 			
 			 }
 		 
@@ -43,7 +42,7 @@ public class LoginService {
 		 catch (NullPointerException nullPointer)
 		 {
 			 errorMessage = "USER NOT REGISTERED";
-				
+			 loginentity.setStatus("NOUSER");
 			System.out.println("Empty value-- not found"+errorMessage);
 			/*	loginentity.setHeartkidNumber(heartkidUsername);*/
 			

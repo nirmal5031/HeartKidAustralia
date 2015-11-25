@@ -5,14 +5,21 @@ import java.util.List;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.heartkid.model.entity.CreateAdminUser;
 import com.heartkid.model.entity.RegisterDtoEntity;
+import com.heartkid.repository.CreateAdminRepository;
+import com.heartkid.repository.HeartkidRepository;
 import com.heartkid.service.HeartkidExportService;
 import com.heartkid.service.SearchService;
 import com.heartkid.util.ExcelBuilder;
@@ -20,9 +27,19 @@ import com.heartkid.util.ExcelBuilder;
 @RestController
 public class AdminController {
 	@Autowired
+	private
+	CreateAdminRepository createadminrepository;
+	@Autowired
 	private ExcelBuilder excelView;
 	@Autowired
-    SearchService searchservice = new SearchService();
+	private SearchService searchservice;
+	@Autowired
+	private HeartkidRepository repository;
+	
+	
+	private static final Logger LOGGER = LoggerFactory
+            .getLogger(HeartkidController.class);
+	
 	List<RegisterDtoEntity> searchdto =  new ArrayList<RegisterDtoEntity>();	
 	@RequestMapping(value="heartkid/getrecord", method=RequestMethod.POST)
 	public  List<RegisterDtoEntity> getrecordheartkid(@RequestBody RegisterDtoEntity searchentity){
@@ -93,6 +110,39 @@ public class AdminController {
 	
 	        return new ModelAndView(excelView, "listheartkidusers", searchdto);
 	    }
+	 
+	 @RequestMapping(value="heartkid/deleterecord/{deleterecordref}", method=RequestMethod.GET)
+		public  String deleteUsersByRefNumber(@PathVariable(value="deleterecordref") String deleterecordref){
+				 try{
+					 LOGGER.info("delete record---"+deleterecordref);
+					 repository.deleteUsersByRefNumber(deleterecordref);   
+				 }
+				 catch (Exception ex) {
+				      return "Error creating the entry: " + ex.toString();
+				    }
+				 
+				 	    return "User record Deleted successfully ! (Reference Id is = " +   deleterecordref+ ")";
+			  }
+	 
+	 @RequestMapping(value="heartkid/createadminuser", method=RequestMethod.POST)
+		public  String createadminuser(@RequestBody CreateAdminUser createuser){
+			
+			 String status = null;
+			 try{
+				if(createuser != null)
+					
+				 createadminrepository.save(createuser);
+				 status = "success";
+			
+			 }
+			 catch (Exception ex) {
+				 status = "fail";
+			     System.out.println("ERROR in Creating user"+ex.toString());
+			    }
+			 
+			    return status;
+			  }
+
 
 
 }

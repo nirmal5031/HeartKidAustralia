@@ -258,18 +258,6 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 		  }
 
 
-@RequestMapping(value="heartkid/deleterecord", method=RequestMethod.GET)
-	public  String deleteUsersByRefNumber(@RequestParam(value="deleterecordref", defaultValue="") String deleterecordref){
-			 try{
-				 LOGGER.info("delete record---"+deleterecordref);
-				 repository.deleteUsersByRefNumber(deleterecordref);   
-			 }
-			 catch (Exception ex) {
-			      return "Error creating the entry: " + ex.toString();
-			    }
-			 
-			 	    return "User record Deleted successfully ! (reference Id is = " +   deleterecordref+ ")";
-		  }
 
 
 @RequestMapping(value="heartkid/sendmail", method=RequestMethod.GET)

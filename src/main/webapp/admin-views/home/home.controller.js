@@ -18,7 +18,7 @@
             };
         })
 
-    .controller('HomeController',['$scope', '$http','$state', function($scope,$http,$state) {
+    .controller('HomeController',['$scope', '$http','$state','$window', function($scope,$http,$state,$window) {
 
             var accessToken = sessionStorage.getItem('tokenId');
             //alert("inside home sontroler"+accessToken);
@@ -29,7 +29,7 @@
                // $location.path('http://localhost:8080/heartkidaustralia/adminindex.html#/login');
             }
             else {
-
+                $scope.userroleArray = ["Administration", "Author","Contributor"];
                 $scope.showModal = false;
                 $scope.buttonClicked = "";
                 $scope.toggleModal = function (btnClicked) {
@@ -57,9 +57,21 @@
                     })
 
                         .success(function (data, status, headers, config) {
-                            alert("SUCESS" + data);
-                            var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-                            saveAs(blob, 'HeartKid_Results' + date + '.xls');
+
+                            if($scope.totalrecords>1000)
+                            {
+                               var exporttoexcel= $window.confirm('There are more than 1000 records. Do you want to export to excel ?');
+                                if(exporttoexcel){
+                                    var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                                    saveAs(blob, 'HeartKid_Results' + date + '.xls');
+                                }
+                                else{
+                               $scope.ErrorMessage = "Please refine your search and try again";
+                                }
+
+                            }
+
+
                         }).error(function (data, status, headers, config) {
                             //upload failed
                         })
@@ -94,12 +106,11 @@
                             // success
                             var data = angular.fromJson(response.data);
                             var data1 = angular.toJson(response.data);
-                            alert("result data1  ---" + data1);
-                           // alert("result dataaaaaaaaaaaaaaaaaa ---" + data);
+
                             $scope.searchHeartKid = true;
                             $scope.users = data;
+                            $scope.totalrecords = data.length;
 
-                            alert("$scope.users----"+$scope.users);
 
 
                         },
@@ -156,7 +167,50 @@
             {
                 $scope.formAdminData = "";
             }
+            $scope.deleteuser = function(deluser)
+            {
+alert("deleting user"+deluser);
 
+                $http({
+                    url: 'heartkid/deleterecord/'+deluser,
+                    method: "GET"
+                })
+                    .then(function (response) {
+                        // success
+                        $scope.deleteMessage=response.data;
+                        $scope.users="";
+                    },
+                    function (response) { // optional
+                        // failed
+                        $scope.deleteMessage="Error in deleting the record ! Try later";
+
+                    });
+
+            }
+            $scope.createadminuser = function()
+            {
+                alert("createadminuser"+$scope.formAdminData.username);
+
+                $http({
+                    url: 'heartkid/createadminuser',
+                    method: "POST",
+                    data: $scope.formAdminData
+                })
+                    .then(function (response) {
+                        // success
+                        if(response.data == "success"){
+                            var creationMessage = response.data + $scope.formAdminData.username;
+                            $scope.creationMessage ="User has been successfully created : Username ="+$scope.formAdminData.username;
+                    }
+                        else
+                            $scope.creationMessage ="Error in creating a user. Please try again later";
+                    },
+                    function (response) { // optional
+                        // failed
+                        alert("Failure" + response.status);
+                    });
+
+            }
     }])
 
 })();

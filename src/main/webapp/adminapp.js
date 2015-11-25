@@ -22,9 +22,21 @@
 
                 })
                 .state('form.modify', {
-                    url: '/search',
+                    url: '/modify',
                     controller: 'HomeController',
-                    templateUrl: 'admin-views/home/search.view.html'
+                    templateUrl: 'admin-views/home/modify.view.html'
+
+                })
+                .state('form.export', {
+                    url: '/export',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/export.view.html'
+
+                })
+                .state('form.manage', {
+                    url: '/manage',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/manage.view.html'
 
                 })
                 .state('/login', {

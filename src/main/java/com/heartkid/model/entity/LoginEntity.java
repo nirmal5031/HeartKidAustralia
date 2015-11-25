@@ -25,24 +25,21 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @AutoProperty
 public class LoginEntity {
 
+	    
+
 	    @Id
 	    @NotNull
 	    @Column(name = "USERNAME")
-	    private String heartkidNumber;
-	    @Column(name = "PASSWORD")
-	    private String password;
-	    @Column(name = "LOGIN_ATTEMPTS")
-	    private String loginAttempts;
-	    private Boolean status;
-	    private String userrole;
-	    private String name;
-	    private String address;
-	    private String emailid;
-	    private String phone;
-	    @Transient
-	    private String errorMessage;
-	    private String surveystatus;   
-	    
+	    private String username;
+	    private String firstname;
+		private String lastname;
+		private String emailid;
+		private String phone;
+		private String status;
+		private String userrole;
+		private String login_attempts;
+		private String password;
+		
 
 	   
 
@@ -52,105 +49,135 @@ public class LoginEntity {
 	    public LoginEntity() {
 	    }
 
-	    /**
-	     * Constructor for domain class LoginDetail
-	     * 
-	    
-	     */
-	    public LoginEntity(final String heartkidNumber,
-	            final String loginAttempts, final String password,
-	            final Boolean status, final String name, final String address, final String userrole,final String emailid, final String phone, final String errorMessage) {
-	    
-	    	this.heartkidNumber = heartkidNumber;
-	        this.loginAttempts = loginAttempts;
-	        this.password = password;
-	        this.status = status;
-	        this.name = name;
-	        this.address=address;
-	        this.userrole=userrole;
-	        this.emailid=emailid;
-	        this.phone=phone;
-	        this.errorMessage = errorMessage;
-	        
-	    }
-	    public String getErrorMessage() {
-			return errorMessage;
+
+
+
+		public String getUsername() {
+			return username;
 		}
 
-		public void setErrorMessage(String errorMessage) {
-			this.errorMessage = errorMessage;
-		}
-	    public void setHeartkidNumber(String heartkidNumber) {
-			this.heartkidNumber = heartkidNumber;
-		}
-	    public void setLoginAttempts(String loginAttempts) {
-	        this.loginAttempts = loginAttempts;
-	    }
 
-	    public void setPassword(String password) {
-	        this.password = password;
-	    }
 
-	    public void setStatus(Boolean status) {
-	        this.status = status;
-	    }
 
-	    public String getLoginAttempts() {
-	        return loginAttempts;
-	    }
-
-	    public String getPassword() {
-	        return password;
-	    }
-
-	    public Boolean getStatus() {
-	        return status;
-	    }
-
-		public String getHeartkidNumber() {
-			return heartkidNumber;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
-		public String getUserrole() {
-			return userrole;
+
+
+
+		public String getFirstname() {
+			return firstname;
 		}
 
-		public void setUserrole(String userrole) {
-			this.userrole = userrole;
+
+
+		public void setFirstname(String firstname) {
+			this.firstname = firstname;
 		}
 
-		public String getName() {
-			return name;
+
+
+
+		public String getLastname() {
+			return lastname;
 		}
 
-		public void setName(String name) {
-			this.name = name;
+
+
+
+		public void setLastname(String lastname) {
+			this.lastname = lastname;
 		}
 
-		public String getAddress() {
-			return address;
-		}
 
-		public void setAddress(String address) {
-			this.address = address;
-		}
+
 
 		public String getEmailid() {
 			return emailid;
 		}
 
+
+
+
 		public void setEmailid(String emailid) {
 			this.emailid = emailid;
 		}
+
+
+
 
 		public String getPhone() {
 			return phone;
 		}
 
+
+
+
 		public void setPhone(String phone) {
 			this.phone = phone;
 		}
 
-		
+
+
+
+		public String getStatus() {
+			return status;
+		}
+
+
+
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
+
+
+
+		public String getUserrole() {
+			return userrole;
+		}
+
+
+
+
+		public void setUserrole(String userrole) {
+			this.userrole = userrole;
+		}
+
+
+
+
+		public String getLogin_attempts() {
+			return login_attempts;
+		}
+
+
+
+
+		public void setLogin_attempts(String login_attempts) {
+			this.login_attempts = login_attempts;
+		}
+
+
+
+
+		public String getPassword() {
+			return password;
+		}
+
+
+
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+	    /**
+	     * Constructor for domain class LoginDetail
+	     * 
+	    
+	  **/
   
 	}

@@ -1,0 +1,52 @@
+<fieldset>
+    <h4>{{creationMessage}}</h4>
+    <div class="control">
+    <p style="color: #0073AC;">Create a user and assign him roles</p></div>
+<div class="control">
+    <label class=" col-sm-2">First Name <em>*</em></label>
+    <input type="text" name="firstname" id="frstname"  class="textfeildname yellow" ng-model="formAdminData.firstname"  />
+</div>
+    <div class="control">
+    <label class=" col-sm-2">Last Name <em>*</em></label>
+    <input type="text" name="lstname" id="lstname"  class="textfeildname yellow" ng-model="formAdminData.lastname"  />
+</div>
+    <div class="control">
+        <label class=" col-sm-2">User Name<em>*</em></label>
+        <input type="text" name="username" id="username"  class="textfeildname yellow" ng-model="formAdminData.username"  />
+    </div>
+    <div class="control">
+    <label class=" col-sm-2">Email<em>*</em></label>
+    <input type="text" name="email" id="email"  class="textfeildname yellow" ng-model="formAdminData.emailid"  />
+</div>
+    <div class="control">
+        <label class=" col-sm-2">Phone<em>*</em></label>
+        <input type="text" name="Phone" id="Phone"  class="textfeildname yellow" ng-model="formAdminData.phone"  />
+    </div>
+
+
+    <div class="control">
+        <label class=" col-sm-2">User Role</label>
+        <select  name="userrole" ng-model="formData.userrole" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="userrole for userrole in userroleArray" >
+            <option value="">--Select--</option> <!-- not selected / blank option -->
+        </select>
+
+
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">Password<em>*</em></label>
+        <input type="text" name="passwrd" id="passwrd"  class="textfeildname yellow" ng-model="formAdminData.password"  />
+    </div>
+    <div class="control">
+        <label class=" col-sm-2">Confirm Password<em>*</em></label>
+        <input type="text" name="confrmpasswrd" id="confrmpasswrd"  class="textfeildname yellow"   />
+    </div>
+    <br>
+    <br>
+
+    <div class="col-xs-6 col-xs-offset-3 col-xs-7">
+
+        <a  ng-click="createadminuser()" style="margin-left: 60%; width: 150px;" class="btn btn-block btn-info">Create User  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+
+</fieldset>

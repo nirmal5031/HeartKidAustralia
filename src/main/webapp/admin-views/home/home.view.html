@@ -16,19 +16,18 @@
 
                 <div id="personal_details">
 
-                    <div class="errormessage" style="margin-left:30px;color:red;"></div>
-                    <div class="myform">Search User</div>
+                     <div class="myform">Search User</div>
                     <br class="col-md-12 formcontent">
 
                     <div id="divleft"> <div class="list-group panel">
                          <a ui-sref="form.search" style="cursor: pointer;" class="list-group-item list-group-item-success" data-parent="#MainMenu">Search</a>
 
-                        <a ng-click="showview('modify')" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
+                        <a ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
 
-                        <a onclick="reportsmenu" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
+                        <a ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
 
-                        <a onclick="exportmenu" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
-                        <a onclick="manageusermenu" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
+                        <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
+                        <a ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
 
 
                     </div></div>
