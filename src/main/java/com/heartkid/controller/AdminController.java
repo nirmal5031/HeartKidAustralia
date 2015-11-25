@@ -22,6 +22,7 @@ import com.heartkid.repository.CreateAdminRepository;
 import com.heartkid.repository.HeartkidRepository;
 import com.heartkid.service.HeartkidExportService;
 import com.heartkid.service.SearchService;
+import com.heartkid.util.EncrptDecryptPassword;
 import com.heartkid.util.ExcelBuilder;
 
 @RestController
@@ -35,7 +36,8 @@ public class AdminController {
 	private SearchService searchservice;
 	@Autowired
 	private HeartkidRepository repository;
-	
+	@Autowired
+	private EncrptDecryptPassword encrpytdecrypt;
 	
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(HeartkidController.class);
@@ -128,11 +130,25 @@ public class AdminController {
 		public  String createadminuser(@RequestBody CreateAdminUser createuser){
 			
 			 String status = null;
+			 int userexist = 0 ;
 			 try{
 				if(createuser != null)
-					
+				{
+					 userexist = createadminrepository.adminuserexist(createuser.getUsername());
+				System.out.println("=====userexist===="+userexist);
+				}
+				if(userexist == 0)
+				{
+					String encpass = EncrptDecryptPassword.encrypt(createuser.getPassword());
+					if(encpass!=null)
+					createuser.setPassword(encpass);
 				 createadminrepository.save(createuser);
 				 status = "success";
+				}
+				else
+				{
+					 status = "useridexist";
+				}
 			
 			 }
 			 catch (Exception ex) {

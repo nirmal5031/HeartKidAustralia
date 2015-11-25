@@ -71,17 +71,17 @@
             <th ng-click="sort('surveystatus')">Status
                 <span class="glyphicon sort-icon" ng-show="sortKey=='surveystatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             </th>
-            <th>Modify</th>
+
         </tr>
 
-        <tr dir-paginate="a in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
+        <tr dir-paginate="a in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
             <td>{{a.id}}</td>
             <td>{{a.referencenumber}}</td>
             <td>{{a.firstname}}</td>
             <td>{{a.lastname}}</td>
             <td>{{a.surveystatus}}</td>
-            <td><button class="btn btn-primary" style="margin-left: 13%; width: 70px;" ng-click="modifyuser(a)">Edit</button></td>
-        </tr>
+            <!--<td><button class="btn btn-primary" style="margin-left: 13%; width: 70px;" ng-click="modifyuser(a)">Edit</button></td>
+       --> </tr>
     </table>
     <dir-pagination-controls style="float: right; margin-right: 5%;"
                              max-size="30"

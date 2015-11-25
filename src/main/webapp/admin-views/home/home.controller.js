@@ -45,7 +45,6 @@
                 $scope.exportData = function () {
                     $scope.searchHeartKid = false;
                     var date = new Date().getDate() + "_" + new Date().getMonth() + "_" + new Date().getFullYear();
-
                     $http({
                         url: 'heartkid/downloadExcel'   ,
                         method: "POST",
@@ -58,18 +57,25 @@
 
                         .success(function (data, status, headers, config) {
 
-                            if($scope.totalrecords>1000)
-                            {
-                               var exporttoexcel= $window.confirm('There are more than 1000 records. Do you want to export to excel ?');
+                            if($scope.totalrecords>1000) {
+                                var exporttoexcel = $window.confirm('There are more than 1000 records. Do you want to export to excel ?');
                                 if(exporttoexcel){
                                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                     saveAs(blob, 'HeartKid_Results' + date + '.xls');
-                                }
-                                else{
-                               $scope.ErrorMessage = "Please refine your search and try again";
+                                } else{
+                                    $scope.ErrorMessage = "Please refine your search and try again";
                                 }
 
                             }
+                            else {
+                                var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                                saveAs(blob, 'HeartKid_Results' + date + '.xls');
+
+                            }
+
+
+
+
 
 
                         }).error(function (data, status, headers, config) {
@@ -169,7 +175,7 @@
             }
             $scope.deleteuser = function(deluser)
             {
-alert("deleting user"+deluser);
+
 
                 $http({
                     url: 'heartkid/deleterecord/'+deluser,
@@ -189,21 +195,29 @@ alert("deleting user"+deluser);
             }
             $scope.createadminuser = function()
             {
-                alert("createadminuser"+$scope.formAdminData.username);
-
-                $http({
+                              $http({
                     url: 'heartkid/createadminuser',
                     method: "POST",
                     data: $scope.formAdminData
                 })
                     .then(function (response) {
                         // success
+
                         if(response.data == "success"){
+                            $scope.formAdminData = "";
                             var creationMessage = response.data + $scope.formAdminData.username;
-                            $scope.creationMessage ="User has been successfully created : Username ="+$scope.formAdminData.username;
+                            $scope.creationMessage ="User has been successfully created";
                     }
+                        else if(response.data == "useridexist")
+                        {
+                            $scope.creationMessage ='User ID is not available . Please choose different user ID';
+                        }
                         else
+                        {
+                            $scope.formAdminData = "";
+
                             $scope.creationMessage ="Error in creating a user. Please try again later";
+                        }
                     },
                     function (response) { // optional
                         // failed

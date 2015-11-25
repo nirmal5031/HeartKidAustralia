@@ -2,6 +2,7 @@ com\heartkid\service\DirectoryService.class
 com\heartkid\model\dto\LoginDetail.class
 com\heartkid\model\entity\LoginEntity.class
 com\heartkid\controller\LoginController.class
+com\heartkid\util\EncrptDecryptPassword.class
 com\heartkid\exception\HeartkidException.class
 com\heartkid\model\entity\CreateAdminUser.class
 com\heartkid\oauth\OAuth2ServerConfiguration.class
@@ -14,6 +15,7 @@ com\heartkid\repository\BurdenDiseaseRepository.class
 com\heartkid\exception\HeartkidBadRequestException.class
 com\heartkid\repository\QualityCareRepository.class
 com\heartkid\oauth\OAuth2ServerConfiguration$ResourceServerConfiguration.class
+com\heartkid\util\DecryptPassword.class
 com\heartkid\service\EditHearkidUserService.class
 com\heartkid\oauth\WebSecurityConfiguration.class
 com\heartkid\oauth\RevokeTokenController.class

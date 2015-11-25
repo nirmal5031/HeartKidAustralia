@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.heartkid.model.dto.*;
 import com.heartkid.model.entity.LoginEntity;
 import com.heartkid.repository.HeartkidLoginRepository;
+import com.heartkid.util.EncrptDecryptPassword;
 
 
 @Service
@@ -20,16 +21,25 @@ public class LoginService {
 	 public LoginEntity validateUser(String heartkidUsername, String password) {
 		
 		 String errorMessage;
+		 String newpassword = null;
+		 int useridexist = 0;
 		 try
 		 {
+			 
+			 if(heartkidUsername != null){
+				 useridexist = repository.checkuserID(heartkidUsername);
+			 }
+			 if(useridexist==1){
 		 loginentity = repository.findOne(heartkidUsername);
-		 
-		  if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword().equals(password)))
+			newpassword = EncrptDecryptPassword.decrypt(loginentity.getPassword());
+			System.out.println("New pass------->>>>"+newpassword);
+		
+		  if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (newpassword.equals(password)))
 				 {
 			  loginentity.setStatus("success");
 			// loginentity.setErrorMessage(errorMessage);		
 		 }
-		  else if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (loginentity.getPassword() != password))
+		  else if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (newpassword != password))
 				
 			{
 			 loginentity.setStatus("INVALIDCREDENTIALS");
@@ -38,7 +48,11 @@ public class LoginService {
 			
 			 }
 		 
+		 }else
+		 {
+			 loginentity.setStatus("NOUSER");
 		 }
+			 }
 		 catch (NullPointerException nullPointer)
 		 {
 			 errorMessage = "USER NOT REGISTERED";
@@ -48,14 +62,12 @@ public class LoginService {
 			
 			}
 		 
-		/* catch(Exception e)
+		 catch(Exception e)
 		 {
 			 e.printStackTrace();
-			 errorMessage = "OtherError";
-				
-			 loginentity.setErrorMessage(errorMessage);
+			
 			 
-		 }*/
+		 }
 
 		 return loginentity;
 	 }
