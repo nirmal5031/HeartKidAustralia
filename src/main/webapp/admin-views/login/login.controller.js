@@ -1,14 +1,14 @@
 ﻿'use strict';
 angular.module('loginApp')
-        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$location', function ($scope, AuthenticationService, LoginService,$location) {
+        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state', function ($scope, AuthenticationService, LoginService,$state) {
          var accessToken = sessionStorage.getItem('tokenId');
         if(accessToken == null){
             sessionStorage.clear();
             $scope.isValidUser = false;
-            $location.path('/login');
+            $state.go('/login');
             }
         else{
-            $location.path('/home');
+            $state.go('/home');
         }
 
 
@@ -49,7 +49,7 @@ angular.module('loginApp')
                         sessionStorage.setItem('tokenId', successData.access_token);
                       //  $state.go('menu');
                         alert("token is--->"+successData.access_token);
-                       $location.path('/home');
+                       $state.go('/home');
                     }
                 });
             };

@@ -2,9 +2,59 @@
     'use strict';
 
     angular
-        .module('loginApp', ['ngRoute', 'ngCookies','angularUtils.directives.dirPagination','angularModalService'])
-        .config(config);
+        .module('loginApp', ['ui.router','angularUtils.directives.dirPagination'])
 
+        .config(function($stateProvider, $urlRouterProvider) {
+            // $httpProvider.interceptors.push('errorInterceptor');
+            $stateProvider
+                // route to show our basic form (/form)
+                // nested states
+                // each of these sections will have their own view
+                // url will be nested (/form/profile)
+                .state('form', {
+                    url: '/home',
+                    templateUrl: 'admin-views/home/home.view.html'
+                })
+                .state('form.search', {
+                    url: '/search',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/search.view.html'
+
+                })
+                .state('form.modify', {
+                    url: '/search',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/search.view.html'
+
+                })
+                .state('/login', {
+                    url: '/login',
+                    controller: 'LoginController',
+                    templateUrl: 'admin-views/login/login.view.html'
+                })
+                .state('/home', {
+                    url: '/home',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/home.view.html'
+                })
+                .state('/register', {
+                    controller: 'RegisterController',
+                    templateUrl: 'admin-views/register/register.view.html'
+
+                })
+                .state('/modify', {
+                    url: '/research',
+                    templateUrl: 'admin-views/modify/modify.view.html'
+                })
+
+            // catch all route
+            // send users to the form page
+            $urlRouterProvider.otherwise('/login');
+        });
+
+
+
+/*
     config.$inject = ['$routeProvider', '$locationProvider'];
     function config($routeProvider, $locationProvider) {
         $routeProvider
@@ -31,7 +81,19 @@
 
             .otherwise({ redirectTo: '/login' })
 
-    };
+    }
+    config.$inject=['$stateProvider', '$urlRouterProvider'];
+    function config($stateProvider, $urlRouterProvider)
+    {
+        $urlRouterProvider.otherwise("/state1");
+        $stateProvider
+            // route to show our basic form (/form)
+            .state('/modify', {
+                url: '/research',
+                templateUrl: 'admin-views/modify/modify.view.html',
+                controllerAs: 'vm'
+            })
+    }*/
     //function config($stateProvider, $urlRouterProvider) {
     //    $stateProvider
     //        // route to show our basic form (/form)

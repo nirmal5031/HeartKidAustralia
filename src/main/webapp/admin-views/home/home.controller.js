@@ -18,14 +18,14 @@
             };
         })
 
-    .controller('HomeController',['$scope', '$http','$location', function($scope,$http,$location) {
+    .controller('HomeController',['$scope', '$http','$state', function($scope,$http,$state) {
 
             var accessToken = sessionStorage.getItem('tokenId');
             //alert("inside home sontroler"+accessToken);
             if(accessToken == null){
                 //alert("Null please go to login page");
               //  $state.go('/login');
-              $location.path('/login');
+                $state.go('/login');
                // $location.path('http://localhost:8080/heartkidaustralia/adminindex.html#/login');
             }
             else {
@@ -83,8 +83,8 @@
 
 
                 $scope.searchheartkid = function () {
-                    alert("inside search heaartkid");
-                    $scope.searchHeartKid = true;
+
+
                     $http({
                         url: 'heartkid/getrecord',
                         method: "POST",
@@ -93,10 +93,13 @@
                         .then(function (response) {
                             // success
                             var data = angular.fromJson(response.data);
-
                             var data1 = angular.toJson(response.data);
                             alert("result data1  ---" + data1);
+                           // alert("result dataaaaaaaaaaaaaaaaaa ---" + data);
+                            $scope.searchHeartKid = true;
                             $scope.users = data;
+
+                            alert("$scope.users----"+$scope.users);
 
 
                         },
@@ -148,6 +151,10 @@
                     $scope.modifyuser = false;
                     $scope.searchuser = false;
                 }
+            }
+            $scope.clearall = function()
+            {
+                $scope.formAdminData = "";
             }
 
     }])

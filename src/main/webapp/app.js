@@ -7,6 +7,7 @@ angular.module('formApp', ['ui.router'])
 // =============================================================================
     .config(function($stateProvider, $urlRouterProvider) {
        // $httpProvider.interceptors.push('errorInterceptor');
+        alert("insode config");
         $stateProvider
             // route to show our basic form (/form)
             .state('form', {
