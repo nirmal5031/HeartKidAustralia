@@ -4,6 +4,8 @@ angular.module('loginApp')
 
 
         var accessToken = sessionStorage.getItem('tokenId');
+    /*var valuetoken = $scope.checktoken();
+        alert("valuetoken" +valuetoken);*/
 
         if(accessToken == null){
             sessionStorage.clear();
@@ -53,7 +55,9 @@ angular.module('loginApp')
                        $state.go('/home');
                     }
                 });
-            };
+            }
+
+
         }]);
    /* LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
     function LoginController($location, AuthenticationService, FlashService) {

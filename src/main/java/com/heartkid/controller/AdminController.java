@@ -159,6 +159,11 @@ public class AdminController {
 			    return status;
 			  }
 
-
-
+	 @RequestMapping(value="heartkid/tokenvalidate", method=RequestMethod.GET)
+		public String Validateaccesstoken(){
+		 String validatemessage = "tokenvalid";
+		 return validatemessage;
+		 
+	 }
+	 
 }

@@ -55,14 +55,45 @@
             var accessToken = sessionStorage.getItem('tokenId');
             console.log(accessToken);
             //alert("inside home sontroler"+accessToken);
-            if(accessToken == null){
+
+
+            $scope.$watch('$viewContentLoaded', function(){
+                var tokenvalid;
+
+                $http({
+                    url: 'heartkid/tokenvalidate',
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization': 'Bearer ' + accessToken
+                    }
+
+                })
+                    .then(function (response) {
+                        //
+localStorage.setItem('isTokenValid',true)
+                    },
+                    function (response) { // optional
+                        // failed
+                        tokenvalid=false;
+                        localStorage.setItem('isTokenValid',false)
+                    })
+            });
+           var istokenvalid = localStorage.getItem('isTokenValid');
+
+            if(accessToken == null ){
                 //alert("Null please go to login page");
               //  $state.go('/login');
                 $state.go('/login');
                // $location.path('http://localhost:8080/heartkidaustralia/adminindex.html#/login');
             }
-            else {
-                $scope.userroleArray = ["Administration", "Author","Contributor"];
+            if(accessToken!=null && istokenvalid==false)
+            {
+                $state.go('/login');
+            }
+
+  else {
+                $scope.userroleArray = ["Administration", "Author", "Contributor"];
                 $scope.showModal = false;
                 $scope.buttonClicked = "";
                 $scope.toggleModal = function (btnClicked) {
@@ -79,7 +110,7 @@
                     $scope.searchHeartKid = false;
                     var date = new Date().getDate() + "_" + new Date().getMonth() + "_" + new Date().getFullYear();
                     $http({
-                        url: 'heartkid/downloadExcel'   ,
+                        url: 'heartkid/downloadExcel',
                         method: "POST",
                         data: $scope.formAdminData,
                         headers: {
@@ -90,12 +121,12 @@
 
                         .success(function (data, status, headers, config) {
 
-                            if($scope.totalrecords>1000) {
+                            if ($scope.totalrecords > 1000) {
                                 var exporttoexcel = $window.confirm('There are more than 1000 records. Do you want to export to excel ?');
-                                if(exporttoexcel){
+                                if (exporttoexcel) {
                                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                     saveAs(blob, 'HeartKid_Results' + date + '.xls');
-                                } else{
+                                } else {
                                     $scope.ErrorMessage = "Please refine your search and try again";
                                 }
 
@@ -105,7 +136,7 @@
                                 saveAs(blob, 'HeartKid_Results' + date + '.xls');
 
                             }
- }).error(function (data, status, headers, config) {
+                        }).error(function (data, status, headers, config) {
                             //upload failed
                         })
 
@@ -134,7 +165,7 @@
                         url: 'heartkid/getrecord',
                         method: "POST",
                         headers: {
-                            'Authorization': 'Bearer '+accessToken
+                            'Authorization': 'Bearer ' + accessToken
                         },
 
                         data: $scope.formAdminData
@@ -149,7 +180,6 @@
                             $scope.totalrecords = data.length;
 
 
-
                         },
                         function (response) { // optional
                             // failed
@@ -158,115 +188,129 @@
                 }
 
 
+                $scope.showview = function (id) {
+                    alert("Show view---" + id);
 
-            }
-            $scope.showview = function(id)
-            {
-                alert("Show view---"+id);
-
-                if(id=='search')
-                {
-                    $scope.searchuser = true;
-                    $scope.modifyuser = true;
-                }
-                if(id=='modify')
-                {
-                    $scope.modifyuser = false;
-                    $scope.searchuser = false;
-                }
-            }
-            $scope.clearall = function()
-            {
-                $scope.formAdminData = "";
-            }
-            $scope.deleteuser = function(deluser)
-            {
-
-
-                $http({
-                    url: 'heartkid/deleterecord/'+deluser,
-                    method: "GET"
-                })
-                    .then(function (response) {
-                        // success
-                        $scope.deleteMessage=response.data;
-                        $scope.users="";
-                    },
-                    function (response) { // optional
-                        // failed
-                        $scope.deleteMessage="Error in deleting the record ! Try later";
-
-                    });
-
-            }
-            $scope.createadminuser = function()
-            {
-                              $http({
-                    url: 'heartkid/createadminuser',
-                    method: "POST",
-                    data: $scope.formAdminData
-                })
-                    .then(function (response) {
-                        // success
-
-                        if(response.data == "success"){
-                            $scope.formAdminData = "";
-                            var creationMessage = response.data + $scope.formAdminData.username;
-                            $scope.creationMessage ="User has been successfully created";
+                    if (id == 'search') {
+                        $scope.searchuser = true;
+                        $scope.modifyuser = true;
                     }
-                        else if(response.data == "useridexist")
-                        {
-                            $scope.creationMessage ='User ID is not available . Please choose different user ID';
-                        }
-                        else
-                        {
-                            $scope.formAdminData = "";
-
-                            $scope.creationMessage ="Error in creating a user. Please try again later";
-                        }
-                    },
-                    function (response) { // optional
-                        // failed
-                        alert("Failure" + response.status);
-                    });
-
-            }
-
-            $scope.logoutadmin = function() {
-               // var accessToken = sessionStorage.getItem('tokenId');
-                $http({
-                    url: 'token/revoke',
-                    method: "DELETE",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization': 'Basic ' + accessToken
+                    if (id == 'modify') {
+                        $scope.modifyuser = false;
+                        $scope.searchuser = false;
                     }
-
-                })
-                    .then(function (response) {
-                        //
-
-
-                    },
-                    function (response) { // optional
-                        // failed
+                }
+                $scope.clearall = function () {
+                    $scope.formAdminData = "";
+                }
+                $scope.deleteuser = function (deluser) {
 
 
-                    });
+                    $http({
+                        url: 'heartkid/deleterecord/' + deluser,
+                        method: "GET"
+                    })
+                        .then(function (response) {
+                            // success
+                            $scope.deleteMessage = response.data;
+                            $scope.users = "";
+                        },
+                        function (response) { // optional
+                            // failed
+                            $scope.deleteMessage = "Error in deleting the record ! Try later";
 
-                if(accessToken != null){
-                    sessionStorage.clear();
-                    $scope.isValidUser = false;
-                    $state.go('/login');
+                        });
 
                 }
-                else
-                {
-                    $state.go('/login');
+                $scope.createadminuser = function () {
+                    $http({
+                        url: 'heartkid/createadminuser',
+                        method: "POST",
+                        data: $scope.formAdminData
+                    })
+                        .then(function (response) {
+                            // success
+
+                            if (response.data == "success") {
+                                $scope.formAdminData = "";
+                                var creationMessage = response.data + $scope.formAdminData.username;
+                                $scope.creationMessage = "User has been successfully created";
+                            }
+                            else if (response.data == "useridexist") {
+                                $scope.creationMessage = 'User ID is not available . Please choose different user ID';
+                            }
+                            else {
+                                $scope.formAdminData = "";
+
+                                $scope.creationMessage = "Error in creating a user. Please try again later";
+                            }
+                        },
+                        function (response) { // optional
+                            // failed
+                            alert("Failure" + response.status);
+                        });
+
                 }
+
+                $scope.logoutadmin = function () {
+                    // var accessToken = sessionStorage.getItem('tokenId');
+                    alert("loguoy");
+                    $http({
+                        url: 'token/revoke',
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                            'Authorization': 'Basic ' + accessToken
+                        }
+
+                    })
+                        .then(function (response) {
+                            //
+
+
+                        },
+                        function (response) { // optional
+                            // failed
+
+
+                        });
+
+                    if (accessToken != null) {
+                        sessionStorage.clear();
+                        $scope.isValidUser = false;
+                        $state.go('/login');
+
+                    }
+                    else {
+                        $state.go('/login');
+                    }
+                }
+
+                $scope.checktoken = function () {
+                    alert("check token ---");
+                    var accessToken = sessionStorage.getItem('tokenId');
+                    $http({
+                        url: 'heartkid/tokenvalidate',
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                            'Authorization': 'Basic ' + accessToken
+                        }
+
+                    })
+                        .then(function (response) {
+                            //
+                            alert("successs validate token" + response.data);
+                        },
+                        function (response) { // optional
+                            // failed
+                            alert("Error respomse----->" + response.data);
+                        })
+                }
+
             }
 
-    }])
+        }])
 
 })();
 

@@ -33,7 +33,6 @@ com\heartkid\repository\DiseaseQuantRepository.class
 com\heartkid\repository\OutHospitalRepository.class
 com\heartkid\util\Dategenerator.class
 com\heartkid\service\LoginService.class
-com\heartkid\controller\AdminController.class
 com\heartkid\service\SearchService.class
 com\heartkid\oauth\OAuth2ServerConfiguration$CustomAuthenticator$CustomAuthentication.class
 com\heartkid\util\ReferenceNumGenerator.class

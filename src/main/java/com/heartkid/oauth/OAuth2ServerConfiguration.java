@@ -93,7 +93,7 @@ public class OAuth2ServerConfiguration {
                     this.authenticationManager);
             // @formatter:on
         }
-
+      
         @Override
         public void configure(ClientDetailsServiceConfigurer clients)
                 throws Exception {
@@ -139,6 +139,8 @@ public class OAuth2ServerConfiguration {
             http.authorizeRequests()
                  .antMatchers("/heartkid/getrecord")
                     .authenticated()
+                    .antMatchers("/heartkid/tokenvalidate")
+                    .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
                    .antMatchers("/heartkid/deleterecord/**")
@@ -148,7 +150,6 @@ public class OAuth2ServerConfiguration {
                     .and()
                     .addFilterAfter(customFilter,
                             AbstractPreAuthenticatedProcessingFilter.class);
-          
         }
 
     }
