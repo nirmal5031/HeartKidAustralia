@@ -3,7 +3,13 @@
 
     angular
         .module('loginApp', ['ui.router','angularUtils.directives.dirPagination'])
+        .service('dataService', function() {
 
+            // private variable
+            var dataObj;
+
+            this.dataObj = dataObj;
+        })
         .config(function($stateProvider, $urlRouterProvider) {
             // $httpProvider.interceptors.push('errorInterceptor');
             $stateProvider
@@ -12,29 +18,30 @@
                 // each of these sections will have their own view
                 // url will be nested (/form/profile)
                 .state('form', {
-                    url: '/home',
+                    url: '/form',
+                    controller: 'HomeController',
                     templateUrl: 'admin-views/home/home.view.html'
                 })
                 .state('form.search', {
-                    url: '/search',
+                    url: '/home',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/search.view.html'
 
                 })
                 .state('form.modify', {
-                    url: '/modify',
+                    url: '/home',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/modify.view.html'
 
                 })
                 .state('form.export', {
-                    url: '/export',
+                    url: '/home',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/export.view.html'
 
                 })
                 .state('form.manage', {
-                    url: '/manage',
+                    url: '/home',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/manage.view.html'
 
@@ -50,12 +57,13 @@
                     templateUrl: 'admin-views/home/home.view.html'
                 })
                 .state('/register', {
+                    url: '/home',
                     controller: 'RegisterController',
                     templateUrl: 'admin-views/register/register.view.html'
 
                 })
                 .state('/modify', {
-                    url: '/research',
+                    url: '/home',
                     templateUrl: 'admin-views/modify/modify.view.html'
                 })
 

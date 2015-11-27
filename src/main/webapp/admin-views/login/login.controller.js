@@ -1,7 +1,10 @@
 ﻿'use strict';
 angular.module('loginApp')
-        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state', function ($scope, AuthenticationService, LoginService,$state) {
-         var accessToken = sessionStorage.getItem('tokenId');
+        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state','dataService','$rootScope', function ($scope, AuthenticationService, LoginService,$state,dataService,$rootScope) {
+
+
+        var accessToken = sessionStorage.getItem('tokenId');
+
         if(accessToken == null){
             sessionStorage.clear();
             $scope.isValidUser = false;
@@ -11,16 +14,16 @@ angular.module('loginApp')
             $state.go('/home');
         }
 
-
+        localStorage.clear();
             $scope.login = function () {
 
-                alert("Scope VM value-->"+$scope.vm.heartkidusername);
+
                 var request = "/" + $scope.vm.heartkidusername + "/" + $scope.vm.heartkidpassword;
 
                 LoginService.loginCustomer(request).then(function (successData) {
-                    alert("Login service Success data"+successData.status);
+
                     if (successData.status === "success") {
-                        sessionStorage.setItem('menuItems', JSON.stringify(successData));
+                        sessionStorage.setItem('userrole',successData.userrole );
                         $scope.getAuthentionToken();
                     }
                     else {
@@ -46,7 +49,7 @@ angular.module('loginApp')
                     if (successData.access_token) {
                         sessionStorage.setItem('tokenId', successData.access_token);
                       //  $state.go('menu');
-                        alert("token is--->"+successData.access_token);
+
                        $state.go('/home');
                     }
                 });

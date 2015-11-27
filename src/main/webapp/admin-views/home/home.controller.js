@@ -18,9 +18,42 @@
             };
         })
 
-    .controller('HomeController',['$scope', '$http','$state','$window', function($scope,$http,$state,$window) {
+        .directive("passwordVerify", function() {
+            return {
+                require: "ngModel",
+                scope: {
+                    passwordVerify: '='
+                },
+                link: function(scope, element, attrs, ctrl) {
+                    scope.$watch(function() {
+                        var combined;
+
+                        if (scope.passwordVerify || ctrl.$viewValue) {
+                            combined = scope.passwordVerify + '_' + ctrl.$viewValue;
+                        }
+                        return combined;
+                    }, function(value) {
+                        if (value) {
+                            ctrl.$parsers.unshift(function(viewValue) {
+                                var origin = scope.passwordVerify;
+                                if (origin !== viewValue) {
+                                    ctrl.$setValidity("passwordVerify", false);
+                                    return undefined;
+                                } else {
+                                    ctrl.$setValidity("passwordVerify", true);
+                                    return viewValue;
+                                }
+                            });
+                        }
+                    });
+                }
+            };
+        })
+
+    .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
 
             var accessToken = sessionStorage.getItem('tokenId');
+            console.log(accessToken);
             //alert("inside home sontroler"+accessToken);
             if(accessToken == null){
                 //alert("Null please go to login page");
@@ -72,13 +105,7 @@
                                 saveAs(blob, 'HeartKid_Results' + date + '.xls');
 
                             }
-
-
-
-
-
-
-                        }).error(function (data, status, headers, config) {
+ }).error(function (data, status, headers, config) {
                             //upload failed
                         })
 
@@ -106,6 +133,10 @@
                     $http({
                         url: 'heartkid/getrecord',
                         method: "POST",
+                        headers: {
+                            'Authorization': 'Bearer '+accessToken
+                        },
+
                         data: $scope.formAdminData
                     })
                         .then(function (response) {
@@ -126,32 +157,7 @@
                         });
                 }
 
-                $scope.logoutadmin = function() {
 
-                    alert("logging out admin fucntion");
-
-                    $http({
-                        url: 'heartkid/getrecord',
-                        method: "POST",
-                        data: $scope.formAdminData
-                    })
-                        .then(function (response) {
-                            // success
-                            var data = angular.fromJson(response.data);
-
-                            var data1 = angular.toJson(response.data);
-                            alert("result data1  ---" + data1);
-                            $scope.users = data;
-
-
-                        },
-                        function (response) { // optional
-                            // failed
-                            alert("Failure" + response.status);
-                        });
-
-
-                }
 
             }
             $scope.showview = function(id)
@@ -225,6 +231,41 @@
                     });
 
             }
+
+            $scope.logoutadmin = function() {
+               // var accessToken = sessionStorage.getItem('tokenId');
+                $http({
+                    url: 'token/revoke',
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization': 'Basic ' + accessToken
+                    }
+
+                })
+                    .then(function (response) {
+                        //
+
+
+                    },
+                    function (response) { // optional
+                        // failed
+
+
+                    });
+
+                if(accessToken != null){
+                    sessionStorage.clear();
+                    $scope.isValidUser = false;
+                    $state.go('/login');
+
+                }
+                else
+                {
+                    $state.go('/login');
+                }
+            }
+
     }])
 
 })();

@@ -71,11 +71,10 @@
             <th ng-click="sort('surveystatus')">Status
                 <span class="glyphicon sort-icon" ng-show="sortKey=='surveystatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             </th>
-
         </tr>
 
         <tr dir-paginate="a in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
-            <td>{{a.id}}</td>
+            <td>{{$index+1}}</td>
             <td>{{a.referencenumber}}</td>
             <td>{{a.firstname}}</td>
             <td>{{a.lastname}}</td>

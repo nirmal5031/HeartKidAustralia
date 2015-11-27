@@ -34,11 +34,15 @@
     </div>
     <div class="control">
         <label class=" col-sm-2">Password<em>*</em></label>
-        <input type="text" name="passwrd" id="passwrd"  class="textfeildname yellow" ng-model="formAdminData.password"  />
+        <input type="password" name="password" id="passwrd"  class="textfeildname yellow" required  ng-model="formAdminData.password"  />
+        <div ng-show="formAdminData.password.$error.required">
+            Field required</div>
     </div>
     <div class="control">
         <label class=" col-sm-2">Confirm Password<em>*</em></label>
-        <input type="text" name="confrmpasswrd" id="confrmpasswrd"  class="textfeildname yellow"   />
+        <input type="password" name='confirm_password'  id="confrmpasswrd" ng-model="formAdminData.confirm_password" required  class="textfeildname yellow"   />
+        <div ng-show="formAdminData.confirm_password.$error.passwordVerify">
+            Confirm password does not match with password entered. </div>
     </div>
     <br>
     <br>

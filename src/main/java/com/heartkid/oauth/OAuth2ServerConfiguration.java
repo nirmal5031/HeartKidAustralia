@@ -137,11 +137,11 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                 .antMatchers("heartkid/downloadExcel/**")
+                 .antMatchers("/heartkid/getrecord")
                     .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
-                   .antMatchers("heartkid/login/**/**")
+                   .antMatchers("/heartkid/deleterecord/**")
                    .permitAll()
                    //   .antMatchers("heartkidaustralia/index.html/**")
                     //.permitAll()

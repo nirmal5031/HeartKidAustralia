@@ -15,7 +15,6 @@ com\heartkid\repository\BurdenDiseaseRepository.class
 com\heartkid\exception\HeartkidBadRequestException.class
 com\heartkid\repository\QualityCareRepository.class
 com\heartkid\oauth\OAuth2ServerConfiguration$ResourceServerConfiguration.class
-com\heartkid\util\DecryptPassword.class
 com\heartkid\service\EditHearkidUserService.class
 com\heartkid\oauth\WebSecurityConfiguration.class
 com\heartkid\oauth\RevokeTokenController.class
