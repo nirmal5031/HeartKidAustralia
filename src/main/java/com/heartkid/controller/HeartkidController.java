@@ -205,15 +205,13 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	        	outhospitalentity.setRegistrationdate(dategenerator.dategenerator());
 	        	outhospitalentity.setSurveystatus("success");
 	        	RegisterDtoEntity resp = personalrepository.save(outhospitalentity);
-	        	
+	        	System.out.println("MAIL TO USER "+resp.getEmail());
 	        	if(resp.getSurveystatus() == "success")
 	        	{
-	        		
-	        		
 	        		response = "success";
 	        		try
 	        		{
-	        			
+	        			mailingclass.mailingservice(resp.getEmail(), "nirmal5031@gmail.com");
 	        		}catch (Exception mex) {
 	        	         mex.printStackTrace();
 	        	      }

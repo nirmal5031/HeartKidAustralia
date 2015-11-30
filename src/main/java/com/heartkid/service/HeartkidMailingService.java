@@ -9,6 +9,7 @@ import javax.activation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.heartkid.controller.HeartkidController;
@@ -19,10 +20,15 @@ import com.heartkid.util.Constants;
 public class HeartkidMailingService {
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(HeartkidMailingService.class);
-
+	
+	@Value("${mailfromId}")
+    public String fromMailId;
+	
+	
 	public String mailingservice(String to, String from)
 	{
 		
+	System.out.println("MAIL FROM ID----"+fromMailId);
 		String response;
     // Assuming you are sending email from localhost
     //String host = "mailhost.qantas.com.au";
