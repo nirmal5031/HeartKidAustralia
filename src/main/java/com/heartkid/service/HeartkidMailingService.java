@@ -23,9 +23,13 @@ public class HeartkidMailingService {
 	
 	@Value("${mailfromId}")
     public String fromMailId;
+	@Value("${mail.smtp.host}")
+	  public String Host;
+	@Value("${mail.smtp.port}")
+	  public String Port;
 	
 	
-	public String mailingservice(String to, String from)
+	public String mailingservice(String to)
 	{
 		
 	System.out.println("MAIL FROM ID----"+fromMailId);
@@ -37,12 +41,12 @@ public class HeartkidMailingService {
     Properties props = System.getProperties();
     // Setup mail server
    // properties.setProperty("mail.smtp.host", host);
-    props.put("mail.smtp.host", Constants.MAILHOST);
-    props.put("mail.smtp.socketFactory.port", "8080");
+    props.put("mail.smtp.host", Host);
+   /* props.put("mail.smtp.socketFactory.port", Port);
     props.put("mail.smtp.socketFactory.class",
-            "javax.net.ssl.SSLSocketFactory");
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.port", "Constants.MAILPORT");
+            "javax.net.ssl.SSLSocketFactory");*/
+    //props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.port", Port);
     // Get the default Session object.
     Session session = Session.getDefaultInstance(props);
 
@@ -51,14 +55,16 @@ public class HeartkidMailingService {
        MimeMessage message = new MimeMessage(session);
 
        // Set From: header field of the header.
-       message.setFrom(new InternetAddress(from));
+       message.setFrom(new InternetAddress(fromMailId));
 
        // Set To: header field of the header.
        message.addRecipient(Message.RecipientType.TO,
                                 new InternetAddress(to));
 
        // Set Subject: header field
-       message.setSubject("This is the Subject Line!");
+       message.setSubject("Thank you for registration!");
+       
+       message.setSentDate(new Date());
 
        // Create the message part 
        BodyPart messageBodyPart = new MimeBodyPart();
@@ -73,12 +79,12 @@ public class HeartkidMailingService {
        multipart.addBodyPart(messageBodyPart);
 
        // Part two is attachment
-       messageBodyPart = new MimeBodyPart();
-       String filename = "file.txt";
-       DataSource source = new FileDataSource(filename);
-       messageBodyPart.setDataHandler(new DataHandler(source));
-       messageBodyPart.setFileName(filename);
-       multipart.addBodyPart(messageBodyPart);
+	      /* messageBodyPart = new MimeBodyPart();
+	       String filename = "file.txt";
+	       DataSource source = new FileDataSource(filename);
+	       messageBodyPart.setDataHandler(new DataHandler(source));
+	       messageBodyPart.setFileName(filename);
+	       multipart.addBodyPart(messageBodyPart);*/
 
        // Send the complete message parts
        message.setContent(multipart );

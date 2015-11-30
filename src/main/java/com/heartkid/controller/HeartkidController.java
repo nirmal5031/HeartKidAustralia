@@ -211,7 +211,7 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	        		response = "success";
 	        		try
 	        		{
-	        			mailingclass.mailingservice(resp.getEmail(), "nirmal5031@gmail.com");
+	        			//mailingclass.mailingservice(resp.getEmail());
 	        		}catch (Exception mex) {
 	        	         mex.printStackTrace();
 	        	      }
@@ -261,8 +261,8 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 @RequestMapping(value="heartkid/sendmail", method=RequestMethod.GET)
 public  String sendmail(){
 	
-	String response=null;
 	
-	return response;
+	String response1 = mailingclass.mailingservice("nirmakumar@yahoo.com");
+	return response1;
 }
 	}
