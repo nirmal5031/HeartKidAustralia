@@ -53,13 +53,10 @@
     .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
 
             var accessToken = sessionStorage.getItem('tokenId');
+
             console.log(accessToken);
-            //alert("inside home sontroler"+accessToken);
-
-
-            $scope.$watch('$viewContentLoaded', function(){
+                   $scope.$watch('$viewContentLoaded', function(){
                 var tokenvalid;
-
                 $http({
                     url: 'heartkid/tokenvalidate',
                     method: "GET",
@@ -70,30 +67,43 @@
 
                 })
                     .then(function (response) {
-                        //
-localStorage.setItem('isTokenValid',true)
+
+            localStorage.setItem('isTokenValid',true);
+
                     },
                     function (response) { // optional
-                        // failed
+
                         tokenvalid=false;
-                        localStorage.setItem('isTokenValid',false)
+                        localStorage.setItem('isTokenValid',false);
+
                     })
             });
            var istokenvalid = localStorage.getItem('isTokenValid');
 
+            alert("aisTokenValid --->"+istokenvalid+"----Access token"+accessToken);
             if(accessToken == null ){
-                //alert("Null please go to login page");
-              //  $state.go('/login');
+
                 $state.go('/login');
-               // $location.path('http://localhost:8080/heartkidaustralia/adminindex.html#/login');
+
             }
-            if(accessToken!=null && istokenvalid==false)
+            else if(accessToken!=null && istokenvalid == false)
             {
                 $state.go('/login');
             }
 
-  else {
-                $scope.userroleArray = ["Administration", "Author", "Contributor"];
+            else {
+                var userroletype = sessionStorage.getItem('userrole');
+
+                if(userroletype != "null" && userroletype == "Admin")
+                {
+
+                    $scope.admin=true;
+
+            }else{
+
+                    $scope.admin=false;
+                }
+                $scope.userroleArray = ["Admin", "Viewer","Other"];
                 $scope.showModal = false;
                 $scope.buttonClicked = "";
                 $scope.toggleModal = function (btnClicked) {
@@ -146,9 +156,9 @@ localStorage.setItem('isTokenValid',true)
                 $scope.statusArray = ["incomplete", "success"];
 
                 $scope.modifyuser = function (a) {
-                    alert("value of a is" + a);
+
                     var b = $.parseJSON(angular.fromJson(a));
-                    alert("bbbbb" + b);
+
 
                     $scope.formAdminData = a;
 
@@ -189,7 +199,7 @@ localStorage.setItem('isTokenValid',true)
 
 
                 $scope.showview = function (id) {
-                    alert("Show view---" + id);
+
 
                     if (id == 'search') {
                         $scope.searchuser = true;
@@ -254,7 +264,7 @@ localStorage.setItem('isTokenValid',true)
 
                 $scope.logoutadmin = function () {
                     // var accessToken = sessionStorage.getItem('tokenId');
-                    alert("loguoy");
+
                     $http({
                         url: 'token/revoke',
                         method: "DELETE",
@@ -277,17 +287,20 @@ localStorage.setItem('isTokenValid',true)
 
                     if (accessToken != null) {
                         sessionStorage.clear();
+                        localStorage.clear();
                         $scope.isValidUser = false;
                         $state.go('/login');
 
                     }
                     else {
+                        sessionStorage.clear();
+                        localStorage.clear();
                         $state.go('/login');
                     }
                 }
 
                 $scope.checktoken = function () {
-                    alert("check token ---");
+
                     var accessToken = sessionStorage.getItem('tokenId');
                     $http({
                         url: 'heartkid/tokenvalidate',
@@ -300,7 +313,7 @@ localStorage.setItem('isTokenValid',true)
                     })
                         .then(function (response) {
                             //
-                            alert("successs validate token" + response.data);
+
                         },
                         function (response) { // optional
                             // failed

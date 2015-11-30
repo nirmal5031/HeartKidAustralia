@@ -22,12 +22,12 @@
                     <div id="divleft"> <div class="list-group panel">
                          <a ui-sref="form.search" style="cursor: pointer;" class="list-group-item list-group-item-success" data-parent="#MainMenu">Search</a>
 
-                        <a ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
+                        <a ng-show="admin" ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
 
-                        <a ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
+                        <a  ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
 
                         <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
-                        <a ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
+                        <a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
 
 
                     </div></div>

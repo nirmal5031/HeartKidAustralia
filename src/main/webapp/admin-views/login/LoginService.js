@@ -8,7 +8,7 @@ app.service('LoginService', ['$http', '$q', 'LOGIN_URL', function($http, $q, LOG
 
         $http.post(LOGIN_URL+request).success(function(data) {
             deferred.resolve(data);
-            alert("data resolve loginservice "+data);
+
         }).error(function(data) {
             deferred.reject(data);
         });

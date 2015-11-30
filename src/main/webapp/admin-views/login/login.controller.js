@@ -4,11 +4,9 @@ angular.module('loginApp')
 
 
         var accessToken = sessionStorage.getItem('tokenId');
-    /*var valuetoken = $scope.checktoken();
-        alert("valuetoken" +valuetoken);*/
-
         if(accessToken == null){
             sessionStorage.clear();
+            localStorage.clear();
             $scope.isValidUser = false;
             $state.go('/login');
             }
@@ -16,11 +14,9 @@ angular.module('loginApp')
             $state.go('/home');
         }
 
-        localStorage.clear();
+
             $scope.login = function () {
-
-
-                var request = "/" + $scope.vm.heartkidusername + "/" + $scope.vm.heartkidpassword;
+            var request = "/" + $scope.vm.heartkidusername + "/" + $scope.vm.heartkidpassword;
 
                 LoginService.loginCustomer(request).then(function (successData) {
 
