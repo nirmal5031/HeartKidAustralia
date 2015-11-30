@@ -22,14 +22,14 @@
                 <h4 class="headervalue">Please enter the details below</h4>
                 <div class="control" ng-class="{'has-error': userForm.firstname.$dirty && userForm.firstname.$error.required}">
                     <label class=" col-sm-2">First Name <em>*</em></label>
-                    <input type="text" name="firstname" id="frstname" ng-pattern="/^\b(?:[A-Z]\w+\b(?:\s*)?)+$/" class="textfeildname yellow" ng-model="formData.firstname" required />
+                    <input type="text" name="firstname" id="frstname"  class="textfeildname yellow" ng-model="formData.firstname" required />
 					<p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">First Name is Required.</p>
 					<p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter valid Name.</p>
 					
                 </div>
                 <div class="control" ng-class="{'has-error': userForm.lastname.$dirty && userForm.lastname.$error.required}">
                     <label class=" col-sm-2">Last Name <em>*</em></label>
-                    <input type="text"  name="lastname" value="" ng-pattern="/^\b(?:[A-Z]\w+\b(?:\s*)?)+$/" class="textfeildname yellow" ng-model="formData.lastname" required/>
+                    <input type="text"  name="lastname" value=""  class="textfeildname yellow" ng-model="formData.lastname" required/>
 					<p ng-show="userForm.lastname.$dirty && userForm.lastname.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter Last Name.</p>
 					<p ng-show="userForm.firstname.$dirty && userForm.lastname.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter valid Name.</p>
 					
@@ -169,9 +169,11 @@
 </div>
 <script>
     $( document ).ready(function() {
+        var date = new Date();
+        var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
         $(".datepicker").datepicker({
-            dateFormat: "dd/mm/yy",
-            yearRange: "1950:2016d3",
+            maxDate:new Date(y, m, d),
+            yearRange: '-90:+1M',
             changeMonth: true,
             changeYear: true
         });
