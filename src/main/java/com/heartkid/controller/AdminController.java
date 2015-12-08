@@ -46,7 +46,7 @@ public class AdminController {
 	@RequestMapping(value="heartkid/getrecord", method=RequestMethod.POST)
 	public  List<RegisterDtoEntity> getrecordheartkid(@RequestBody RegisterDtoEntity searchentity){
 		
-		 String jsonInString = null;
+		 //String jsonInString = null;
 		 try{
 			 System.out.println("Search referen"+searchentity.getReferencenumber());
 			 System.out.println("Search userti"+searchentity.getUsertype());
@@ -68,7 +68,7 @@ public class AdminController {
 	@RequestMapping(value="heartkid/getrecordinexcel", method=RequestMethod.POST)
 	public  List<RegisterDtoEntity> getrecordheartkidexcel(@RequestBody RegisterDtoEntity searchentity){
 		
-		 String jsonInString = null;
+		
 		 try{
 			 System.out.println("Search referen"+searchentity.getReferencenumber());
 			 System.out.println("Search userti"+searchentity.getUsertype());
@@ -149,8 +149,7 @@ public class AdminController {
 				{
 					 status = "useridexist";
 				}
-			
-			 }
+						 }
 			 catch (Exception ex) {
 				 status = "fail";
 			     System.out.println("ERROR in Creating user"+ex.toString());

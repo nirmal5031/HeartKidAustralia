@@ -29,13 +29,15 @@ public class LoginService {
 			 if(heartkidUsername != null){
 				 useridexist = repository.checkuserID(heartkidUsername);
 			 }
-			 if(useridexist==1){
-		 loginentity = repository.findOne(heartkidUsername);
+			 if(useridexist==1)
+			 {
+		    loginentity = repository.findOne(heartkidUsername);
 			newpassword = EncrptDecryptPassword.decrypt(loginentity.getPassword());
 			System.out.println("New pass------->>>>"+newpassword);
 		
 		  if((loginentity.getUsername().equalsIgnoreCase(heartkidUsername)) & (newpassword.equals(password)))
 				 {
+			  
 			  loginentity.setStatus("success");
 			// loginentity.setErrorMessage(errorMessage);		
 		 }
@@ -48,7 +50,8 @@ public class LoginService {
 			
 			 }
 		 
-		 }else
+		 }
+			 else
 		 {
 			 loginentity.setStatus("NOUSER");
 		 }

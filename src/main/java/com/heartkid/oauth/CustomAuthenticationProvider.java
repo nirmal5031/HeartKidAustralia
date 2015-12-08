@@ -27,17 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> grantedAuths = null;
         String heartkidnumber = authentication.getName();
         String password = authentication.getCredentials().toString();
-        //boolean loginState = directoryService.con(heartkidnumber, password);
-        /*if (loginState) {
-            List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            auth = new UsernamePasswordAuthenticationToken(heartkidnumber,
-                    password, grantedAuths);
-            return auth;
-        } else {
-            return auth;
-        }*/
-        
+       
         grantedAuths = new ArrayList<GrantedAuthority>();
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
         auth = new UsernamePasswordAuthenticationToken(heartkidnumber, password, grantedAuths);

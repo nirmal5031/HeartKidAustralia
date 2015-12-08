@@ -143,10 +143,6 @@ public class OAuth2ServerConfiguration {
                     .authenticated()
                     .antMatchers("/token/revoke")
                     .permitAll()
-                   .antMatchers("/heartkid/deleterecord/**")
-                   .permitAll()
-                   //   .antMatchers("heartkidaustralia/index.html/**")
-                    //.permitAll()
                     .and()
                     .addFilterAfter(customFilter,
                             AbstractPreAuthenticatedProcessingFilter.class);
@@ -195,7 +191,7 @@ public class OAuth2ServerConfiguration {
                             accessToken);
 
                     df.setExpiration(new Date(System.currentTimeMillis()
-                            + (60 * 1000)));
+                            + (1800 * 1000)));
 
                     tokenStore.storeAccessToken(df, oAuth);
                 }

@@ -56,7 +56,8 @@
 
             console.log(accessToken);
                    $scope.$watch('$viewContentLoaded', function(){
-                var tokenvalid;
+
+          //     alert("checking token");
                 $http({
                     url: 'heartkid/tokenvalidate',
                     method: "GET",
@@ -68,42 +69,31 @@
                 })
                     .then(function (response) {
 
-            localStorage.setItem('isTokenValid',true);
+            sessionStorage.setItem('isTokenValid',true);
 
                     },
                     function (response) { // optional
-
-                        tokenvalid=false;
-                        localStorage.setItem('isTokenValid',false);
+                        sessionStorage.setItem('isTokenValid',false);
 
                     })
             });
-           var istokenvalid = localStorage.getItem('isTokenValid');
 
-            alert("aisTokenValid --->"+istokenvalid+"----Access token"+accessToken);
-            if(accessToken == null ){
+            var istokenvalid = sessionStorage.getItem('isTokenValid');
 
-                $state.go('/login');
-
-            }
-            else if(accessToken!=null && istokenvalid == false)
-            {
+          //  alert("aisTokenValid --->"+istokenvalid+"----Access token"+accessToken);
+            if(accessToken == null) {
                 $state.go('/login');
             }
-
             else {
                 var userroletype = sessionStorage.getItem('userrole');
 
                 if(userroletype != "null" && userroletype == "Admin")
                 {
-
                     $scope.admin=true;
-
             }else{
-
-                    $scope.admin=false;
+                    $scope.admin=true;
                 }
-                $scope.userroleArray = ["Admin", "Viewer","Other"];
+                $scope.userroleArray = ["Admin", "Viewer"];
                 $scope.showModal = false;
                 $scope.buttonClicked = "";
                 $scope.toggleModal = function (btnClicked) {
@@ -210,9 +200,11 @@
                         $scope.searchuser = false;
                     }
                 }
+
                 $scope.clearall = function () {
                     $scope.formAdminData = "";
                 }
+
                 $scope.deleteuser = function (deluser) {
 
 
