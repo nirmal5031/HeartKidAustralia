@@ -13,6 +13,4 @@ public interface PersonalInfoRepository extends CrudRepository<RegisterDtoEntity
 	
 	@Query("select count(u) from RegisterDtoEntity u")
 	int registationcount ();
-	
-
 }

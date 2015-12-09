@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heartkid.model.entity.RegisterDtoEntity;
 import com.heartkid.repository.BurdenDiseaseRepository;
 import com.heartkid.repository.DiseaseQuantRepository;
+import com.heartkid.repository.HeartKidReportRepository;
 import com.heartkid.repository.HeartkidRepository;
 import com.heartkid.repository.OutHospitalRepository;
 import com.heartkid.repository.PersonalInfoRepository;
@@ -49,6 +50,8 @@ private ReferenceNumGenerator refnumber;
 @Autowired
 private RandomNumGenerator randomnumber;
 
+@Autowired
+private HeartKidReportRepository heartkidrepository;
 
 @Autowired
 private ObjectMapper mapper;
@@ -71,6 +74,30 @@ public  String registrationcount(){
 	      return "Error creating the entry: " + ex.toString();
 	    }
 	return regcount;	
+}
+
+@RequestMapping(value="heartkid/regcount1", method=RequestMethod.GET)
+public  String registrationcount1(){
+	LOGGER.info("Report Screen for the request-----> ::" );
+	String regcount1;
+	String carerCountNo;
+	String LovedoneNo;
+	try
+	{
+	 String regcountnumber = heartkidrepository.patienttioncount();
+	 String carercount = heartkidrepository.carercount();
+	 String Lovedone = heartkidrepository.lovedcount();
+	 regcount1=regcountnumber;
+	 carerCountNo= carercount;
+	 LovedoneNo = Lovedone;
+	}
+	 catch (Exception ex) {
+	      return "Error creating the entry: " + ex.toString();
+	    }
+	regcount1 = regcount1.concat(",");
+	regcount1 = regcount1.concat(carerCountNo.concat(","));
+	regcount1 = regcount1.concat(LovedoneNo);
+	return regcount1;	
 }
 
 
@@ -138,6 +165,8 @@ public  String savediseasequant(@RequestBody RegisterDtoEntity diseasequant){
 
 @RequestMapping(value="heartkid/burdendisease", method=RequestMethod.POST)
 public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
+	
+	LOGGER.info("Save burden Disease of the request :::::::::::" +burdendisease.getId());
 	 try{
 		 burdendisease.setRegistrationdate(dategenerator.dategenerator());
 	     
@@ -159,6 +188,7 @@ public  String saveburdendisease(@RequestBody RegisterDtoEntity burdendisease){
 
 @RequestMapping(value="heartkid/producteducation", method=RequestMethod.POST)
 public  String producteducation(@RequestBody RegisterDtoEntity producteduentity){
+	LOGGER.info("Save for product education :::::::::::" +producteduentity.getId());
 	 try{
 		 producteduentity.setRegistrationdate(dategenerator.dategenerator());
 	        if (producteduentity != null){
@@ -178,6 +208,7 @@ public  String producteducation(@RequestBody RegisterDtoEntity producteduentity)
 
 @RequestMapping(value="heartkid/qualitycare", method=RequestMethod.POST)
 public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
+	LOGGER.info("Quality care for product education :::::::::::" +qualitycareentity.getId());
 	 try{
 		 
 	        if (qualitycareentity != null){
@@ -199,6 +230,9 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 
 @RequestMapping(value="heartkid/outhospital", method=RequestMethod.POST)
 	public  String outhospital(@RequestBody RegisterDtoEntity outhospitalentity) throws MessagingException{
+	
+	LOGGER.info("Quality care for product education :::::::::::" +outhospitalentity.getId());
+	
 	String response = null;
 	 try{
 	        if (outhospitalentity != null){
@@ -233,13 +267,10 @@ public  String qualitycare(@RequestBody RegisterDtoEntity qualitycareentity){
 	 
 	    return response;
 	  }
-
-
-
-	
 		
 @RequestMapping(value="heartkid/updaterecord", method=RequestMethod.POST)
 	public  String updaterecordheartkid(@RequestParam(value="updaterecordref", defaultValue="") String updaterecordref,@RequestBody RegisterDtoEntity registration){
+	LOGGER.info("Update the record :::::::::::" +updaterecordref);
 			 try{
 			        if (registration != null){
 			        	repository.save(registration);
