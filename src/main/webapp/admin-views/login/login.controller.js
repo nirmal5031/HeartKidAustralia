@@ -22,6 +22,7 @@ angular.module('loginApp')
 
                     if (successData.status === "success") {
                         sessionStorage.setItem('userrole',successData.userrole );
+                        sessionStorage.setItem('adminuser',successData.firstname+" "+ successData.lastname);
                         $scope.getAuthentionToken();
                     }
                     else {
@@ -48,7 +49,7 @@ angular.module('loginApp')
                         sessionStorage.setItem('tokenId', successData.access_token);
                       //  $state.go('menu');
 
-                       $state.go('/home');
+                       $state.go('form.welcome');
                     }
                 });
             }

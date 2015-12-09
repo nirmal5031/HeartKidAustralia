@@ -189,12 +189,14 @@ public class AdminController {
 				 }
 				return response;
 	 }
+	 
 	 List<CreateAdminUser> fetchadminuser  =  new ArrayList<CreateAdminUser>();	
-	 @RequestMapping(value="heartkid/fetchadminuser", method=RequestMethod.POST)
-		public  List<CreateAdminUser> fetchadminuser(@RequestParam(value="username") Long username){
+	 @RequestMapping(value="heartkid/fetchadminuser/{username}", method=RequestMethod.GET)
+		public  List<CreateAdminUser> fetchadminuser(@PathVariable(value="username") String username){
 				 try{
 		System.out.println("FETCH ADMIN USER"+username);
-					 fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username);
+	
+					 fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username.toLowerCase());
 				 }
 				 catch(Exception e)
 				 {

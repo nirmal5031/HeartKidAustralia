@@ -24,25 +24,25 @@
                 })
 
                 .state('form.export', {
-                    url: '/home',
+                    url: '/export',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/export.view.html'
 
                 })
                 .state('form.manage', {
-                    url: '/home',
+                    url: '/manage',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/manage.view.html'
 
                 })
                 .state('form.listuser', {
-                    url: '/home',
+                    url: '/listuser',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/listuser.view.html'
 
                 })
                 .state('form.deleteuser', {
-                    url: '/home',
+                    url: '/deleteuser',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/deleteuser.view.html'
 
@@ -68,15 +68,21 @@
                     templateUrl: 'admin-views/modify/modify.view.html'
                 })
                 .state('form.search', {
-                    url: '/home',
+                    url: '/search',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/search.view.html'
 
                 })
                 .state('form.modify', {
-                    url: '/home',
+                    url: '/modify',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/modify.view.html'
+
+                })
+                .state('form.welcome', {
+                    url: '/welcome',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/welcome.view.html'
 
                 })
             $urlRouterProvider.otherwise('/login');

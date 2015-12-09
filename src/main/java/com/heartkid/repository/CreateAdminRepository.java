@@ -1,5 +1,7 @@
 package com.heartkid.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +20,9 @@ public interface CreateAdminRepository extends CrudRepository<CreateAdminUser, L
 	
 	  @Query("delete from CreateAdminUser u where u.username=:deleteuseradmin")
 		String deleteUsersadmin( @Param(value = "deleteuseradmin") final String deleteuseradmin);
+
+	  @Query("select u from CreateAdminUser u where u.username=:deleteuseradmin")
+	List<CreateAdminUser> findOne( @Param(value = "deleteuseradmin") final String deleteuseradmin);
 
 
 }

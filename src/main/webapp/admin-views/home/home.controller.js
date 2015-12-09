@@ -53,6 +53,9 @@
     .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
 
             var accessToken = sessionStorage.getItem('tokenId');
+            var adminuser = sessionStorage.getItem('adminuser');
+            $scope.adminuser = adminuser;
+            alert("ADMIN USER------"+adminuser);
 
             console.log(accessToken);
                    $scope.$watch('$viewContentLoaded', function(){
@@ -334,9 +337,8 @@ $scope.listadminuser = function()
                    var username = $scope.formAdminData.delusername;
                    alert("USRNAME------"+username);
                    $http({
-                       url: 'heartkid/fetchadminuser',
-                       method: "POST",
-                       data: username
+                       url: 'heartkid/fetchadminuser/'+username,
+                       method: "GET"
                       /* headers: {
                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                            'Authorization': 'Basic ' + accessToken
