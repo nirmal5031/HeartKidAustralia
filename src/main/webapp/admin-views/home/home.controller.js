@@ -165,7 +165,6 @@
                         headers: {
                             'Authorization': 'Bearer ' + accessToken
                         },
-
                         data: $scope.formAdminData
                     })
                         .then(function (response) {
