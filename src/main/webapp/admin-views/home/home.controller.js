@@ -339,10 +339,10 @@ $scope.listadminuser = function()
                    $http({
                        url: 'heartkid/fetchadminuser/'+username,
                        method: "GET"
-                      /* headers: {
-                           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                           'Authorization': 'Basic ' + accessToken
-                       }*/
+                       /* headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization': 'Basic ' + accessToken
+                        }*/
 
                    })
 
@@ -354,6 +354,37 @@ $scope.listadminuser = function()
                        },
                        function (response) {
                            alert("Error respomse----->" + response.data);
+                       })
+
+               }
+               $scope.deleteadminuser = function(username)
+               {
+
+                   $http({
+                       url: 'heartkid/deleteadminuser/'+username,
+                       method: "GET"
+                       /* headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization': 'Basic ' + accessToken
+                        }*/
+
+                   })
+
+                       .then(function (response) {
+                           var data = angular.fromJson(response.data);
+
+                           if(data==1)
+                           {
+                               $scope.deletionMessage= "User successfully deleted";
+                               $scope.delusers = "";
+                           }
+                           else{
+                               $scope.deletionMessage= "Error in deleting user. Please try again later! ";
+
+                           }
+                       },
+                       function (response) {
+                           $scope.deletionMessage= "Error in deleting user. Please try again later! ";
                        })
 
                }

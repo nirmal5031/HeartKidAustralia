@@ -175,9 +175,9 @@ public class AdminController {
 		 
 	 }
 	 
-	 @RequestMapping(value="heartkid/deleteadminuser", method=RequestMethod.POST)
-		public  String Deleteadminuser(@RequestParam(value="delusername") String delusername){
-		 String response = null;
+	 @RequestMapping(value="heartkid/deleteadminuser/{delusername}", method=RequestMethod.GET)
+		public  int Deleteadminuser(@PathVariable(value="delusername") String delusername){
+		 int response = 0;
 				 try{
 		
 					 response = createadminrepository.deleteUsersadmin(delusername);
