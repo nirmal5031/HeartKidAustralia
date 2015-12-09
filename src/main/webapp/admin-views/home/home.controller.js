@@ -55,7 +55,7 @@
             var accessToken = sessionStorage.getItem('tokenId');
             var adminuser = sessionStorage.getItem('adminuser');
             $scope.adminuser = adminuser;
-            alert("ADMIN USER------"+adminuser);
+          
 
             console.log(accessToken);
                    $scope.$watch('$viewContentLoaded', function(){
@@ -335,7 +335,7 @@ $scope.listadminuser = function()
                $scope.deleteuseradmin = function()
                {
                    var username = $scope.formAdminData.delusername;
-                   alert("USRNAME------"+username);
+
                    $http({
                        url: 'heartkid/fetchadminuser/'+username,
                        method: "GET"

@@ -196,7 +196,7 @@ public class AdminController {
 				 try{
 		System.out.println("FETCH ADMIN USER"+username);
 	
-					 fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username.toLowerCase());
+					 fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username);
 				 }
 				 catch(Exception e)
 				 {

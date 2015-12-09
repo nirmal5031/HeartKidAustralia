@@ -49,8 +49,8 @@
       <file leaf-file-name="deleteuser.view.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin-views/home/deleteuser.view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.961538">
-              <caret line="29" column="43" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="43" />
+            <state vertical-scroll-proportion="-7.1923075">
+              <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#fieldset#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#2;n#fieldset#0;n#!!top" expanded="true" />
@@ -109,8 +109,8 @@
       <file leaf-file-name="home.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin-views/home/home.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27739727">
-              <caret line="340" column="36" selection-start-line="340" selection-start-column="36" selection-end-line="340" selection-end-column="36" />
+            <state vertical-scroll-proportion="-7.020548">
+              <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -200,11 +200,11 @@
         <option value="$PROJECT_DIR$/admin-views/home/createuser.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/search.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/listuser.view.html" />
-        <option value="$PROJECT_DIR$/admin-views/home/deleteuser.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/home.view.html" />
         <option value="$PROJECT_DIR$/adminapp.js" />
         <option value="$PROJECT_DIR$/admin-views/login/login.controller.js" />
         <option value="$PROJECT_DIR$/admin-views/home/welcome.view.html" />
+        <option value="$PROJECT_DIR$/admin-views/home/deleteuser.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/home.controller.js" />
       </list>
     </option>
@@ -842,19 +842,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin-views/home/deleteuser.view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.961538">
-          <caret line="29" column="43" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#fieldset#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#2;n#fieldset#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#div#3;n#fieldset#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#td#3;n#tr#1;n#table#0;n#div#3;n#fieldset#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/adminapp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -884,10 +871,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/admin-views/home/deleteuser.view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1923075">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#fieldset#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#2;n#fieldset#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#3;n#fieldset#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#3;n#tr#1;n#table#0;n#div#3;n#fieldset#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/admin-views/home/home.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27739727">
-          <caret line="340" column="36" selection-start-line="340" selection-start-column="36" selection-end-line="340" selection-end-column="36" />
+        <state vertical-scroll-proportion="-7.020548">
+          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
           <folding />
         </state>
       </provider>
