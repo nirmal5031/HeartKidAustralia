@@ -27,7 +27,9 @@
                         <a  ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
 
                         <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
-                        <a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
+                                              <a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Manage Admin</a>
+                        <a ng-show="admin" ui-sref="form.listuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu" ng-click="listadminuser()">List Admin</a>
+                        <a ng-show="admin" ui-sref="form.deleteuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Delete Admin</a>
 
 
                     </div></div>

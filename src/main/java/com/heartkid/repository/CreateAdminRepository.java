@@ -16,5 +16,8 @@ public interface CreateAdminRepository extends CrudRepository<CreateAdminUser, L
 	@Query("select count(u) from CreateAdminUser u where u.username=:username")
 	int adminuserexist (@Param(value = "username") final String username);
 	
+	  @Query("delete from CreateAdminUser u where u.username=:deleteuseradmin")
+		String deleteUsersadmin( @Param(value = "deleteuseradmin") final String deleteuseradmin);
+
 
 }

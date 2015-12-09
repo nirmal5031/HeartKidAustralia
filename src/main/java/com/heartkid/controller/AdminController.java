@@ -164,5 +164,45 @@ public class AdminController {
 		 return validatemessage;
 		 
 	 }
+	 List<CreateAdminUser> listadminuser =  new ArrayList<CreateAdminUser>();	
+	 @RequestMapping(value="heartkid/listadminuser", method=RequestMethod.GET)
+	 public List<CreateAdminUser> Listadminuser(){
+		 
+		 listadminuser = (List<CreateAdminUser>) createadminrepository.findAll();
+		 
+		return listadminuser;
+		 
+		 
+	 }
+	 
+	 @RequestMapping(value="heartkid/deleteadminuser", method=RequestMethod.POST)
+		public  String Deleteadminuser(@RequestParam(value="delusername") String delusername){
+		 String response = null;
+				 try{
+		
+					 response = createadminrepository.deleteUsersadmin(delusername);
+					 System.out.println("Delete response ----"+response);
+				 }
+				 catch(Exception e)
+				 {
+					 e.printStackTrace();
+				 }
+				return response;
+	 }
+	 List<CreateAdminUser> fetchadminuser  =  new ArrayList<CreateAdminUser>();	
+	 @RequestMapping(value="heartkid/fetchadminuser", method=RequestMethod.POST)
+		public  List<CreateAdminUser> fetchadminuser(@RequestParam(value="username") Long username){
+				 try{
+		System.out.println("FETCH ADMIN USER"+username);
+					 fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username);
+				 }
+				 catch(Exception e)
+				 {
+					 e.printStackTrace();
+				 }
+				return fetchadminuser;
+	 }
+	 
+	 
 	 
 }

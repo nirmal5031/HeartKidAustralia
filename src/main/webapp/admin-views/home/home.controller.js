@@ -57,7 +57,6 @@
             console.log(accessToken);
                    $scope.$watch('$viewContentLoaded', function(){
 
-          //     alert("checking token");
                 $http({
                     url: 'heartkid/tokenvalidate',
                     method: "GET",
@@ -80,8 +79,7 @@
 
             var istokenvalid = sessionStorage.getItem('isTokenValid');
 
-          //  alert("aisTokenValid --->"+istokenvalid+"----Access token"+accessToken);
-            if(accessToken == null) {
+           if(accessToken == null) {
                 $state.go('/login');
             }
             else {
@@ -312,48 +310,55 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
+$scope.listadminuser = function()
+{
+    $http({
+        url: 'heartkid/listadminuser',
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Authorization': 'Basic ' + accessToken
+        }
 
+    })
+        .then(function (response) {
+            var data = angular.fromJson(response.data);
+            $scope.users = data;
+            $scope.totalrecords = data.length;
+        },
+        function (response) {
+            alert("Error respomse----->" + response.data);
+        })
+}
+               $scope.deleteuseradmin = function()
+               {
+                   var username = $scope.formAdminData.delusername;
+                   alert("USRNAME------"+username);
+                   $http({
+                       url: 'heartkid/fetchadminuser',
+                       method: "POST",
+                       data: username
+                      /* headers: {
+                           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                           'Authorization': 'Basic ' + accessToken
+                       }*/
+
+                   })
+
+                       .then(function (response) {
+                           var data = angular.fromJson(response.data);
+                           alert("data a--1 "+data);
+                           $scope.delusers = data;
+                           $scope.totalrecords = data.length;
+                       },
+                       function (response) {
+                           alert("Error respomse----->" + response.data);
+                       })
+
+               }
             }
 
         }])
 
 })();
-
-   /* HomeController.$inject = ['UserService', '$rootScope'];
-    function HomeController(UserService, $rootScope) {
-        var vm = this;
-
-        vm.user = null;
-        vm.allUsers = [];
-        vm.deleteUser = deleteUser;
-
-        initController();
-
-        function initController() {
-            loadCurrentUser();
-            loadAllUsers();
-        }
-
-        function loadCurrentUser() {
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
-                .then(function (user) {
-                    vm.user = user;
-                });
-        }
-
-        function loadAllUsers() {
-            UserService.GetAll()
-                .then(function (users) {
-                    vm.allUsers = users;
-                });
-        }
-
-        function deleteUser(id) {
-            UserService.Delete(id)
-            .then(function () {
-                loadAllUsers();
-            });
-        }
-    }
-*/
 

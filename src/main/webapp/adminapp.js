@@ -22,18 +22,7 @@
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/home.view.html'
                 })
-                .state('form.search', {
-                    url: '/home',
-                    controller: 'HomeController',
-                    templateUrl: 'admin-views/home/search.view.html'
 
-                })
-                .state('form.modify', {
-                    url: '/home',
-                    controller: 'HomeController',
-                    templateUrl: 'admin-views/home/modify.view.html'
-
-                })
                 .state('form.export', {
                     url: '/home',
                     controller: 'HomeController',
@@ -44,6 +33,18 @@
                     url: '/home',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/manage.view.html'
+
+                })
+                .state('form.listuser', {
+                    url: '/home',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/listuser.view.html'
+
+                })
+                .state('form.deleteuser', {
+                    url: '/home',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/deleteuser.view.html'
 
                 })
                 .state('/login', {
@@ -66,9 +67,18 @@
                     url: '/home',
                     templateUrl: 'admin-views/modify/modify.view.html'
                 })
+                .state('form.search', {
+                    url: '/home',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/search.view.html'
 
-            // catch all route
-            // send users to the form page
+                })
+                .state('form.modify', {
+                    url: '/home',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/modify.view.html'
+
+                })
             $urlRouterProvider.otherwise('/login');
         });
 
