@@ -68,6 +68,9 @@
             <th ng-click="sort('lastname')">Last Name
                 <span class="glyphicon sort-icon" ng-show="sortKey=='lastname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             </th>
+            <th ng-click="sort('usertype')">User Type
+                <span class="glyphicon sort-icon" ng-show="sortKey=='usertype'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+            </th>
             <th ng-click="sort('surveystatus')">Status
                 <span class="glyphicon sort-icon" ng-show="sortKey=='surveystatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             </th>
@@ -78,6 +81,7 @@
             <td>{{a.referencenumber}}</td>
             <td>{{a.firstname}}</td>
             <td>{{a.lastname}}</td>
+            <td>{{a.usertype}}</td>
             <td>{{a.surveystatus}}</td>
             <!--<td><button class="btn btn-primary" style="margin-left: 13%; width: 70px;" ng-click="modifyuser(a)">Edit</button></td>
        --> </tr>

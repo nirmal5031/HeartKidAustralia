@@ -55,7 +55,7 @@
             var accessToken = sessionStorage.getItem('tokenId');
             var adminuser = sessionStorage.getItem('adminuser');
             $scope.adminuser = adminuser;
-          
+
 
             console.log(accessToken);
                    $scope.$watch('$viewContentLoaded', function(){
@@ -348,7 +348,7 @@ $scope.listadminuser = function()
 
                        .then(function (response) {
                            var data = angular.fromJson(response.data);
-                           alert("data a--1 "+data);
+
                            $scope.delusers = data;
                            $scope.totalrecords = data.length;
                        },

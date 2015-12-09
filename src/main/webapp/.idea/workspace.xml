@@ -106,11 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="home.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin-views/home/home.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.020548">
-              <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
+            <state vertical-scroll-proportion="-24.5">
+              <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -129,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.view.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="search.view.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin-views/home/search.view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.653846">
-              <caret line="41" column="10" selection-start-line="36" selection-start-column="4" selection-end-line="41" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.9417808">
+              <caret line="83" column="28" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#dir-pagination-controls#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -198,7 +198,6 @@
         <option value="$PROJECT_DIR$/admin-views/login/LoginService.js" />
         <option value="$PROJECT_DIR$/admin-views/login/AuthenticationService.js" />
         <option value="$PROJECT_DIR$/admin-views/home/createuser.view.html" />
-        <option value="$PROJECT_DIR$/admin-views/home/search.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/listuser.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/home.view.html" />
         <option value="$PROJECT_DIR$/adminapp.js" />
@@ -206,6 +205,7 @@
         <option value="$PROJECT_DIR$/admin-views/home/welcome.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/deleteuser.view.html" />
         <option value="$PROJECT_DIR$/admin-views/home/home.controller.js" />
+        <option value="$PROJECT_DIR$/admin-views/home/search.view.html" />
       </list>
     </option>
   </component>
@@ -795,16 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin-views/home/search.view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.653846">
-          <caret line="41" column="10" selection-start-line="36" selection-start-column="4" selection-end-line="41" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#dir-pagination-controls#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin-views/home/listuser.view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.1923075">
@@ -886,9 +876,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin-views/home/home.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.020548">
-          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
+        <state vertical-scroll-proportion="-24.5">
+          <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin-views/home/search.view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9417808">
+          <caret line="83" column="28" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#dir-pagination-controls#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
