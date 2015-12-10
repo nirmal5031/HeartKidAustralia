@@ -25,10 +25,23 @@ public class CreateAdminUser {
 	private String userrole;
 	private String login_attempts;
 	private String password;
+	private int loginflag;
+
 	
 	public CreateAdminUser(){
 		
 	}
+	
+	public int getLoginflag() {
+		return loginflag;
+	}
+
+	public void setLoginflag(int loginflag) {
+		this.loginflag = loginflag;
+	}
+
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}

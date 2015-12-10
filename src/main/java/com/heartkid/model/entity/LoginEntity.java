@@ -39,8 +39,8 @@ public class LoginEntity {
 		private String userrole;
 		private String login_attempts;
 		private String password;
-		
-
+		private int loginflag;
+        private String newpassword;
 	   
 
 		/**
@@ -48,6 +48,23 @@ public class LoginEntity {
 	     */
 	    public LoginEntity() {
 	    }
+	    
+	    public String getNewpassword() {
+			return newpassword;
+		}
+
+		public void setNewpassword(String newpassword) {
+			this.newpassword = newpassword;
+		}
+
+		public int getLoginflag() {
+			return loginflag;
+		}
+
+		public void setLoginflag(int loginflag) {
+			this.loginflag = loginflag;
+		}
+
 
 
 

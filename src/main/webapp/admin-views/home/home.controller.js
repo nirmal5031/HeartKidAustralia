@@ -58,7 +58,7 @@
 
 
             console.log(accessToken);
-                   $scope.$watch('$viewContentLoaded', function(){
+                  /* $scope.$watch('$viewContentLoaded', function(){
 
                 $http({
                     url: 'heartkid/tokenvalidate',
@@ -78,7 +78,7 @@
                         sessionStorage.setItem('isTokenValid',false);
 
                     })
-            });
+            });*/
 
             var istokenvalid = sessionStorage.getItem('isTokenValid');
 
@@ -312,6 +312,10 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
+               $scope.test = function()
+               {
+                   alert("TEST FUNCTION");
+               }
 $scope.listadminuser = function()
 {
     $http({

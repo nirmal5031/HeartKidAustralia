@@ -1,31 +1,41 @@
 ﻿'use strict';
 angular.module('loginApp')
-        .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state','dataService','$rootScope', function ($scope, AuthenticationService, LoginService,$state,dataService,$rootScope) {
-
-
+          .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state','dataService','$rootScope', function ($scope, AuthenticationService, LoginService,$state,dataService,$rootScope) {
         var accessToken = sessionStorage.getItem('tokenId');
-        if(accessToken == null){
+        var loginflagvalue = sessionStorage.getItem('loginflag');
+        $scope.$on('someEvent', function(event, mass) {
+            console.log(mass)
+            alert("masss-----"+mass);
+        });
+        if(accessToken == null) {
             sessionStorage.clear();
             localStorage.clear();
             $scope.isValidUser = false;
             $state.go('/login');
-            }
-        else{
+        }
+        else {
             $state.go('/home');
         }
-
-
             $scope.login = function () {
             var request = "/" + $scope.vm.heartkidusername + "/" + $scope.vm.heartkidpassword;
 
                 LoginService.loginCustomer(request).then(function (successData) {
+                    sessionStorage.setItem('loginflag',successData.loginflag);
+                    if ((successData.status === "success")&&(successData.loginflag === 1)) {
+                        alert("successData.username"+successData.username);
 
-                    if (successData.status === "success") {
                         sessionStorage.setItem('userrole',successData.userrole );
                         sessionStorage.setItem('adminuser',successData.firstname+" "+ successData.lastname);
                         $scope.getAuthentionToken();
                     }
-                    else {
+                    else if((successData.status === "success")&&(successData.loginflag != 1))
+                    {
+                        sessionStorage.setItem('username',successData.username );
+                        alert("successData.loginflag--------->"+successData.loginflag);
+                        alert("going to reset pass word");
+                        $state.go('/reset');
+                    }
+                    else  {
                         $scope.isValidUser = true;
                         if (successData.status == "INVALIDCREDENTIALS") {
                             $scope.vm.error = "Invalid Credentials. Please try again";
@@ -47,15 +57,24 @@ angular.module('loginApp')
                 AuthenticationService.getAuthention(requestOauth).then(function (successData) {
                     if (successData.access_token) {
                         sessionStorage.setItem('tokenId', successData.access_token);
-                      //  $state.go('menu');
-
-                       $state.go('form.welcome');
+                        $state.go('form.welcome');
                     }
+                    else
+                    {
+                        var accessToken = sessionStorage.getItem('tokenId');
+                        if(accessToken == null)
+                        {
+                            $state.go('/login');
+                        }
+                    }
+
                 });
             }
 
 
         }]);
+
+
    /* LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
     function LoginController($location, AuthenticationService, FlashService) {
         var vm = this;

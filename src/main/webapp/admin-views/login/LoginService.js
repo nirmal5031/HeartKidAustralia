@@ -13,17 +13,8 @@ app.service('LoginService', ['$http', '$q', 'LOGIN_URL', function($http, $q, LOG
             deferred.reject(data);
         });
 
-         /*$http({
-             url: '/heartkid/login',
-             method: "POST",
-             data:$scope.vm
-         }).success(function(data) {
-             deferred.resolve(data);
-         }).error(function(data) {
-             deferred.reject(data);
-         });
 
-*/
+
         return deferred.promise;
     };
 }]);

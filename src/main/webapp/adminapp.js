@@ -52,6 +52,7 @@
                     controller: 'LoginController',
                     templateUrl: 'admin-views/login/login.view.html'
                 })
+
                 .state('/home', {
                     url: '/home',
                     controller: 'HomeController',
@@ -84,6 +85,11 @@
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/welcome.view.html'
 
+                })
+                .state('/reset', {
+                    url: '/reset',
+                    controller: 'ResetController',
+                    templateUrl: 'admin-views/login/reset-pass.html'
                 })
             $urlRouterProvider.otherwise('/login');
         });
