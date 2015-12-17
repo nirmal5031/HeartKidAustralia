@@ -13,53 +13,53 @@
 
             <fieldset>
                 <div class="txtcntnt">
-                <p class="conctfrmt"><b class="hearticon">&#9829;</b>	Please help us quantify how living with your disease impacts your life</p>
-                <p class="conctfrmt"><b class="hearticon">&#9829;	</b>We want doctors and government to know what you deal with</p>
-                <p class="conctfrmt"><b class="hearticon">&#9829;</b>	This will help us to make sure the services and support that is needed is in place for everyone.</p></div>
+                    <p class="conctfrmt"><b class="hearticon">&#9829;</b>	Please help us quantify how living with your disease impacts your life</p>
+                    <p class="conctfrmt"><b class="hearticon">&#9829;	</b>We want doctors and government to know what you deal with</p>
+                    <p class="conctfrmt"><b class="hearticon">&#9829;</b>	This will help us to make sure the services and support that is needed is in place for everyone.</p></div>
 
                 <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Doctor Visits</div>
                 <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">How many time did you see you heart (cardiologist) doctor in the last  3 years ?  </label>
-</br>
+                    <label class=" col-sm-2" style="width: 100%;">How many times have you seen your heart doctor (cardiologist) in the last 3 years ? <em>*</em></label>
+                    </br>
 
-
-                        <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
-
-                            <tbody>
-                            <tr style=" padding: 4px; " >
-                                <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
-                                    ng-click="nodeclick(node.id)"
-                                    ng-model="formData.heartdocvisit" ng-class="getClass(node.id)"   ng-mouseenter="myClass='redclass'"
-                                    ng-mouseleave="myClass = ''">
-                                    {{node.rate}}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-
-
-
-                </div>
-                <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">How many times did you see your local doctor (GD) last 3 years ? </label>
-                    <select  name="localdoctor-count" ng-model="formData.localdoctorvisit" class="textfeildname yellow arrowupdown"  style="width:25%; " ng-options="ldcount for ldcount in scale1to20" >
-                        <option value="">--Select--</option> <!-- not selected / blank option -->
-
-                    </select>
-
-                </div>
-                <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">How many times did you visit Emergency Department last year ?  </label>
 
                     <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
 
                         <tbody>
                         <tr style=" padding: 4px; " >
                             <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="nodeclick(node.id)"
+                                ng-model="formData.heartdocvisit" ng-class="getClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" required>
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many times have you seen your local doctor (GP) in the last 3 years ? <em>*</em></label>
+                    <select  name="localdoctor-count" ng-model="formData.localdoctorvisit" class="textfeildname yellow arrowupdown"  style="width:25%; " ng-options="ldcount for ldcount in scale1to20" required>
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many times did you have to go to the Emergency Department last year ?  <em>*</em></label>
+
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
                                 ng-click="emergdept(node.id)"
                                 ng-model="formData.emergdeptvisit" ng-class="getenerClass(node.id)"   ng-mouseenter="myClass='redclass'"
-                                ng-mouseleave="myClass = ''">
+                                ng-mouseleave="myClass = ''" required>
                                 {{node.rate}}
                             </td>
                         </tr>
@@ -68,11 +68,11 @@
                 </div>
                 <div class="control">
                     <label class=" col-sm-2" style="width: 100%;">Are you / do you care for a person over the age of 16?</label>
-                   <select  name="careage16" ng-model="formData.careage16" class="textfeildname yellow arrowupdown" ng-change="childtoadultdoc()"  style="width:25%;" ng-options="yesno for yesno in yesnoArray" >
+                    <select  name="careage16" ng-model="formData.careage16" class="textfeildname yellow arrowupdown" ng-change="childtoadultdoc()"  style="width:25%;" ng-options="yesno for yesno in yesnoArray" >
                         <option value="">&#45;&#45;Select&#45;&#45;</option> &lt;!&ndash; not selected / blank option &ndash;&gt;
 
                     </select>
-             </div>
+                </div>
 
                 <div class="control" ng-show="showchildtoheartdoc">
                     <label class=" col-sm-2" style="width: 100%;">Did you move from your child heart doctor to an adult doctor? </label>
@@ -81,18 +81,18 @@
 
                     </select>
                 </div>
-                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Mental composition</div>
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Mental Health Assesment</div>
 
 
                 <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">Have you experience any anxiety about your condition? </label>
-                    <select  name="anxietycond" ng-model="formData.anxietycond" class="textfeildname yellow arrowupdown" ng-change="anxietycond()" style="width:25%; " ng-options="anxietycond for anxietycond in yesnoArray" >
+                    <label class=" col-sm-2" style="width: 100%;">Have you experience any anxiety about your heart condition? <em>*</em></label>
+                    <select  name="anxietycond" ng-model="formData.anxietycond" class="textfeildname yellow arrowupdown" ng-change="anxietycond()" style="width:25%; " ng-options="anxietycond for anxietycond in yesnoArray" required>
                         <option value="">--Select--</option> <!-- not selected / blank option -->
 
                     </select>
                 </div>
                 <div class="control"  ng-show="anxietycondimpact">
-                    <label class=" col-sm-2" style="width: 100%;">What is the impact of disease on anxiety / depression? </label>
+                    <label class=" col-sm-2" style="width: 100%;">What do you feel has been the impact of your heart condition on your level of anxiety / depression? </label>
                     <textarea type="textarea"  name ="anxietycondimpact"  class="" style="width: 100%;"  ng-model="formData.anxietycondimpact"></textarea>
 
                 </div>
@@ -109,13 +109,13 @@
 
                 <div class="col-xs-6 col-xs-offset-3 col-xs-7">
 
-                    <a ui-sref="form.burden-add" class="btn btn-block btn-info" ng-click="saveburdendiseaseform()">
+                    <a ui-sref="form.burden-add" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="saveburdendiseaseform()">
                         Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </a></br>
                 </div>
 
                 <div style="margin-bottom: 3%;"></div>
             </fieldset>
-            </div>
-        </div></div>
+        </div>
+    </div></div>
 <style>

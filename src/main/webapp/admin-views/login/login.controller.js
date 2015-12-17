@@ -1,13 +1,24 @@
 ﻿'use strict';
 angular.module('loginApp')
-          .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state','dataService','$rootScope', function ($scope, AuthenticationService, LoginService,$state,dataService,$rootScope) {
+          .controller('LoginController', [ '$scope', 'AuthenticationService', 'LoginService','$state','dataService','$rootScope','$stateParams', function ($scope, AuthenticationService, LoginService,$state,dataService,$rootScope,$stateParams) {
         var accessToken = sessionStorage.getItem('tokenId');
+
+
         var loginflagvalue = sessionStorage.getItem('loginflag');
-        $scope.$on('someEvent', function(event, mass) {
-            console.log(mass)
-            alert("masss-----"+mass);
-        });
+           /* if(resetSuccess!="")
+            {
+                alert("setting error value--->");
+                $scope.vm.error = resetSuccess;
+            }*/
+
+        var Message = $stateParams.Message;
+       if($stateParams.Message != null)
+
+       {
+           $scope.errorMessage = Message;
+       }
         if(accessToken == null) {
+
             sessionStorage.clear();
             localStorage.clear();
             $scope.isValidUser = false;
@@ -22,7 +33,6 @@ angular.module('loginApp')
                 LoginService.loginCustomer(request).then(function (successData) {
                     sessionStorage.setItem('loginflag',successData.loginflag);
                     if ((successData.status === "success")&&(successData.loginflag === 1)) {
-                        alert("successData.username"+successData.username);
 
                         sessionStorage.setItem('userrole',successData.userrole );
                         sessionStorage.setItem('adminuser',successData.firstname+" "+ successData.lastname);
@@ -31,8 +41,7 @@ angular.module('loginApp')
                     else if((successData.status === "success")&&(successData.loginflag != 1))
                     {
                         sessionStorage.setItem('username',successData.username );
-                        alert("successData.loginflag--------->"+successData.loginflag);
-                        alert("going to reset pass word");
+
                         $state.go('/reset');
                     }
                     else  {

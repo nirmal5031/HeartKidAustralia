@@ -12,9 +12,6 @@ app.service('LoginService', ['$http', '$q', 'LOGIN_URL', function($http, $q, LOG
         }).error(function(data) {
             deferred.reject(data);
         });
-
-
-
         return deferred.promise;
     };
 }]);

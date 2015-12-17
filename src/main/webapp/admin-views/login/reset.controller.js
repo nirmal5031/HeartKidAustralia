@@ -24,8 +24,8 @@ $scope.resetpassword = function()
             var data = angular.toJson(response.data);
            if(response.data.status==="RESETSUCCESS")
            {
-
-               $state.go('/login');
+               localStorage.setItem("resetSuccess","Password reset Successful ! Try login with new password")
+               $state.go('/login',  {'Message': 'Reset successful. Please login with new password' });
            }
             else if(response.data.status==="INVALIDCREDENTIALS"){
 $scope.resetMessage = "Old password entered is wrong. Please try again";
@@ -37,6 +37,5 @@ $scope.resetMessage = "Old password entered is wrong. Please try again";
         function (response) {
             alert("Error respomse----->" + response.data);
         })
-
 }
     });

@@ -16,8 +16,8 @@
             <fieldset>
                 <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Productivity</div>
                 <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">Do you currently work? </label>
-                    <select  name="curntwork" ng-model="formData.curntwork" ng-change="curentlywork()" class="textfeildname yellow arrowupdown"  style="width:15%;" ng-options="curntwork for curntwork in yesnoArray" >
+                    <label class=" col-sm-2" style="width: 100%;">Do you currently work? <em>*</em></label>
+                    <select  name="curntwork" ng-model="formData.curntwork" ng-change="curentlywork()" class="textfeildname yellow arrowupdown"  style="width:15%;" ng-options="curntwork for curntwork in yesnoArray" required>
                         <option value="">--Select--</option> <!-- not selected / blank option -->
 
                     </select>
@@ -39,7 +39,7 @@
                     </select>
                 </div>
                 <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">Has living with CHD impacted your career? </label>
+                    <label class=" col-sm-2" style="width: 100%;">Do you feel that living with your heart condition has impacted your career?  </label>
 
                     <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
 
@@ -72,7 +72,7 @@
 
                         <tbody>
                         <tr style=" padding: 4px; " >
-                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
                                 ng-click="chdimpactwork(node.id)"
                                 ng-model="formData.chdimpactwork" ng-class="chdimpactworkClass(node.id)"   ng-mouseenter="myClass='redclass'"
                                 ng-mouseleave="myClass = ''">
@@ -83,7 +83,7 @@
                     </table>
                 </div>
                 <div class="control">
-                    <label class=" col-sm-2" style="width: 100%;">How many days missed of work / school last year? </label>
+                    <label class=" col-sm-2" style="width: 100%;">How many days missed of work / school last year due to symptoms relating to your heart condition? <em>*</em></label>
 
                     <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
 
@@ -132,13 +132,13 @@
                     </select>
                 </div>
                 <div class="control"  ng-show="showschoolgrdchal">
-                    <label class=" col-sm-2" style="width: 100%;">Do you feel this has impacted you / your child’s / the person you care for QoL ? </label>
+                    <label class=" col-sm-2" style="width: 100%;">Do you feel this has impacted you / your child’s / the person you care for in relation to your Quality of Life?  </label>
                     <textarea type="textarea"  name ="impactQol"  class="" style="width: 75%;"  ng-model="formData.impactQol"></textarea>
 
                 </div>
 
                 <div class="control">
-                    <label class=" col-sm-2"  style="width: 100%;">Has your condition affected you involvement level in school / work /  community?  </label>
+                    <label class=" col-sm-2"  style="width: 100%;">Has your heart condition affected you involvement level in school / work / community?  </label>
                     <select  name="condimpactschl"  ng-model="formData.condimpactschl" ng-change="condimpactschl()" class="arrowupdown textfeildname yellow"  style="width:15%; " ng-options="condimpactschl for condimpactschl in yesnoArray" >
                         <option value="">--Select--</option> <!-- not selected / blank option -->
 
@@ -153,7 +153,7 @@
                 </div>
                 <div style="margin-bottom: 5%;"></div>
 
-                 <div class="col-xs-6 col-xs-offset-3">
+                <div class="col-xs-6 col-xs-offset-3">
                     <a ui-sref="form.burden-1" class="btn btn-block btn-info">
                         <span class="glyphicon glyphicon-circle-arrow-left"></span>Previous
                     </a>
@@ -161,12 +161,12 @@
 
                 <div class="col-xs-6 col-xs-offset-3 col-xs-7">
 
-                    <a ui-sref="form.burden-2" class="btn btn-block btn-info" ng-click="saveprodeductionform()">
+                    <a ui-sref="form.burden-2" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="saveprodeductionform()">
                         Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </a></br>
                 </div>
 
 
-                </fieldset>
-            </div></div></div>
+            </fieldset>
+        </div></div></div>
 

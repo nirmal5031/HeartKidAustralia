@@ -50,7 +50,8 @@
                 .state('/login', {
                     url: '/login',
                     controller: 'LoginController',
-                    templateUrl: 'admin-views/login/login.view.html'
+                    templateUrl: 'admin-views/login/login.view.html',
+                    params:      {'Message': null}
                 })
 
                 .state('/home', {

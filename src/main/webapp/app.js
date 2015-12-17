@@ -194,8 +194,6 @@ angular.module('formApp', ['ui.router'])
                     .then(function(response) {
                                 var data = $.parseJSON(angular.toJson(response.data));
                         dataService.dataObj = data;
-
-
                         },
                         function(response) { // optional
                             // failed
@@ -210,7 +208,6 @@ angular.module('formApp', ['ui.router'])
         $scope.formData.referencenumber = dataService.dataObj;
         $scope.showcarerdetails = 'false';
 
-
         var progress = setInterval(function () {
             var $bar = $('.bar');
             if ($bar.width() >= 400) {
@@ -222,12 +219,6 @@ angular.module('formApp', ['ui.router'])
             $bar.text($bar.width() / 4 + "%");
         }, 800);
 
-
-
-
-
-        //$scope.colorsArray = ["Yes", "No"];
-       /* $scope.formData.countrybrth = 'Australia';*/
         $scope.yesnoArray = ["Yes", "No"];
         $scope.usertypeArray = ["Patient", "Carer","Filling this form on behalf of your passed loved one"];
         $scope.titleArray = ["Mr","Mrs","Miss","Mrs","Dr","Prof"];
@@ -283,15 +274,20 @@ angular.module('formApp', ['ui.router'])
             $scope.opened = true;
         };
         $scope.contctviaphone = function() {
-
             var selectd = $scope.formData.contctviaphone;
-            if(selectd == 'yes')
+
+
+            if((selectd == 'yes'))
             {
+
                 $scope.showcontactviaphone = 'true' ;
+
+
             }
             else
             {
                 $scope.showcontactviaphone = 'false' ;
+                $scope.userForm.phone.$error.required ='false';
             }
         }
         $scope.contctviaemail = function() {
@@ -306,27 +302,54 @@ angular.module('formApp', ['ui.router'])
                 $scope.showcontactviaemail = 'false' ;
             }
         }
-        $scope.personalInfoSubmit = function(){
-            var formstatus = "incomplete";
-            $scope.formData.surveystatus = formstatus;
-                       $http({
-                url: 'heartkid/personalinfo',
-                method: "POST",
-                data: $scope.formData
-            })
-                .then(function(response) {
-                        // success
-                       var data = $.parseJSON(angular.toJson(response.data));
-                               $scope.formData.id=data.id;
+        $scope.phonevalue = function(e){
 
-                },
-                    function(status) { // optional
+          var phonevalue = $scope.formData.phone;
+          //  alert("phone value"+phonevalue.length);
+            if(phonevalue.length == '9')
+            {
+                $scope.userForm.phone.$error.required='false';
+                $scope.userForm.phone.$dirty  = 'false';
+
+
+            }
+            else {
+                $scope.userForm.phone.$dirty  = 'true';
+            }
+
+        }
+        $scope.personalInfoSubmit = function(e) {
+            var formstatus = "incomplete";
+            var contactagree = $scope.formData.contctviaphone;
+            var contactagreephone = $scope.formData.phone;
+            if((contactagree == 'yes')&&(contactagreephone == "")){
+                $scope.userForm.phone.$error.required='true';
+                e.preventDefault()
+            }
+            else{
+                $state.go('form.treatment');
+
+                $scope.formData.surveystatus = formstatus;
+                $http({
+                    url: 'heartkid/personalinfo',
+                    method: "POST",
+                    data: $scope.formData
+                })
+                    .then(function (response) {
+                        // success
+                        var data = $.parseJSON(angular.toJson(response.data));
+                        $scope.formData.id = data.id;
+                        $state.go('form.treatment');
+
+                    },
+                    function (status) { // optional
                         // failed
                         $state.go('form.generror');
 
                     })
-        }
+            }
 
+        }
         $scope.usertypesel = function()
         {
             var selectdusertyp = $scope.formData.usertype;
