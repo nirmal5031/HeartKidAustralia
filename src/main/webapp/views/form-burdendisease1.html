@@ -30,7 +30,7 @@
                             <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
                                 ng-click="nodeclick(node.id)"
                                 ng-model="formData.heartdocvisit" ng-class="getClass(node.id)"   ng-mouseenter="myClass='redclass'"
-                                ng-mouseleave="myClass = ''" required>
+                                ng-mouseleave="myClass = ''" >
                                 {{node.rate}}
                             </td>
                         </tr>
@@ -59,7 +59,7 @@
                             <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
                                 ng-click="emergdept(node.id)"
                                 ng-model="formData.emergdeptvisit" ng-class="getenerClass(node.id)"   ng-mouseenter="myClass='redclass'"
-                                ng-mouseleave="myClass = ''" required>
+                                ng-mouseleave="myClass = ''" >
                                 {{node.rate}}
                             </td>
                         </tr>
@@ -113,9 +113,8 @@
                         Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </a></br>
                 </div>
-
+<pre>{{userForm.$invalid}}</pre>
                 <div style="margin-bottom: 3%;"></div>
             </fieldset>
         </div>
     </div></div>
-<style>

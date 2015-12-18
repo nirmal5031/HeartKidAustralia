@@ -50,10 +50,9 @@
                                     </div>
 
                                     <div ng-show="surgerydelayedcount" >
-                                        <table class="table bs-example" style="  padding: 4px;  margin-top: 2%;" >
-
+                                        <table class="table bs-example" style="padding: 4px; margin-top: 2%;" >
                                             <tbody>
-                                            <tr style=" padding: 4px; " >
+                                            <tr style="padding: 4px;">
                                                 <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
                                                     ng-click="Surgerydelaycount(node.id)"
                                                     ng-model="formData.surgerydelaycount" ng-class="SurgerydelaycountClass(node.id)"   ng-mouseenter="myClass='redclass'"

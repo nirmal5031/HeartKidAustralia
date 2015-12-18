@@ -1,4 +1,4 @@
-<div class="col-lg-12">
+<div class="col-lg-12"  ng-controller="burdendiseaseController">
     <div class="col-md-12 formborder">
         <div class="myform">Confirmation</div>
         <br class="col-md-12 formcontent">
@@ -9,18 +9,19 @@
         </div>
         <div class="col-md-12"><div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">	Thank you for Your Registration</div>
 
-            <div style="margin-left: 15px; margin-top:3%;">
-            <p><b> Thank you for helping us give a voice to all HeartKids and their carers so that we achieve better health and support!
-                Your time has been well spent and is so valuable to us! </b></p>
+            <h4 style="margin-left: 2%;">Dear {{usernameval}},</h4>
+            <div style="margin-left: 2%; margin-top:3%;">
 
-            <div id="contctyes" style="display:none;  color: limegreen;"><p> Regardless we will be in touch with you shortly! Thanks again.</p></div>
-            <div id="contctno" style="display:none; color: red;"><p> Thank you !</p></div>
+                <h4 style="text-align: left; float: left;">Reference Number :</h4>
+                <h4 style="text-align: right; float: right; display: inline; color: #ad0404;">{{referencenumberval}}</h4>
 
-            <p> If you would like further information on congenital heart conditions and treatments, please <b style="color:#026ab3;">click here</b> or have any questions, feel free to email us on  <b style="color:#026ab3;">xxxxxyyyzzz@tcs.com</b> or call us on <b style="color:#026ab3;">+61 0xyyyyzzz</b> or visit the <a style="color:#026ab3;">HeartKids Australia</a> website <b style="color:#026ab3;">www.heartkid.au</b>.</p>
+                          <p><b> Thank you for helping us give a voice to all HeartKids and their carers. The form you have submitted is incomplete, but still we have saved your records in our database. If you want to know the status of survey please mail us at "abcd@heartkids.com" with your reference ID. </b></p>
 
-            <p> Had you heard of HeatKids, offered support, took it up?</p>
+                <p> If you would like further information on congenital heart conditions and treatments, please <b style="color:#026ab3;">click here</b> . If you have any questions, feel free to email us on  <b style="color:#026ab3;">xxxxxyyyzzz@tcs.com</b> or call us on <b style="color:#026ab3;">+61 0xyyyyzzz</b> or visit the <a style="color:#026ab3;">HeartKids Australia</a> website <b style="color:#026ab3;">www.heartkid.au</b>.</p>
 
-            <p style="margin-bottom: 10%;"> If you would like a health professional to call you, <a style="color:#026ab3;">click here</a> and submit the form.</p>
+            <p> If you would like a health professional to call you, <a style="color:#026ab3;">click here</a> and submit the form.</p>
+
+                <p style="margin-bottom: 7%;"> An email has been sent to you along with the reference number. Please get back to us in case you need any support.</p>
         </div>
     </div>
 </div>

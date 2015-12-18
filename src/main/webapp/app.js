@@ -68,9 +68,6 @@ angular.module('formApp', ['ui.router'])
                 templateUrl: 'views/incompleteconfirm.html'
             });
 
-
-        // catch all route
-        // send users to the form page
         $urlRouterProvider.otherwise('/form/research');
     })
 
@@ -366,6 +363,9 @@ angular.module('formApp', ['ui.router'])
 
         var usertype = $scope.formData.usertype;
         var conditioncalldelectd = $scope.formData.conditioncalld;
+        $scope.usernameval = $scope.formData.firstname+" "+$scope.formData.lastname;
+        $scope.referencenumberval = $scope.formData.referencenumber;
+        alert($scope.usernameval+$scope.referencenumberval);
         $scope.showcarerdetails = 'false';
         var surgeryheldselectd = $scope.formData.surgeryheld;
         if(surgeryheldselectd == 'Yes')
