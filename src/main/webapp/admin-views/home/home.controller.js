@@ -145,6 +145,7 @@
                 }
 
                 $scope.statusArray = ["incomplete", "success"];
+               $scope.usertypeArray = ["Patient", "Carer"];
 
                 $scope.modifyuser = function (a) {
 
@@ -166,7 +167,8 @@
                         url: 'heartkid/getrecord',
                         method: "POST",
                         headers: {
-                            'Authorization': 'Bearer ' + accessToken
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
                         },
                         data: $scope.formAdminData
                     })
