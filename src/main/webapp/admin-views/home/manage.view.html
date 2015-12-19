@@ -5,22 +5,32 @@
 <div class="control">
     <label class=" col-sm-2">First Name <em>*</em></label>
     <input type="text" name="firstname" id="frstname" ng-pattern="/^[a-zA-Z]*$/" required  class="textfeildname yellow" ng-model="formAdminData.firstname"  />
+    <p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Firstname is not valid</p>
+    <p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">First name is required</p>
 </div>
     <div class="control">
     <label class=" col-sm-2">Last Name <em>*</em></label>
     <input type="text" name="lstname" id="lstname"  required ng-pattern="/^[a-zA-Z]*$/" class="textfeildname yellow" ng-model="formAdminData.lastname"  />
+        <p ng-show="userForm.lstname.$dirty && userForm.lstname.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Lastname is not valid</p>
+        <p ng-show="userForm.lstname.$dirty && userForm.lstname.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Last name is required</p>
 </div>
     <div class="control">
         <label class=" col-sm-2">User Name<em>*</em></label>
         <input type="text" name="username" id="username"  required ng-pattern="/^[a-zA-Z0-9]*$/" class="textfeildname yellow" ng-model="formAdminData.username"  />
+        <p ng-show="userForm.username.$dirty && userForm.username.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Username is not valid</p>
+        <p ng-show="userForm.username.$dirty && userForm.username.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">username is required</p>
     </div>
     <div class="control">
     <label class=" col-sm-2">Email<em>*</em></label>
-    <input type="text" name="email" id="email"  required class="textfeildname yellow" ng-model="formAdminData.emailid"  />
-</div>
+    <input type="text" name="emailid" id="email"  required class="textfeildname yellow" ng-model="formAdminData.emailid"  />
+        <p ng-show="userForm.emailid.$dirty && userForm.emailid.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Email is Required.</p>
+        <p ng-show="userForm.emailid.$dirty && userForm.emailid.$error.email" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter valid email.</p>
+    </div>
     <div class="control">
         <label class=" col-sm-2">Phone<em>*</em></label>
-        <input type="text" name="Phone" id="Phone"  required ng-pattern="/^[0-9]*$/" class="textfeildname yellow" ng-model="formAdminData.phone"  />
+        <input type="email" name="phone" id="phone"  required ng-pattern="/^[0-9]*$/" ng-maxlength="12" ng-minlength="9" class="textfeildname yellow" ng-model="formAdminData.phone"  />
+        <p ng-show="userForm.phone.$dirty && userForm.phone.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Phone number is Required.</p>
+        <p ng-show="userForm.phone.$dirty && userForm.phone.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter valid phone number.</p>
     </div>
 
 
@@ -30,26 +40,27 @@
             <option value="">--Select--</option> <!-- not selected / blank option -->
         </select>
 
+        <p ng-show="userForm.userrole.$dirty && userForm.userrole.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">User role is Required.</p>
 
     </div>
     <div class="control">
         <label class=" col-sm-2">Password<em>*</em></label>
-        <input type="password" name="password" id="passwrd" required ng-minlength="5" ng-maxlength="15" class="textfeildname yellow" required  ng-model="formAdminData.password"  />
-        <div ng-show="formAdminData.password.$error.required">
-            Field required</div>
+        <input type="password" name="password" id="passwrd"  ng-minlength="5" ng-maxlength="15" class="textfeildname yellow" required  ng-model="formAdminData.password"  />
+        <p ng-show="userForm.password.$dirty && userForm.password.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Password is required .</p>
+
     </div>
     <div class="control">
         <label class=" col-sm-2">Confirm Password<em>*</em></label>
-        <input type="password" name='confirm_password' required  id="confrmpasswrd" ng-minlength="5" ng-maxlength="15" ng-model="formAdminData.confirm_password" required  class="textfeildname yellow"   />
-        <div ng-show="formAdminData.confirm_password.$error.passwordVerify">
-            Confirm password does not match with password entered. </div>
+        <input type="password" name='confirm_password'   id="confrmpasswrd" ng-minlength="5" ng-maxlength="15" ng-model="formAdminData.confirm_password" required  class="textfeildname yellow"   />
+        <p ng-show="userForm.confirm_password.$dirty && userForm.confirm_password.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please re-enter the password.</p>
+
     </div>
     <br>
     <br>
 
     <div class="col-xs-6 col-xs-offset-3 col-xs-7">
 
-        <a  ng-click="createadminuser()" style="margin-left: 60%; width: 150px;" class="btn btn-block btn-info">Create User  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        <a  ng-click="createadminuser()"  style="margin-left: 60%; width: 150px;" class="btn btn-block btn-info">Create User  <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a>
     </div>
 

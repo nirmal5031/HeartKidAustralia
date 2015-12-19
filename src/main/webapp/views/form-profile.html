@@ -13,7 +13,7 @@
                 </div>
             </div>
             <fieldset>
-                <h4 class="headervalue">Please select who you are?</h4>
+                <h4 class="headervalue">Please select who you are? <em>*</em></h4>
 
                 <select  name="userType" ng-model="formData.usertype"  ng-change="usertypesel()" required class="textfeildname yellow arrowupdown"  style="width:47%; margin-left:15px; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="user for user in usertypeArray" >
                     <option value="">--Select--</option> <!-- not selected / blank option -->
@@ -21,9 +21,9 @@
                 </select>
                 <p ng-show="userForm.userType.$dirty && userForm.userType.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">User Type is Required.</p>
                 <h4 class="headervalue">Please enter the details below</h4>
-                <div class="control" ng-class="{'has-error': userForm.firstname.$dirty && userForm.firstname.$error.required}">
+                <div class="control"  ng-class="{'has-error': userForm.firstname.$dirty && userForm.firstname.$error.required}">
                     <label class=" col-sm-2">First Name <em>*</em></label>
-                    <input type="text" name="firstname" id="frstname" ng-pattern="/^[a-zA-Z]*$/" class="textfeildname yellow" ng-model="formData.firstname" required />
+                    <input type="text" name="firstname" value="" ng-pattern="/^[a-zA-Z]*$/" class="textfeildname yellow" ng-model="formData.firstname" required />
                     <p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">First Name is Required.</p>
                     <p ng-show="userForm.firstname.$dirty && userForm.firstname.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter valid Name.</p>
 
@@ -47,11 +47,11 @@
                     <input type="text" id="" readonly="true" class="textfeildname yellow datepicker" ng-model="formData.birthdate" style="width:12%;" required>
                     <p ng-show="userForm.birthdate.$dirty && userForm.birthdate.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter DOB.</p>
                 </div>
-                <div class="control" ng-class="{'has-error': userForm.postcode.$dirty && userForm.postcode.$error.required}">
+                <div class="control" ng-class="{'has-error': userForm.postcode.$dirty || userForm.postcode.$error.required || userForm.postcode.$error.pattern}">
                     <label class=" col-sm-2">PostCode<em>*</em></label>
                     <input type="text" name="postcode" maxlength="4" ng-pattern="/^(\d)+$/" minlength="4" ng-change="" value="" id="postcde"  class="textfeildname" style="width: 75px;" ng-model="formData.postcode" required/>
                     <p ng-show="userForm.postcode.$dirty && userForm.postcode.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter PostCode.</p>
-                    <p ng-show="userForm.postcode.$dirty && userForm.postcode.$invalid" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter Number Only.</p>
+                    <p ng-show="userForm.postcode.$dirty && userForm.postcode.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter Number Only.</p>
 
                 </div>
 

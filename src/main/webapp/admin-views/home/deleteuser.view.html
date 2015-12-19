@@ -4,10 +4,12 @@
         <p style="color: #0073AC;">Delete a admin user</p></div>
     <div class="control">
         <label class=" col-sm-2">UserName<em>*</em></label>
-        <input type="text" name="username" id="delusername"  class="textfeildname yellow" ng-model="formAdminData.delusername"  />
+        <input type="text" name="username" id="delusername"  ng-pattern="/^[a-zA-Z0-9]*$/" class="textfeildname yellow" ng-model="formAdminData.delusername" required />
+        <p ng-show="userForm.username.$dirty && userForm.username.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid username.</p>
+        <p ng-show="userForm.username.$dirty && userForm.username.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">User name is required</p>
     </div>
     <div class="col-xs-6 col-xs-offset-3 col-xs-7">
-        <a class="btn btn-block btn-info" ng-click="deleteuseradmin()" style="width: 30%">
+        <a class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="deleteuseradmin()" style="width: 30%">
             Search User  <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a>
     </div><br><br><br><br>

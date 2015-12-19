@@ -365,7 +365,6 @@ angular.module('formApp', ['ui.router'])
         var conditioncalldelectd = $scope.formData.conditioncalld;
         $scope.usernameval = $scope.formData.firstname+" "+$scope.formData.lastname;
         $scope.referencenumberval = $scope.formData.referencenumber;
-        alert($scope.usernameval+$scope.referencenumberval);
         $scope.showcarerdetails = 'false';
         var surgeryheldselectd = $scope.formData.surgeryheld;
         if(surgeryheldselectd == 'Yes')
