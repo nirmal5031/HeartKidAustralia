@@ -206,7 +206,49 @@
                 $scope.clearall = function () {
                     $scope.formAdminData = "";
                 }
+               $http({
+                   url: 'heartkid/reportcount',
+                   method: "GET",
+                   async: false,
 
+               })
+
+                   .then(function(response) {
+                       var data = $.parseJSON(angular.toJson(response.data));
+
+                       /* var value = isNumber(data);
+
+                        if(value==false)
+                        {
+                        $state.go('form.generror');
+                        }
+                        else {*/
+                       $scope.reportcount = data;
+                       //alert($scope.reportcount);
+                       $scope.string = $scope.reportcount;
+                       $scope.arrString = $scope.string.split(',');
+                       $scope.reportData = [{key: "Patient",y: $scope.arrString[0]}, {key: "carer",y: $scope.arrString[1]}, {key: "Loved one",y: $scope.arrString[2]}];
+                       $scope.xFunction = function() {
+                           return function(d) {
+                               return d.key;
+                           };
+                       }
+                       $scope.yFunction = function() {
+                           return function(d) {
+                               return d.y;
+                           };
+                       }
+
+                       $scope.descriptionFunction = function() {
+                           return function(d) {
+                               return d.key;
+                           }
+                           //}
+                       }
+                   },
+                   function(response) {
+                       $state.go('form.generror');
+                   })
                 $scope.deleteuser = function (deluser) {
 
 

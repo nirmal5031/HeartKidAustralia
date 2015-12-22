@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('loginApp', ['ui.router','angularUtils.directives.dirPagination'])
+        .module('loginApp', ['ui.router','angularUtils.directives.dirPagination','nvd3ChartDirectives'])
         .service('dataService', function() {
 
             // private variable
@@ -91,6 +91,11 @@
                     url: '/reset',
                     controller: 'ResetController',
                     templateUrl: 'admin-views/login/reset-pass.html'
+                })
+                .state('form.reports', {
+                    url: '/reports',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/reports.view.html'
                 })
             $urlRouterProvider.otherwise('/login');
         });

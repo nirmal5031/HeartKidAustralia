@@ -40,3 +40,4 @@ com\heartkid\util\ReferenceNumGenerator.class
 com\heartkid\oauth\CustomAuthenticationProvider.class
 com\heartkid\model\entity\RegisterDtoEntity.class
 com\heartkid\service\HeartkidMailingService.class
+com\heartkid\repository\HeartKidReportRepository.class

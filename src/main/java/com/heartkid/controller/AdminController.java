@@ -20,6 +20,7 @@ import com.heartkid.model.entity.CreateAdminUser;
 import com.heartkid.model.entity.LoginEntity;
 import com.heartkid.model.entity.RegisterDtoEntity;
 import com.heartkid.repository.CreateAdminRepository;
+import com.heartkid.repository.HeartKidReportRepository;
 import com.heartkid.repository.HeartkidRepository;
 import com.heartkid.service.HeartkidExportService;
 import com.heartkid.service.LoginService;
@@ -40,6 +41,9 @@ public class AdminController {
 	private HeartkidRepository repository;
 	@Autowired
 	private EncrptDecryptPassword encrpytdecrypt;
+	@Autowired
+	private HeartKidReportRepository heartkidrepository; 
+	
 	
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(HeartkidController.class);
@@ -206,6 +210,29 @@ public class AdminController {
 				 }
 				return fetchadminuser;
 	 }
+	 @RequestMapping(value="heartkid/reportcount", method=RequestMethod.GET)
+		public  String registrationcount1(){
+			LOGGER.info("Report Screen for the request-----> ::" );
+			String reportcount;
+			String carerCountNo;
+			String LovedoneNo;
+			try
+			{
+			 String regcountnumber = heartkidrepository.patientcount();
+			 String carercount = heartkidrepository.carercount();
+			 String Lovedone = heartkidrepository.lovedcount();
+			 reportcount=regcountnumber;
+			 carerCountNo= carercount;
+			 LovedoneNo = Lovedone;
+			}
+			 catch (Exception ex) {
+			      return "Error creating the entry: " + ex.toString();
+			    }
+			reportcount = reportcount.concat(",");
+			reportcount = reportcount.concat(carerCountNo.concat(","));
+			reportcount = reportcount.concat(LovedoneNo);
+			return reportcount;	
+		}
 	 
 	
 	 
