@@ -4,7 +4,7 @@
     <div class="control" ng-class="{ 'has-error': userForm.refnum.$dirty || userForm.refnum.$error.pattern }">
         <label class=" col-sm-2">Reference Number</label>
         <input type="text" name="refnum" id="refnum" class="textfeildname yellow" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="formAdminData.referencenumber"  ng-init="formAdminData.referencenumber=''" />
-       <p ng-show="formAdminData.referencenumber.$dirty && formAdminData.referencenumber.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid reference number.</p>
+       <p ng-show="userForm.referencenumber.$dirty && userForm.referencenumber.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid reference number.</p>
        </div>
     <div class="control">
         <label class=" col-sm-2">User Type</label>

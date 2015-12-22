@@ -1,7 +1,4 @@
-﻿
-
-
-(function () {
+﻿(function () {
     'use strict';
 
     angular.module('loginApp')
@@ -88,13 +85,13 @@
             else {
                 var userroletype = sessionStorage.getItem('userrole');
 
-                if(userroletype != "null" && userroletype == "Admin")
+                if(userroletype != "" && userroletype == "Admin")
                 {
                     $scope.admin=true;
             }else{
-                    $scope.admin=true;
+                    $scope.admin=false;
                 }
-                $scope.userroleArray = ["Admin", "Viewer"];
+                $scope.userroleArray = ["Admin", "Coordinator"];
                 $scope.showModal = false;
                 $scope.buttonClicked = "";
                 $scope.toggleModal = function (btnClicked) {
@@ -209,7 +206,7 @@
                $http({
                    url: 'heartkid/reportcount',
                    method: "GET",
-                   async: false,
+                   async: false
 
                })
 
@@ -278,9 +275,10 @@
                             // success
 
                             if (response.data == "success") {
-                                $scope.formAdminData = "";
+
                                 var creationMessage = response.data + $scope.formAdminData.username;
                                 $scope.creationMessage = "User has been successfully created";
+                                $scope.formAdminData = null;
                             }
                             else if (response.data == "useridexist") {
                                 $scope.creationMessage = 'User ID is not available . Please choose different user ID';

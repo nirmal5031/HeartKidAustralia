@@ -30,13 +30,13 @@
 
                 })
                 .state('form.manage', {
-                    url: '/manage',
+                    url: '/admin',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/manage.view.html'
 
                 })
                 .state('form.listuser', {
-                    url: '/listuser',
+                    url: '/admin',
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/listuser.view.html'
 
