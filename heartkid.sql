@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `heartkidregistration` (
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
+  `sex` varchar(100) DEFAULT NULL,
   `birthdate` varchar(100) DEFAULT NULL,
   `postcode` varchar(100) DEFAULT NULL,
   `state` varchar(100) DEFAULT NULL,
@@ -241,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `heartkid_trigger` (
 ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TRIGGER heartkid_updtrigger AFTER UPDATE ON `heartkidregistration` FOR EACH ROW insert into heartkid_trigger(action_performed,firstname,usertype,referencenumber) values('update','new.firstname','sysdate()','new.referencenumber') ;
+CREATE TRIGGER heartkid_updtrigger AFTER UPDATE ON `heartkidregistration` FOR EACH ROW insert into heartkid_trigger(action_performed,firstname,usertype,referencenumber) values('update','new.firstname','new.usertype','new.referencenumber') ;
 
 
 CREATE TRIGGER heartkid_deltrigger AFTER DELETE ON `heartkidregistration` FOR EACH ROW insert into heartkid_trigger(action_performed,firstname,usertype,referencenumber) values('delete','old.firstname','old.usertype','old.referencenumber');
