@@ -1,0 +1,111 @@
+
+<div>
+
+    <div id="header">
+        <a href="index.html"><img  class="headerlogo" id="logo" title="" alt="HeartKids Australia" src="images/logo.png"></a>
+
+        <p class="text-left"> HEARTKID ADMIN</p>
+        <a style="float:right;margin-right:8%;">Welcome {{adminuser}}</a></br>
+        <a style="float:right;margin-right:8%; margin-top: -9%;cursor: pointer;" ng-click="logoutadmin()">Logout</a>
+    </div>
+
+    <!-- use ng-submit to catch the form submission and use our Angular function -->
+    <form id="formAdminData" name="userForm" novalidate>
+
+        <div class="col-lg-12">
+            <div class="col-md-12 formborder">
+
+                <div id="personal_details">
+
+                     <div class="myform">Search User</div>
+                    <br class="col-md-12 formcontent">
+
+                    <div id="divleft">
+                        <div id="MainMenu">
+                            <div class="list-group panel">
+                         <a ui-sref="form.search" style="cursor: pointer;" class="list-group-item list-group-item-success" data-parent="#MainMenu">Search</a>
+
+                        <a ng-show="admin" ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
+
+                         <a  ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
+                         <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
+                         <a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Create Admin</a>
+                         <a ng-show="admin" ui-sref="form.listuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu" ng-click="listadminuser()">List Admin</a>
+                         <a ng-show="admin" ui-sref="form.deleteuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Delete Admin</a>
+                        <div class="collapse" id="demo4">
+                            <a href="" class="list-group-item">Subitem 1</a>
+                            <a href="" class="list-group-item">Subitem 2</a>
+                            <a href="" class="list-group-item">Subitem 3</a>
+                        </div>
+                    </div></div></div>
+                    <div id="divright">
+                        <div id="form-views" ui-view></div>
+
+                    </div>
+
+</div></div></div>
+
+    </form>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div style="background:#bbdaee; padding-left:8px;"> <a href="">About us </a> |  <a href="#">Disclaimer</a> |   <a href=""> Careers </a>  |   <a href=""> Contact us</a></div>
+            <div style="font-size:11px; font-family:Arial, Helvetica, sans-serif; background:#293f78; color:#CCCCCC; padding-left:10px;">©2005-2015 HeartKids Health Record System. All rights reserved.</div>
+        </div>
+    </div>
+
+
+
+</div>
+<style>
+
+
+    #header {
+        background: rgba(0, 0, 0, 0) url("images/bg-header.png") repeat-x scroll 0 0;
+        float: left;
+        height: 115px;
+        margin: 0px 0px 0;
+        position: relative;
+        width: 100%;
+        z-index: 100;
+    }
+
+    #header #logo {
+        float: left;
+    }
+    img.headerlogo {
+        height: 95%;
+        border: 0 none;
+        vertical-align: bottom;
+    }
+
+    .sort-icon {
+        font-size: 9px;
+        margin-left: 5px;
+    }
+
+    th {
+        cursor:pointer;
+    }
+    div {
+       // border: 1px solid #000000;
+    }
+    #divleft{
+        width: 25%;
+        float: left;
+    }
+    #divright{
+        display: block;
+        margin-left: 62px;
+    }
+    .list-group.panel > .list-group-item {
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px
+    }
+</style>
+
+<!-- show our formData as it is being typed -->
+
+
+

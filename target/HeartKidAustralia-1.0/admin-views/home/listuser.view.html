@@ -1,0 +1,36 @@
+<fieldset>
+
+    <div class="control">
+        <p style="color: #0073AC;">List of admin user</p></div>
+    <div class="table-responsive" id="exportable" >
+        <table class="table table-striped table-bordered" style="width: 92%;margin-left: 4%;">
+            <tr class="info">
+                <th ng-click="sort('id')">Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                <th ng-click="sort('username')">User Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='username'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                </th>
+                <th ng-click="sort('firstname')">First Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='firstname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                </th>
+                <th ng-click="sort('lastname')">Last Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='lastname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                </th>
+                <th ng-click="sort('userrole')">User Role
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='userrole'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                </th>
+            </tr>
+
+            <tr dir-paginate="a in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                <td>{{$index+1}}</td>
+                <td>{{a.username}}</td>
+                <td>{{a.firstname}}</td>
+                <td>{{a.lastname}}</td>
+
+                <td>{{a.userrole}}</td>
+                <!--<td><button class="btn btn-primary" style="margin-left: 13%; width: 70px;" ng-click="modifyuser(a)">Edit</button></td>
+           --> </tr>
+        </table>
+        </div>
+
+    </fieldset>

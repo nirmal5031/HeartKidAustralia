@@ -197,7 +197,7 @@ public class RegisterDtoEntity {
 		  this.firstname=  firstname;                  
 		  this.lastname=  lastname;                   
 		  this.title=  title; 
-		  thi.sex= sex;
+		  this.sex= sex;
 		  this.birthdate = birthdate;           
 		  this.postcode=   postcode;                  
 		  this.state =  state;                       
