@@ -321,12 +321,8 @@ angular.module('formApp', ['ui.router'])
             var formstatus = "incomplete";
             var contactagree = $scope.formData.contctviaphone;
             var contactagreephone = $scope.formData.phone;
-            if((contactagree == 'yes')&&(contactagreephone == "")){
-                $scope.userForm.phone.$error.required='true';
-                e.preventDefault()
-            }
-            else{
-                $state.go('form.treatment');
+
+
 
                 $scope.formData.surveystatus = formstatus;
                 $http({
@@ -338,7 +334,7 @@ angular.module('formApp', ['ui.router'])
                         // success
                         var data = $.parseJSON(angular.toJson(response.data));
                         $scope.formData.id = data.id;
-                        $state.go('form.treatment');
+                        //$state.go('form.treatment');
 
                     },
                     function (status) { // optional
@@ -348,7 +344,7 @@ angular.module('formApp', ['ui.router'])
                     })
             }
 
-        }
+
         $scope.usertypesel = function()
         {
             var selectdusertyp = $scope.formData.usertype;
