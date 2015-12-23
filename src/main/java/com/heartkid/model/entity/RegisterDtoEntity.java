@@ -28,7 +28,8 @@ public class RegisterDtoEntity {
 	private String firstname; 
 	 @Column(name = "LASTNAME")
 	private String lastname;                    
-	private String title;                                 
+	private String title;
+	private String sex; 
 	private String birthdate;                 
 	private String postcode;                          
 	private String state;                               
@@ -187,7 +188,7 @@ public class RegisterDtoEntity {
 
 
 
-	public RegisterDtoEntity(long id, String usertype,String firstname,String lastname,String title,String postcode,String state,String surveystatus,String conctagree,String contctviaphone ,String contctviaemail ,String phone,String email,String ethnicity,String countrybirth,String language,String conditioncalld,String heartconds,String surgeryHeld  ,String surgerydelay,String Surgerydelaycount,String trvlsurg,String heartdoc,String localdoctorvisit,String emergdeptvisit,String careage16,String childtoadultdoc,String anxietycond ,String anxietycondimpact,String curntwork,String worktime,String disabilityben,String chdlivingimpc,String changeimpactchd,String chdimpactwork,String missschooldays,String eductnchallng,String schoolgrd,String formalassess,String impactQol,String condimpactschl,String condimpactschooldesc,String moneyspentinyear,String frstsurgerysel,String hosptlsurgery,String educsupporthosp,String transpaedtoadult,String ratetransition,String feelsupport,String heartkidsupport,String socworker,String pstcologist,String familysuprt  ,String dedicatednurse,String dedicatedCHDnurse,String doctorcountsee,String traveldistdoc,String aftrsurgfeel,String heardheartkid,String memberheartkid,String supportheartkid,String useheartkid,String desccommentsany) {
+	public RegisterDtoEntity(long id, String usertype,String firstname,String lastname,String title,String sex,String postcode,String state,String surveystatus,String conctagree,String contctviaphone ,String contctviaemail ,String phone,String email,String ethnicity,String countrybirth,String language,String conditioncalld,String heartconds,String surgeryHeld  ,String surgerydelay,String Surgerydelaycount,String trvlsurg,String heartdoc,String localdoctorvisit,String emergdeptvisit,String careage16,String childtoadultdoc,String anxietycond ,String anxietycondimpact,String curntwork,String worktime,String disabilityben,String chdlivingimpc,String changeimpactchd,String chdimpactwork,String missschooldays,String eductnchallng,String schoolgrd,String formalassess,String impactQol,String condimpactschl,String condimpactschooldesc,String moneyspentinyear,String frstsurgerysel,String hosptlsurgery,String educsupporthosp,String transpaedtoadult,String ratetransition,String feelsupport,String heartkidsupport,String socworker,String pstcologist,String familysuprt  ,String dedicatednurse,String dedicatedCHDnurse,String doctorcountsee,String traveldistdoc,String aftrsurgfeel,String heardheartkid,String memberheartkid,String supportheartkid,String useheartkid,String desccommentsany) {
 		  
 		  
 		  super();
@@ -195,7 +196,8 @@ public class RegisterDtoEntity {
 		  this.usertype=  usertype;                   
 		  this.firstname=  firstname;                  
 		  this.lastname=  lastname;                   
-		  this.title=  title;                         
+		  this.title=  title; 
+		  thi.sex= sex;
 		  this.birthdate = birthdate;           
 		  this.postcode=   postcode;                  
 		  this.state =  state;                       
@@ -299,6 +301,13 @@ public class RegisterDtoEntity {
 
 	public String getTitle() {
 		return title;
+	}
+	public String getSex() {
+	return sex;
+	}
+
+	public void setSex(String sex) {
+	this.sex = sex;
 	}
 
 
