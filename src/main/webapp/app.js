@@ -6,19 +6,13 @@ angular.module('formApp', ['ui.router'])
 // configuring our routes
 // =============================================================================
     .config(function($stateProvider, $urlRouterProvider) {
-       // $httpProvider.interceptors.push('errorInterceptor');
-
         $stateProvider
-            // route to show our basic form (/form)
+
             .state('form', {
                     url: '/form',
                 templateUrl: 'form.html',
                 controller: 'formController'
             })
-
-            // nested states
-            // each of these sections will have their own view
-            // url will be nested (/form/profile)
             .state('home', {
                 url: '/form/research',
                 templateUrl: 'views/home.html'
@@ -26,6 +20,7 @@ angular.module('formApp', ['ui.router'])
 
             .state('form.profile', {
                 url: '/research',
+                controller:'personalInfoContrler',
                 templateUrl: 'views/form-profile.html'
             })
             .state('form.carer-profile', {
@@ -37,7 +32,6 @@ angular.module('formApp', ['ui.router'])
                 templateUrl: 'views/form-treatmnt.html'
             })
 
-            // url will be /form/interests
             .state('form.burden-1', {
                 url: '/research',
                 templateUrl: 'views/form-burdendisease1.html'
@@ -54,7 +48,7 @@ angular.module('formApp', ['ui.router'])
                 url: '/research',
                 templateUrl: 'views/form-burdendisease3.html'
             })
-            // url will be /form/payment
+
             .state('form.thankyou', {
                 url: '/research',
                 templateUrl: 'views/confirmation.html'
@@ -85,7 +79,7 @@ angular.module('formApp', ['ui.router'])
     .directive('windowExit', function($window) {
         return {
             restrict: 'AE',
-            //performance will be improved in compile
+
             compile: function(element, attrs){
                 var myEvent = $window.attachEvent || $window.addEventListener,
                     chkevent = $window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compatable
@@ -98,40 +92,10 @@ angular.module('formApp', ['ui.router'])
             }
         };
     })
-/*
-    .factory('myHttpResponseInterceptor',['$q','$location',function($q,$location){
-        return {
-            response: function(response){
-                return $q(
-                    function success(response) {
-                        return response;
-                    },
-                    function error(response) {
-                        if(response.status === 302){
-                            alert("302");
-                            $location.path('/signin');
-                            return $q.reject(response);
-                        }
-                        else{
-                            alert("other ");
-                            return $q.reject(response);
-                        }
-                    });
-            }
-        }
-    }])
 
-
-//Http Intercpetor to check auth failures for xhr requests
-    .config(['$httpProvider',function($httpProvider) {
-        $httpProvider.interceptors.push('myHttpResponseInterceptor');
-    }])*/
-
-// our controller for the form
-// =============================================================================
     .controller('formController', function($scope) {
 
-        // we will store all of our form data in this object
+
         $scope.formData = {};
 
         // function to process the form
@@ -141,10 +105,9 @@ angular.module('formApp', ['ui.router'])
 
     })
 
-    //services
     .service('dataService', function() {
 
-        // private variable
+
         var _dataObj;
 
         this.dataObj = _dataObj;
@@ -173,27 +136,27 @@ angular.module('formApp', ['ui.router'])
                        $scope.regcount = data;
                    }
                 },
-                function(response) { // optional
-                    // failed
+                function(response) {
                     $state.go('form.generror');
 
 
                 })
         });
-        var empty = "";
+
                 $scope.proceedtosurvey = function() {
+
                 $http({
                     url: 'heartkid/referencegen',
-                    method: "GET",
-                    data:empty
+                    method: "GET"
 
                 })
                     .then(function(response) {
                                 var data = $.parseJSON(angular.toJson(response.data));
-                        dataService.dataObj = data;
+
+                      dataService.dataObj = data;
+                        $state.go('form.profile');
                         },
-                        function(response) { // optional
-                            // failed
+                        function(response) {
                             $state.go('form.generror');
 
                         })
@@ -203,9 +166,10 @@ angular.module('formApp', ['ui.router'])
     .controller('personalInfoContrler', function ($scope, $http, dataService,$state) {
 
         $scope.formData.referencenumber = dataService.dataObj;
+
         $scope.showcarerdetails = 'false';
 
-        var progress = setInterval(function () {
+ var progress = setInterval(function () {
             var $bar = $('.bar');
             if ($bar.width() >= 400) {
                 clearInterval(progress);
@@ -303,7 +267,7 @@ angular.module('formApp', ['ui.router'])
         $scope.phonevalue = function(e){
 
           var phonevalue = $scope.formData.phone;
-          //  alert("phone value"+phonevalue.length);
+
             if(phonevalue.length == '9')
             {
                 $scope.userForm.phone.$error.required='false';
@@ -331,14 +295,12 @@ angular.module('formApp', ['ui.router'])
                     data: $scope.formData
                 })
                     .then(function (response) {
-                        // success
                         var data = $.parseJSON(angular.toJson(response.data));
                         $scope.formData.id = data.id;
-                        //$state.go('form.treatment');
+
 
                     },
-                    function (status) { // optional
-                        // failed
+                    function (status) {
                         $state.go('form.generror');
 
                     })
@@ -416,15 +378,7 @@ angular.module('formApp', ['ui.router'])
             $scope.knowncondition = 'true' ;
         }
 
-      /* if(usertype =="Patient" )
-       {
-        $scope.showcarerdetails = 'false';
-       }
-        else if(usertype =="Carer")
-       {
-           alert("carer");
-           $scope.showcarerdetails = 'true';
-       }*/
+
         $scope.scale1to5 = ["0","1", "2","3","4","5"];
         $scope.scale1to10 = ["1", "2","3","4","5","6","7","8","9","10",">10"];
         $scope.scale1to20 = ["1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20",">20"];
@@ -524,16 +478,7 @@ angular.module('formApp', ['ui.router'])
               }
           }
 
-        /*$scope.go = function(ai) {
-        alert(ai);
-        }
-        $scope.changeColor = function(person, bool) {
-            if(bool === true) {
-                $scope.personColour = {color: '#'+person.colour};
-            } else if (bool === false) {
-                $scope.personColour = {color: 'white'}; //or, whatever the original color is
-            }
-        };*/
+
         $scope.myClass = [];
         $scope.nodes = [
             {id: 1,rate: "1" },
@@ -837,8 +782,6 @@ angular.module('formApp', ['ui.router'])
 
         $scope.saveouthospitalform = function(){
 
-           /* var formstatus = "success";
-            $scope.formData.surveystatus = formstatus;*/
             $http({
                 url: 'heartkid/outhospital',
                 method: "POST",

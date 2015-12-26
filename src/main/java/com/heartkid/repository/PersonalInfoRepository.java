@@ -2,6 +2,7 @@ package com.heartkid.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.heartkid.model.entity.*;
@@ -13,4 +14,7 @@ public interface PersonalInfoRepository extends CrudRepository<RegisterDtoEntity
 	
 	@Query("select count(u) from RegisterDtoEntity u")
 	int registationcount ();
+	
+	@Query("select count(u) from RegisterDtoEntity u where u.referencenumber=:referencenumber")
+	int referenceexist (@Param(value = "referencenumber") final String referencenumber);
 }

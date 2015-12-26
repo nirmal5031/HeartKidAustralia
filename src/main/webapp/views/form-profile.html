@@ -116,13 +116,13 @@
 
                 <div class="control"  ng-show="showcontactviaphone">
                     <label class=" col-sm-2">Phone<em>*</em></label>
-                    <input type="text"  name="phone" value="" ng-pattern="/^(\d)+$/" ng-minlength="10" ng-maxlength="12" class="textfeildname yellow" ng-model="formData.phone" ng-required="formData.contctviaphone=='yes'" style="width: 25%;">
+                    <input type="text"  name="phone" value="" ng-pattern="/^(\d)+$/" ng-minlength="5" ng-maxlength="12" class="textfeildname yellow" ng-model="formData.phone" ng-required="formData.contctviaphone=='yes'" style="width: 25%;">
                     <p ng-show="userForm.phone.$dirty && userForm.phone.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Phone Number is Required.</p>
 <!--
                    <p ng-show="userForm.phone.$dirty && userForm.phone.$invalid" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter Number Only.</p>
 -->                 <p ng-show="userForm.phone.$invalid && userForm.phone.$error.pattern " class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid phone number</p>
                   <p ng-show="userForm.phone.$dirty && userForm.phone.$error.maxlength" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Maximum length exceeded.Please enter valid number </p>
-                    <p ng-show="userForm.phone.$dirty && userForm.phone.$error.minLength" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid number. </p>
+                    <p ng-show="userForm.phone.$dirty && userForm.phone.$error.minlength" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid number. </p>
                 </div>
                  <div  ng-show="showcarerdetails">
                         <h4 class="headervalue">Carer Details:</h4>
@@ -152,9 +152,10 @@
 
                         <div class="control">
                             <label class=" col-sm-2">Phone</label>
-                            <input type="text"  name="carerphone" value="" ng-pattern="/^(\d)+$/" ng-maxlength="12"  class="textfeildname yellow" ng-model="formData.carerphone" style="width: 25%;"/>
+                            <input type="text"  name="carerphone" value="" ng-pattern="/^(\d)+$/" ng-minlength="6" ng-maxlength="12"  class="textfeildname yellow" ng-model="formData.carerphone" style="width: 25%;"/>
                             <p ng-show="userForm.carerphone.$dirty && userForm.carerphone.$error.maxlength" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Maximum 12 character are allowed</p>
-                     <p ng-show="userForm.carerphone.$invalid && userForm.carerphone.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid number.</p> </div>
+                     <p ng-show="userForm.carerphone.$invalid && userForm.carerphone.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid number.</p>
+                     <p ng-show="userForm.carerphone.$dirty && userForm.carerphone.$error.minlength" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid number.</p> </div>
 
                 <div class="control">
                             <label class=" col-sm-2">eMail<em>*</em></label>

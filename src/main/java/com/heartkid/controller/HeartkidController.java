@@ -20,6 +20,7 @@ import com.heartkid.repository.QualityCareRepository;
 import com.heartkid.service.EditHearkidUserService;
 import com.heartkid.service.HeartkidMailingService;
 import com.heartkid.util.Dategenerator;
+import com.heartkid.util.EncrptDecryptPassword;
 import com.heartkid.util.RandomNumGenerator;
 import com.heartkid.util.ReferenceNumGenerator;
 
@@ -77,9 +78,34 @@ public  String registrationcount(){
 @RequestMapping(value="heartkid/referencegen", method=RequestMethod.GET)
 public  String generatereference(){
 	 int randomCount = randomnumber.randomcountgenerator();
-	 String referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
+	 int referenceexist= 0;
+	 String referenceNumb = null;
+	  referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
 	 LOGGER.info("Reference Number for the request-----> ::"+referenceNumb);
 	
+		 try{
+				if(referenceNumb != null)
+				{
+					 referenceexist = personalrepository.referenceexist(referenceNumb);
+				}
+				else
+				{
+					 referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();
+				}
+				if(referenceexist == 0)
+				{
+					referenceNumb = referenceNumb;
+				}
+				else
+				{
+					referenceNumb = randomnumber.generateRandomString(randomCount).toUpperCase();		
+				}
+		 } 
+			 catch (Exception ex) {
+				
+			     System.out.println("ERROR in Creating reference number"+ex.toString());
+			    }
+		
 	return referenceNumb;	
 }
 

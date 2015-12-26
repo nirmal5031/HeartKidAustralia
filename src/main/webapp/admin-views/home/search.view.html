@@ -4,8 +4,8 @@
     <div class="control" ng-class="{ 'has-error': userForm.refnum.$dirty || userForm.refnum.$error.pattern }">
         <label class=" col-sm-2">Reference Number</label>
         <input type="text" name="refnum" id="refnum" class="textfeildname yellow" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="formAdminData.referencenumber"  ng-init="formAdminData.referencenumber=''" />
-       <p ng-show="userForm.referencenumber.$dirty && userForm.referencenumber.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid reference number.</p>
-       </div>
+        <p ng-show="userForm.referencenumber.$dirty && userForm.referencenumber.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid reference number.</p>
+    </div>
     <div class="control">
         <label class=" col-sm-2">User Type</label>
         <select  name="usertype" ng-model="formAdminData.usertype" class="textfeildname yellow arrowupdown"  style="width:27%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="usertype for usertype in usertypeArray">
@@ -47,7 +47,6 @@
             Search  <span class="glyphicon glyphicon-circle-arrow-right"></span>
         </a></br>
     </div>
-    <pre>{{userForm.$invalid}}</pre>
     <!--
     <div class="col-xs-6 col-xs-offset-3 col-xs-7">
 
@@ -56,10 +55,13 @@
         </a></br>
     </div>-->
 </fieldset>
-<div class="control">
+<!--<div class="control">
     <label class=" col-sm-2">Search User</label>
     <input type="text"  name="Search" value="" class="textfeildname yellow" ng-model="search" placeholder="Search"/>
-</div>
+</div>-->
+
+<p style="color: red;">{{deleteMessage}}</p>
+</br>
 
 <div class="table-responsive" id="exportable" ng-show="searchHeartKid">
     <table class="table table-striped table-bordered" style="width: 92%;margin-left: 4%;">
@@ -81,15 +83,21 @@
             <th ng-click="sort('surveystatus')">Status
                 <span class="glyphicon sort-icon" ng-show="sortKey=='surveystatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             </th>
+            <th>
+            </th>
+            <th>
+            </th>
         </tr>
 
-        <tr dir-paginate="a in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+        <tr dir-paginate="a in searchusers|orderBy:sortKey:reverse|filter:search|itemsPerPage:20">
             <td>{{$index+1}}</td>
             <td>{{a.referencenumber}}</td>
             <td>{{a.firstname}}</td>
             <td>{{a.lastname}}</td>
             <td>{{a.usertype}}</td>
             <td>{{a.surveystatus}}</td>
+            <td><a  class="btn btn-xs btn-primary modifybutton" ><span class="glyphicon glyphicon-pencil "></span> Edit</a></td>
+            <td><a  class="btn btn-xs btn-danger modifybutton" ng-click="deleteuser($index,a.referencenumber)"><span class="glyphicon glyphicon-remove "></span> Delete</a></td>
             <!--<td><button class="btn btn-primary" style="margin-left: 13%; width: 70px;" ng-click="modifyuser(a)">Edit</button></td>
        --> </tr>
     </table>
@@ -99,3 +107,13 @@
                              boundary-links="true">
     </dir-pagination-controls>
 </div>
+
+<style>
+
+    .modifybutton {
+        width: 84%;
+        margin-left: 11%;
+        margin-top: 10%;
+    }
+
+</style>

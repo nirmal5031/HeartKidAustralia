@@ -47,7 +47,7 @@
             };
         })
 
-    .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
+        .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
 
             var accessToken = sessionStorage.getItem('tokenId');
             var adminuser = sessionStorage.getItem('adminuser');
@@ -55,31 +55,31 @@
 
 
             console.log(accessToken);
-                  /* $scope.$watch('$viewContentLoaded', function(){
+            /* $scope.$watch('$viewContentLoaded', function(){
 
-                $http({
-                    url: 'heartkid/tokenvalidate',
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization': 'Bearer ' + accessToken
-                    }
+             $http({
+             url: 'heartkid/tokenvalidate',
+             method: "GET",
+             headers: {
+             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+             'Authorization': 'Bearer ' + accessToken
+             }
 
-                })
-                    .then(function (response) {
+             })
+             .then(function (response) {
 
-            sessionStorage.setItem('isTokenValid',true);
+             sessionStorage.setItem('isTokenValid',true);
 
-                    },
-                    function (response) { // optional
-                        sessionStorage.setItem('isTokenValid',false);
+             },
+             function (response) { // optional
+             sessionStorage.setItem('isTokenValid',false);
 
-                    })
-            });*/
+             })
+             });*/
 
             var istokenvalid = sessionStorage.getItem('isTokenValid');
 
-           if(accessToken == null) {
+            if(accessToken == null) {
                 $state.go('/login');
             }
             else {
@@ -88,7 +88,7 @@
                 if(userroletype != "" && userroletype == "Admin")
                 {
                     $scope.admin=true;
-            }else{
+                }else{
                     $scope.admin=false;
                 }
                 $scope.userroleArray = ["Admin", "Coordinator"];
@@ -142,7 +142,7 @@
                 }
 
                 $scope.statusArray = ["incomplete", "success"];
-               $scope.usertypeArray = ["Patient", "Carer"];
+                $scope.usertypeArray = ["Patient", "Carer"];
 
                 $scope.modifyuser = function (a) {
 
@@ -158,7 +158,8 @@
 
 
                 $scope.searchheartkid = function () {
-
+                    $scope.deleteMessage="";
+                    var fromvalue  = $scope.formAdminData;
 
                     $http({
                         url: 'heartkid/getrecord',
@@ -167,7 +168,7 @@
                             'Authorization': 'Bearer ' + accessToken,
                             'Content-Type': 'application/json'
                         },
-                        data: $scope.formAdminData
+                        data: fromvalue
                     })
                         .then(function (response) {
                             // success
@@ -175,7 +176,7 @@
                             var data1 = angular.toJson(response.data);
 
                             $scope.searchHeartKid = true;
-                            $scope.users = data;
+                            $scope.searchusers = data;
                             $scope.totalrecords = data.length;
 
 
@@ -201,53 +202,57 @@
                 }
 
                 $scope.clearall = function () {
-                    $scope.formAdminData = "";
+                    $scope.formAdminData.referencenumber = '';
+                    $scope.formAdminData.usertype = '';
+                        $scope.formAdminData.status='';
+                        $scope.formAdminData.country = '';
+
+
                 }
-               $http({
-                   url: 'heartkid/reportcount',
-                   method: "GET",
-                   async: false
+                $http({
+                    url: 'heartkid/reportcount',
+                    method: "GET",
+                    async: false
 
-               })
+                })
 
-                   .then(function(response) {
-                       var data = $.parseJSON(angular.toJson(response.data));
+                    .then(function(response) {
+                        var data = $.parseJSON(angular.toJson(response.data));
 
-                       /* var value = isNumber(data);
+                        /* var value = isNumber(data);
 
-                        if(value==false)
-                        {
-                        $state.go('form.generror');
+                         if(value==false)
+                         {
+                         $state.go('form.generror');
+                         }
+                         else {*/
+                        $scope.reportcount = data;
+                        //alert($scope.reportcount);
+                        $scope.string = $scope.reportcount;
+                        $scope.arrString = $scope.string.split(',');
+                        $scope.reportData = [{key: "Patient",y: $scope.arrString[0]}, {key: "carer",y: $scope.arrString[1]}, {key: "Loved one",y: $scope.arrString[2]}];
+                        $scope.xFunction = function() {
+                            return function(d) {
+                                return d.key;
+                            };
                         }
-                        else {*/
-                       $scope.reportcount = data;
-                       //alert($scope.reportcount);
-                       $scope.string = $scope.reportcount;
-                       $scope.arrString = $scope.string.split(',');
-                       $scope.reportData = [{key: "Patient",y: $scope.arrString[0]}, {key: "carer",y: $scope.arrString[1]}, {key: "Loved one",y: $scope.arrString[2]}];
-                       $scope.xFunction = function() {
-                           return function(d) {
-                               return d.key;
-                           };
-                       }
-                       $scope.yFunction = function() {
-                           return function(d) {
-                               return d.y;
-                           };
-                       }
+                        $scope.yFunction = function() {
+                            return function(d) {
+                                return d.y;
+                            };
+                        }
 
-                       $scope.descriptionFunction = function() {
-                           return function(d) {
-                               return d.key;
-                           }
-                           //}
-                       }
-                   },
-                   function(response) {
-                       $state.go('form.generror');
-                   })
-                $scope.deleteuser = function (deluser) {
-
+                        $scope.descriptionFunction = function() {
+                            return function(d) {
+                                return d.key;
+                            }
+                            //}
+                        }
+                    },
+                    function(response) {
+                        $state.go('form.generror');
+                    })
+                $scope.deleteuser = function (index,deluser) {
 
                     $http({
                         url: 'heartkid/deleterecord/' + deluser,
@@ -256,7 +261,8 @@
                         .then(function (response) {
                             // success
                             $scope.deleteMessage = response.data;
-                            $scope.users = "";
+                            $scope.searchusers.splice(index, 1);
+                            // $scope.users = "";
                         },
                         function (response) { // optional
                             // failed
@@ -354,86 +360,86 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
-               $scope.test = function()
-               {
-                   alert("TEST FUNCTION");
-               }
-$scope.listadminuser = function()
-{
-    $http({
-        url: 'heartkid/listadminuser',
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Authorization': 'Basic ' + accessToken
-        }
+                $scope.test = function()
+                {
+                    alert("TEST FUNCTION");
+                }
+                $scope.listadminuser = function()
+                {
+                    $http({
+                        url: 'heartkid/listadminuser',
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                            'Authorization': 'Basic ' + accessToken
+                        }
 
-    })
-        .then(function (response) {
-            var data = angular.fromJson(response.data);
-            $scope.users = data;
-            $scope.totalrecords = data.length;
-        },
-        function (response) {
-            alert("Error respomse----->" + response.data);
-        })
-}
-               $scope.deleteuseradmin = function()
-               {
-                   var username = $scope.formAdminData.delusername;
+                    })
+                        .then(function (response) {
+                            var data = angular.fromJson(response.data);
+                            $scope.users = data;
+                            $scope.totalrecords = data.length;
+                        },
+                        function (response) {
+                            alert("Error respomse----->" + response.data);
+                        })
+                }
+                $scope.deleteuseradmin = function()
+                {
+                    var username = $scope.formAdminData.delusername;
 
-                   $http({
-                       url: 'heartkid/fetchadminuser/'+username,
-                       method: "GET"
-                       /* headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization': 'Basic ' + accessToken
-                        }*/
+                    $http({
+                        url: 'heartkid/fetchadminuser/'+username,
+                        method: "GET"
+                        /* headers: {
+                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                         'Authorization': 'Basic ' + accessToken
+                         }*/
 
-                   })
+                    })
 
-                       .then(function (response) {
-                           var data = angular.fromJson(response.data);
+                        .then(function (response) {
+                            var data = angular.fromJson(response.data);
 
-                           $scope.delusers = data;
-                           $scope.totalrecords = data.length;
-                       },
-                       function (response) {
-                           alert("Error respomse----->" + response.data);
-                       })
+                            $scope.delusers = data;
+                            $scope.totalrecords = data.length;
+                        },
+                        function (response) {
+                            alert("Error respomse----->" + response.data);
+                        })
 
-               }
-               $scope.deleteadminuser = function(username)
-               {
+                }
+                $scope.deleteadminuser = function(username)
+                {
 
-                   $http({
-                       url: 'heartkid/deleteadminuser/'+username,
-                       method: "GET"
-                       /* headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization': 'Basic ' + accessToken
-                        }*/
+                    $http({
+                        url: 'heartkid/deleteadminuser/'+username,
+                        method: "GET"
+                        /* headers: {
+                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                         'Authorization': 'Basic ' + accessToken
+                         }*/
 
-                   })
+                    })
 
-                       .then(function (response) {
-                           var data = angular.fromJson(response.data);
+                        .then(function (response) {
+                            var data = angular.fromJson(response.data);
 
-                           if(data==1)
-                           {
-                               $scope.deletionMessage= "User successfully deleted";
-                               $scope.delusers = "";
-                           }
-                           else{
-                               $scope.deletionMessage= "Error in deleting user. Please try again later! ";
+                            if(data==1)
+                            {
+                                $scope.deletionMessage= "User successfully deleted";
+                                $scope.delusers = "";
+                            }
+                            else{
+                                $scope.deletionMessage= "Error in deleting user. Please try again later! ";
 
-                           }
-                       },
-                       function (response) {
-                           $scope.deletionMessage= "Error in deleting user. Please try again later! ";
-                       })
+                            }
+                        },
+                        function (response) {
+                            $scope.deletionMessage= "Error in deleting user. Please try again later! ";
+                        })
 
-               }
+                }
             }
 
         }])
