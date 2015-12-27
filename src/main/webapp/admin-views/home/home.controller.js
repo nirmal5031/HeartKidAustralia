@@ -47,11 +47,21 @@
             };
         })
 
-        .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope', function($scope,$http,$state,$window,dataService,$rootScope) {
+        .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope','$anchorScroll','$location', function($scope,$http,$state,$window,dataService,$rootScope,$anchorScroll,$location) {
 
             var accessToken = sessionStorage.getItem('tokenId');
             var adminuser = sessionStorage.getItem('adminuser');
             $scope.adminuser = adminuser;
+            $scope.sexArray = ["Male","Female"];
+            $scope.yesnoArray = ["Yes", "No"];
+            $scope.usertypeArray = ["Patient", "Carer"];
+            $scope.titleArray = ["Mr","Mrs","Miss","Mrs","Dr","Prof"];
+            $scope.sexArray = ["Male","Female"];
+            $scope.conttypeArray = ["Phone","Email"];
+            $scope.ethnicityArray = ["Caucasian","Aborigional / Tores Strait Island","Mouri","Asian","Indian","Black/Afican American","European","None of the above"];
+            $scope.lstofcountryArray = ["Australia","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","China","Colombia","Comoros","Congo","Congo {Democratic Rep}","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland {Republic}","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar, {Burma}","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican","Other"];
+            $scope.languageArray = ["English","Chinese","Italian","Vietnamese","Greek","Cantonese","Arabic","Mandarin","Macedonian","French","Spanish"];
+            $scope.statelistArray = ["New South Wales","Australian Capital Territory","Victoria","Queensland","South Australia","Western Australia","Tasmania","Northern Territory"] ;
 
 
             console.log(accessToken);
@@ -105,7 +115,7 @@
 
 
                 $scope.exportData = function () {
-                    $scope.searchHeartKid = false;
+                    //$scope.searchHeartKid = false;
                     var date = new Date().getDate() + "_" + new Date().getMonth() + "_" + new Date().getFullYear();
                     $http({
                         url: 'heartkid/downloadExcel',
@@ -124,6 +134,8 @@
                                 if (exporttoexcel) {
                                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                     saveAs(blob, 'HeartKid_Results' + date + '.xls');
+                                    $scope.ErrorMessage = "Record exported successfully (HeartKid_Results"+date+".xls)";
+
                                 } else {
                                     $scope.ErrorMessage = "Please refine your search and try again";
                                 }
@@ -132,6 +144,8 @@
                             else {
                                 var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                 saveAs(blob, 'HeartKid_Results' + date + '.xls');
+                                $scope.ErrorMessage = "Record exported successfully (HeartKid_Results)"+date+".xls";
+
 
                             }
                         }).error(function (data, status, headers, config) {
@@ -178,7 +192,6 @@
                             $scope.searchHeartKid = true;
                             $scope.searchusers = data;
                             $scope.totalrecords = data.length;
-
 
                         },
                         function (response) { // optional
@@ -360,10 +373,7 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
-                $scope.test = function()
-                {
-                    alert("TEST FUNCTION");
-                }
+
                 $scope.listadminuser = function()
                 {
                     $http({
@@ -409,9 +419,8 @@
                         })
 
                 }
-                $scope.deleteadminuser = function(username)
+                $scope.deleteadminuser = function(index,username)
                 {
-
                     $http({
                         url: 'heartkid/deleteadminuser/'+username,
                         method: "GET"
@@ -427,8 +436,8 @@
 
                             if(data==1)
                             {
-                                $scope.deletionMessage= "User successfully deleted";
-                                $scope.delusers = "";
+                                $scope.deletionMessage= "User successfully deleted - Username : "+username;
+                                $scope.delusers.splice(index, 1);
                             }
                             else{
                                 $scope.deletionMessage= "Error in deleting user. Please try again later! ";
@@ -439,6 +448,33 @@
                             $scope.deletionMessage= "Error in deleting user. Please try again later! ";
                         })
 
+                }
+
+                $scope.getuserdetails = function(editID)
+                {
+                    $http({
+                        url: 'heartkid/getuserdetails/'+editID,
+                        method: "GET"
+                        /* headers: {
+                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                         'Authorization': 'Basic ' + accessToken
+                         }*/
+                    })
+
+                        .then(function (response) {
+                            $scope.edituserdetailshow = 'true';
+                            var data = angular.toJson(response.data);
+                            var data1 = angular.fromJson(response.data);
+
+                            $scope.formData = data1;
+                            $location.hash('edituser');
+
+                            // call $anchorScroll()
+                            $anchorScroll();
+                        },
+                        function (response) {
+                            alert("Error respomse----->" + response.data);
+                        })
                 }
             }
 

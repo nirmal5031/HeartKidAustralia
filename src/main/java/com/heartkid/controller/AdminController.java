@@ -233,8 +233,17 @@ public class AdminController {
 			reportcount = reportcount.concat(LovedoneNo);
 			return reportcount;	
 		}
-	 
-	
-	 
-	 
+	RegisterDtoEntity getuserdetails  =  new RegisterDtoEntity();	
+	@RequestMapping(value="heartkid/getuserdetails/{id}", method=RequestMethod.GET)
+	 public  RegisterDtoEntity getuserdetails(@PathVariable(value="id") String id){
+		 try{
+			 long d = Long.parseLong(id);
+			 getuserdetails = repository.findOne(d);
+			 
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+	 return getuserdetails;
+}
 }

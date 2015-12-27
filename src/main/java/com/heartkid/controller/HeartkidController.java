@@ -119,6 +119,32 @@ public  String savepersonalInfo(@RequestBody RegisterDtoEntity personalinfo){
 		 LOGGER.info("Referencenumber of the request :::::::::::"+personalinfo.getReferencenumber());
 		
 		if(personalinfo != null)
+			if(personalinfo.getCountrybirth() == null)
+			{
+				System.out.println("country of birthda is null");
+				personalinfo.setCountrybirth("0");
+			}
+		if(personalinfo.getSex() == null)
+		{
+			personalinfo.setSex("0");
+		}
+		if(personalinfo.getSex() == null)
+		{
+			personalinfo.setSex("0");
+		}
+		if(personalinfo.getState() == "")
+		{
+			personalinfo.setState("0");
+		}
+		if(personalinfo.getContctviaemail() == null)
+		{
+			personalinfo.setContctviaemail("0");
+		}
+		if(personalinfo.getContctviaphone() == null)
+		{
+			personalinfo.setContctviaphone("0");
+		}
+		
 			personalrepository.save(personalinfo);
 		  
 		    if(personalinfo!= null)

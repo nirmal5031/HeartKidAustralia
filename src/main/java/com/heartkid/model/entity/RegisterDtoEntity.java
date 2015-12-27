@@ -30,7 +30,9 @@ public class RegisterDtoEntity {
 	private String lastname;                    
 	private String title;
 	private String sex; 
-	private String birthdate;                 
+	private String birthdate;  
+	private String age;
+	
 	private String postcode;                          
 	private String state;                               
 	private String conctagree;                       
@@ -178,7 +180,16 @@ public class RegisterDtoEntity {
 
 
 
-		
+		public String getAge() {
+			return age;
+		}
+
+		public void setAge(String age) {
+			this.age = age;
+		}
+
+
+
 
 
 	public void setId(long id) {

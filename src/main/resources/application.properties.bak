@@ -13,6 +13,7 @@ jpa.database=MYSQL
 #spring security .login
 security.user.name=
 security.user.password=
+
 mailfromId=nirmal5031@gmail.com
 mail.smtp.host=localhost
 mail.smtp.port=25

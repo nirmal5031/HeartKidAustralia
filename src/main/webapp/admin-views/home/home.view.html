@@ -25,18 +25,18 @@
                             <div class="list-group panel">
                          <a ui-sref="form.search" style="cursor: pointer;" class="list-group-item list-group-item-success" data-parent="#MainMenu">Search</a>
 
-                        <a ng-show="admin" ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
-
+                        <!--<a ng-show="admin" ui-sref="form.modify" style="cursor: pointer;"  class="list-group-item list-group-item-success"  data-parent="#MainMenu">Modify User</a>
+-->
                          <a  ui-sref="form.reports" style="cursor: pointer;" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Reports</a>
-                         <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
-                         <a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Create Admin</a>
-                         <a ng-show="admin" ui-sref="form.listuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu" ng-click="listadminuser()">List Admin</a>
-                         <a ng-show="admin" ui-sref="form.deleteuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Delete Admin</a>
-                        <div class="collapse" id="demo4">
-                            <a href="" class="list-group-item">Subitem 1</a>
-                            <a href="" class="list-group-item">Subitem 2</a>
-                            <a href="" class="list-group-item">Subitem 3</a>
-                        </div>
+                       <!--  <a ui-sref="form.export" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export Data</a>
+                        --><a ng-show="admin" ui-sref="form.manage" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Create Admin</a>
+                         <a ng-show="admin" ui-sref="form.listuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu" ng-click="listadminuser()">Manage Admin</a>
+                                <a ui-sref="form.edituser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu" ng-click="getuserdetails()">Edit User</a>
+
+                                <!--  <a ng-show="admin" ui-sref="form.deleteuser" style="cursor: pointer;"  class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Delete Admin</a>
+                       -->
+
+
                     </div></div></div>
                     <div id="divright">
                         <div id="form-views" ui-view></div>

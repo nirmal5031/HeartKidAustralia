@@ -229,6 +229,13 @@ angular.module('formApp', ['ui.router'])
                 $scope.formData.contctviaemail = "false";
             }
         }
+
+        $scope.calculateAge = function calculateAge(birthday) { // birthday is a date
+
+            var dob = new Date(birthday);
+            var today = new Date();
+            $scope.formData.age=(today.getFullYear()-dob.getFullYear());
+        };
         $scope.opencal = function($event) {
 
             $event.preventDefault();

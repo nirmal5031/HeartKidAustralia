@@ -54,7 +54,16 @@
                     <input type="text" id="" readonly="true" class="textfeildname yellow datepicker" ng-model="formData.birthdate" style="width:12%;" required>
                     <p ng-show="userForm.birthdate.$dirty && userForm.birthdate.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter DOB.</p>
                 </div>
-                <div class="control" ng-class="{'has-error': userForm.postcode.$dirty || userForm.postcode.$error.required || userForm.postcode.$error.pattern}">
+
+<div ng-if ="calculateAge(formData.birthdate) != ''">
+
+    <div class="control">
+        <label class=" col-sm-2">Age</label>
+        <input type="text"  name="age" value="" style="width: 7%;" disabled class="textfeildname yellow" ng-model="formData.age" />
+
+    </div>
+</div>
+<div class="control" ng-class="{'has-error': userForm.postcode.$dirty || userForm.postcode.$error.required || userForm.postcode.$error.pattern}">
                     <label class=" col-sm-2">PostCode<em>*</em></label>
                     <input type="text" name="postcode" maxlength="4" ng-pattern="/^(\d)+$/" minlength="4" ng-change="" value="" id="postcde"  class="textfeildname" style="width: 75px;" ng-model="formData.postcode" required/>
                     <p ng-show="userForm.postcode.$dirty && userForm.postcode.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Enter PostCode.</p>
