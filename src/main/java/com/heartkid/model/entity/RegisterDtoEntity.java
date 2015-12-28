@@ -55,7 +55,8 @@ public class RegisterDtoEntity {
 	private String surgerydelay;     
 	private String surgerydelaycount;          
 	private String trvlsurg;                            
-	private String heartdoc;                     
+	private String heartdoc;   
+	private String heartdocvisit; 
 	private String localdoctorvisit ;                  
 	private String emergdeptvisit;                   
 	private String careage16 ;    
@@ -108,6 +109,14 @@ public class RegisterDtoEntity {
 
 		public void setBirthdate(String birthdate) {
 			this.birthdate = birthdate;
+		}
+
+		public String getHeartdocvisit() {
+			return heartdocvisit;
+		}
+
+		public void setHeartdocvisit(String heartdocvisit) {
+			this.heartdocvisit = heartdocvisit;
 		}
 
 		public String getCarerfirstname() {

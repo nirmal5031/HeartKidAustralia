@@ -54,16 +54,21 @@
             $scope.adminuser = adminuser;
             $scope.sexArray = ["Male","Female"];
             $scope.yesnoArray = ["Yes", "No"];
+            $scope.yesnoArraycaps = ["yes", "no"];
             $scope.usertypeArray = ["Patient", "Carer"];
             $scope.titleArray = ["Mr","Mrs","Miss","Mrs","Dr","Prof"];
             $scope.sexArray = ["Male","Female"];
             $scope.conttypeArray = ["Phone","Email"];
             $scope.ethnicityArray = ["Caucasian","Aborigional / Tores Strait Island","Mouri","Asian","Indian","Black/Afican American","European","None of the above"];
             $scope.lstofcountryArray = ["Australia","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","China","Colombia","Comoros","Congo","Congo {Democratic Rep}","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland {Republic}","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar, {Burma}","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican","Other"];
-            $scope.languageArray = ["English","Chinese","Italian","Vietnamese","Greek","Cantonese","Arabic","Mandarin","Macedonian","French","Spanish"];
-            $scope.statelistArray = ["New South Wales","Australian Capital Territory","Victoria","Queensland","South Australia","Western Australia","Tasmania","Northern Territory"] ;
+            $scope.languageArray = ["English","Chinese","Italian","Vietnamese","Greek","Cantonese","Arabic","Mandarin","Macedonian","French","Spanish","Other"];
+            $scope.statelistArray = ["New South Wales","Australian Capital Territory","Victoria","Queensland","South Australia","Western Australia","Tasmania","Northern Territory","Other"] ;
+            $scope.heartcondsArray = ["Atrial septal defect","Ventricular septal defect","Atrioventricular septal defect","Patent ductus arteriosus","Pulmonary vein anomaly","Tricuspid atresia","Ebstein’s anomaly ","Dysplastic tricuspid valve","Pulmonary stenosis","Pulmonary atresia","Tetralogy of Fallot","Abnormal mitral valve","Aortic stenosis","Coarctation of the aorta or interrupted aorta","Truncus arteriosus","Bicuspid aortic valve","Hypoplastic left heart syndrome","Transposition of the great arteries","Congenitally corrected transposition of the great arteries","Double-outlet right ventricle","Double-inlet left ventricle","Double-inlet right ventricle","Atrial isomerism (left or right)","None of the above"];
 
-
+            $scope.myNumber = 100;
+            $scope.getNumber = function(num) {
+                return new Array(num);
+            }
             console.log(accessToken);
             /* $scope.$watch('$viewContentLoaded', function(){
 
@@ -424,11 +429,6 @@
                     $http({
                         url: 'heartkid/deleteadminuser/'+username,
                         method: "GET"
-                        /* headers: {
-                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                         'Authorization': 'Basic ' + accessToken
-                         }*/
-
                     })
 
                         .then(function (response) {
@@ -436,8 +436,8 @@
 
                             if(data==1)
                             {
-                                $scope.deletionMessage= "User successfully deleted - Username : "+username;
-                                $scope.delusers.splice(index, 1);
+                                $scope.deletionMessage= "User deleted successfully  - Username : "+username;
+                                $scope.users.splice(index, 1);
                             }
                             else{
                                 $scope.deletionMessage= "Error in deleting user. Please try again later! ";
@@ -452,6 +452,8 @@
 
                 $scope.getuserdetails = function(editID)
                 {
+                    $scope.showNumber = 'personal';
+                    $scope.activeMenu = 'personal';
                     $http({
                         url: 'heartkid/getuserdetails/'+editID,
                         method: "GET"
@@ -460,7 +462,6 @@
                          'Authorization': 'Basic ' + accessToken
                          }*/
                     })
-
                         .then(function (response) {
                             $scope.edituserdetailshow = 'true';
                             var data = angular.toJson(response.data);
@@ -476,7 +477,39 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
+
+
+                //EDIT FUCNTION
+                $scope.editsavedetails = function() {
+
+                    $http({
+                        url: 'heartkid/personalinfo',
+                        method: "POST",
+                        data: $scope.formData
+                    })
+                        .then(function (response) {
+                            var data = $.parseJSON(angular.toJson(response.data));
+                             $scope.EditMessage = "Data Saved Successfully for reference number : "+$scope.formData.referencenumber;
+                       $scope.searchheartkid();
+
+                        },
+                        function (status) {
+                            $state.go('form.generror');
+                            $scope.EditMessage = "Error in saving data. Please close and login again";
+                        })
+                }
+$scope.closeedittable = function()
+{
+    $scope.edituserdetailshow = 'false';
+    $scope.EditMessage = "";
+}
+                $scope.editMenu = function(menu)
+                {
+                    $scope.showNumber = menu;
+                    $scope.activeMenu = menu;
+                }
             }
+
 
         }])
 
