@@ -89,6 +89,7 @@ public class LoginService {
 			 {
 		    loginentity = repository.findOne(username);
 		    encryppass = EncrptDecryptPassword.decrypt(loginentity.getPassword());
+		    System.out.println("=========encryppass========"+encryppass);
 		    if((loginentity.getUsername().equalsIgnoreCase(username)) & (password.equals(encryppass)))
 			 {
 		  		 
