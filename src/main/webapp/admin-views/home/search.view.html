@@ -66,7 +66,7 @@
         <div class="form-group">
             <label for="crctsurgery">How many delays to the corrective surgery did you experience?
             </label>
-            <select class="form-control arrowupdown"  ng-model="formAdminData.surgerydelaycount" style=" moz-appearance: none;-webkit-appearance: none;appearance:none; width: 45%" >
+            <select class="form-control arrowupdown"  ng-model="formAdminData.surgerydelaycount" style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" >
                 <option value="">--Select--</option>
                 <option ng-repeat="i in getNumber(5) track by $index" >{{$index}}</option>
             </select>
@@ -75,14 +75,20 @@
 
     </div>
 
-    <label class="checkbox-inline form-group" style=" margin-left: 5%;">
-        <input type="checkbox" value="">Do you know what your specific condition is called?<br>
-        <input type="checkbox" value="">Do you know what your specific condition is called?
-    </label>
-
-
-
-
+    <div style="margin-left: 5%;">
+        <input style="" id="box1" type="checkbox" ng-model="formAdminData.conditioncalld" ng-true-value="Yes" ng-false-value="No"/>
+        <label for="box1" style="font-size: 16px;">Do you know what your specific condition is called?</label><br>
+        <input style="font-size:16px;" id="box2" type="checkbox" ng-model="formAdminData.surgeryheld" ng-true-value="Yes" ng-false-value="No"/>
+        <label for="box2" style="font-size: 16px;">Have you had corrective surgery on your heart?</label><br>
+        <input style="font-size: 16px;" id="box3" type="checkbox" ng-model="formAdminData.surgerydelay" ng-true-value="Yes" ng-false-value="No"/>
+        <label for="box3" style="font-size: 16px;">If you have had surgery, was it delayed? </label><br>
+        <input style="font-size: 16px;" id="box4" type="checkbox" ng-model="formAdminData.trvlsurg" ng-true-value="Yes" ng-false-value="No"/>
+        <label for="box4" style="font-size: 16px;">Did you have to travel > 50km for surgery?
+        </label><br>
+        <input style="" id="box5" type="checkbox" ng-model="formAdminData.anxietycond" ng-true-value="Yes" ng-false-value="No"/>
+        <label for="box5" style="font-size: 16px;">Have you experience any anxiety about your heart condition?
+        </label><br>
+    </div>
     <!--
     <div class="col-xs-6 col-xs-offset-3 col-xs-7">
 
@@ -597,4 +603,17 @@
         margin-left: 5%;
         float: left;
     }
+
+
+    input[type=checkbox] { display:none; } /* to hide the checkbox itself */
+    input[type=checkbox] + label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+    }
+
+    input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
+    input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
+
+    input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
+    input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
 </style>
