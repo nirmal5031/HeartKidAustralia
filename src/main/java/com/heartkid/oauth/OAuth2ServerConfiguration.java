@@ -137,8 +137,7 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                 .antMatchers("/heartkid/getrecord")
-                    .authenticated()
+                
                     .antMatchers("/heartkid/tokenvalidate")
                     .authenticated()
                     .antMatchers("/token/revoke")

@@ -32,7 +32,6 @@ public class RegisterDtoEntity {
 	private String sex; 
 	private String birthdate;  
 	private String age;
-	
 	private String postcode;                          
 	private String state;                               
 	private String conctagree;                       
@@ -43,12 +42,12 @@ public class RegisterDtoEntity {
 	private String ethnicity;                           
 	private String countrybirth ;                     
 	private String language ;
-	    private String carerfirstname  ; 
-		private String carerlastname ;   
-		private String carertitle     ;  
-		private String carerbirthdate  ; 
-		private String carerphone       ;
-		private String careremail     ;
+    private String carerfirstname; 
+	private String carerlastname;   
+	private String carertitle;  
+	private String carerbirthdate; 
+	private String carerphone;
+	private String careremail;
 	private String conditioncalld;                    
 	private String heartconds;
 	private String surgeryheld;                       
@@ -100,8 +99,17 @@ public class RegisterDtoEntity {
 	private String desccommentsany ;   
 	private String surveystatus;
 	private String registrationdate;
+	private String updateddate;
 	                             
 	  
+
+	public String getUpdateddate() {
+		return updateddate;
+	}
+
+	public void setUpdateddate(String updateddate) {
+		this.updateddate = updateddate;
+	}
 
 	public String getBirthdate() {
 			return birthdate;
@@ -187,19 +195,13 @@ public class RegisterDtoEntity {
 			this.registrationdate = registrationdate;
 		}
 
-
-
-		public String getAge() {
+	public String getAge() {
 			return age;
 		}
 
 		public void setAge(String age) {
 			this.age = age;
 		}
-
-
-
-
 
 	public void setId(long id) {
 		this.id = id;

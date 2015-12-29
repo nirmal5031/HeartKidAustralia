@@ -5,7 +5,7 @@
     <div class="form-group" ng-class="{ 'has-error': userForm.refnum.$dirty || userForm.refnum.$error.pattern }">
         <label for="ReferenceNumber">Reference Number : </label>
         <input  type="text" name="refnum" id="refnum" class="form-control" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="formAdminData.referencenumber" placeholder="JKHSDS874326HFI87" ng-init="formAdminData.referencenumber=''" />
-        <p ng-show="userForm.referencenumber.$dirty && userForm.referencenumber.$error.pattern" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please enter valid reference number.</p>
+        <p ng-show="userForm.refnum.$dirty && userForm.refnum.$error.pattern" class="help-block" style="margin: auto;padding: 10px;">Please enter valid reference number.</p>
     </div>
         <div class="form-group">
             <label for="state">State: </label>
@@ -15,14 +15,14 @@
         </div>
         <div class="form-group">
             <label for="Ethinicity">Ethinicity: </label>
-            <select  name="Ethinicity" ng-model="formAdminData.ethinicity" class="form-control arrowupdown"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="state for state in ethnicityArray">
+            <select  name="Ethinicity" ng-model="formAdminData.ethnicity" class="form-control arrowupdown"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="state for state in ethnicityArray">
                 <option value="">--Select--</option> <!-- not selected / blank option -->
             </select>
         </div>
 
         <div class="form-group">
             <label for="age1">Age from: </label>
-            <select class="form-control arrowupdown"  ng-model="formAdminData.age1" style=" moz-appearance: none;-webkit-appearance: none;appearance:none; width: 45%" >
+            <select class="form-control arrowupdown"  ng-model="formAdminData.agefrom" ng-init="formAdminData.agefrom=''"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none; width: 45%" >
                 <option value="" >--Select--</option>
                 <option ng-repeat="i in getNumber(myNumber) track by $index" >{{$index}}</option>
             </select>
@@ -30,6 +30,13 @@
         <div class="form-group">
             <label for="heartconds1">What congenital heart condition were you diagnosed with?</label>
             <select  name="heartconds1" ng-model="formAdminData.heartconds" class="form-control arrowupdown"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="cond for cond in heartcondsArray">
+                <option value="">--Select--</option> <!-- not selected / blank option -->
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="usertype">User Type</label>
+            <select  name="usertype" ng-model="formAdminData.usertype" class="form-control arrowupdown"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="cond for cond in usertypeArray">
                 <option value="">--Select--</option> <!-- not selected / blank option -->
             </select>
 
@@ -57,7 +64,7 @@
         </div>
         <div class="form-group">
             <label for="age2">Age To: </label>
-            <select class="form-control arrowupdown" ng-model="formAdminData.age2" style=" moz-appearance: none;-webkit-appearance: none;appearance:none; width: 45%" >
+            <select class="form-control arrowupdown" ng-model="formAdminData.ageto"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none; width: 45%" >
                 <option value="">--Select--</option>
                 <option ng-repeat="i in getNumber(myNumber) track by $index"  >{{$index}}</option>
             </select>
@@ -73,20 +80,28 @@
 
         </div>
 
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select  name="status" ng-model="formAdminData.surveystatus" class="form-control arrowupdown"  style=" moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="status for status in statusArray">
+                <option value="">--Select--</option>
+            </select>
+
+        </div>
+
     </div>
 
     <div style="margin-left: 5%;">
         <input style="" id="box1" type="checkbox" ng-model="formAdminData.conditioncalld" ng-true-value="Yes" ng-false-value="No"/>
-        <label for="box1" style="font-size: 16px;">Do you know what your specific condition is called?</label><br>
+        <label for="box1" style="font-size: 16px;">List user records whose specific condition are known?</label><br>
         <input style="font-size:16px;" id="box2" type="checkbox" ng-model="formAdminData.surgeryheld" ng-true-value="Yes" ng-false-value="No"/>
-        <label for="box2" style="font-size: 16px;">Have you had corrective surgery on your heart?</label><br>
+        <label for="box2" style="font-size: 16px;">List people who had corrective surgery in heart</label><br>
         <input style="font-size: 16px;" id="box3" type="checkbox" ng-model="formAdminData.surgerydelay" ng-true-value="Yes" ng-false-value="No"/>
-        <label for="box3" style="font-size: 16px;">If you have had surgery, was it delayed? </label><br>
+        <label for="box3" style="font-size: 16px;">List records whose surgery has been delayed </label><br>
         <input style="font-size: 16px;" id="box4" type="checkbox" ng-model="formAdminData.trvlsurg" ng-true-value="Yes" ng-false-value="No"/>
-        <label for="box4" style="font-size: 16px;">Did you have to travel > 50km for surgery?
+        <label for="box4" style="font-size: 16px;">List records who travel for more than 50Km for surgery.
         </label><br>
         <input style="" id="box5" type="checkbox" ng-model="formAdminData.anxietycond" ng-true-value="Yes" ng-false-value="No"/>
-        <label for="box5" style="font-size: 16px;">Have you experience any anxiety about your heart condition?
+        <label for="box5" style="font-size: 16px;">List records who experience any anxiety about heart condition
         </label><br>
     </div>
     <!--
@@ -110,7 +125,6 @@
         </div></div>
 </fieldset>
 
-<pre>{{formAdminData}}</pre>
 <!--<div class="control">
     <label class=" col-sm-2">Search User</label>
     <input type="text"  name="Search" value="" class="textfeildname yellow" ng-model="search" placeholder="Search"/>

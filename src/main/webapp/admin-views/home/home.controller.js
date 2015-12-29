@@ -178,14 +178,67 @@
 
                 $scope.searchheartkid = function () {
                     $scope.deleteMessage="";
-                    var fromvalue  = $scope.formAdminData;
-alert("fromvalue"+fromvalue);
-                    if(formvalue==="")
+                    $scope.EditMessage="";
+                    $scope.ErrorMessage="";
+                    if($scope.formAdminData.surgerydelaycount=="")
                     {
-                        alert("Form is null");
+                        $scope.formAdminData.surgerydelaycount=null;
+                    }
+                    if($scope.formAdminData.conditioncalld =='No')
+                    {
+                        $scope.formAdminData.conditioncalld =null;
+                    }
+                    if($scope.formAdminData.surgeryheld=='No')
+                    {
+                        $scope.formAdminData.surgeryheld =null;
+                    }
+                    if($scope.formAdminData.surgerydelay=='No')
+                    {
+                        $scope.formAdminData.surgerydelay =null;
+                    }
+                    if($scope.formAdminData.anxietycond=='No')
+                    {
+                        $scope.formAdminData.anxietycond =null;
+                    }
+                    if($scope.formAdminData.trvlsurg=='No')
+                    {
+                        $scope.formAdminData.trvlsurg =null;
+                    }
+                   /* if($scope.formAdminData.agefrom == "")
+                    {
+                        $scope.formAdminData.age=null;
+                    }
+
+                    if($scope.formAdminData.agefrom != "" || $scope.formAdminData.agefrom != null)
+                    {
+                        ($scope.formAdminData.ageto==null) || ($scope.formAdminData.ageto == '')
+                        {
+                            $scope.formAdminData.ageto = $scope.formAdminData.agefrom;
+                        }
+                     alert("age from to to"+$scope.formAdminData.age+"----------"+$scope.formAdminData.agefrom);
+                        $scope.formAdminData.age=$scope.formAdminData.agefrom+"-"+$scope.formAdminData.ageto;
+                    }*/
+                    if($scope.formAdminData.agefrom == "")
+                    {
+                        $scope.formAdminData.ageto ="";
+                        $scope.formAdminData.age ="empty-empty";
                     }
                     else{
-                        alert("Formisnot null");
+                        if($scope.formAdminData.ageto == "")
+                        {
+                            $scope.formAdminData.ageto =$scope.formAdminData.agefrom;
+                        }
+                        $scope.formAdminData.age =$scope.formAdminData.agefrom+"-"+$scope.formAdminData.ageto;
+                    }
+
+
+                    if($scope.formAdminData.contactvia == 'Phone')
+                    {
+                        $scope.formAdminData.contctviaphone='yes';
+                    }
+                    if($scope.formAdminData.contactvia == 'Email')
+                    {
+                        $scope.formAdminData.contctviaemail='yes';
                     }
                     $http({
                         url: 'heartkid/getrecord',
@@ -194,7 +247,7 @@ alert("fromvalue"+fromvalue);
                             'Authorization': 'Bearer ' + accessToken,
                             'Content-Type': 'application/json'
                         },
-                        data: fromvalue
+                        data: $scope.formAdminData
                     })
                         .then(function (response) {
                             // success
@@ -227,12 +280,25 @@ alert("fromvalue"+fromvalue);
                 }
 
                 $scope.clearall = function () {
-                    $scope.formAdminData.referencenumber = '';
-                    $scope.formAdminData.usertype = '';
-                        $scope.formAdminData.status='';
-                        $scope.formAdminData.country = '';
-
-
+                    $scope.formAdminData.referencenumber="";
+                    $scope.formAdminData.agefrom="";
+                    $scope.formAdminData.sex=null;
+                    $scope.formAdminData.state=null;
+                    $scope.formAdminData.contactvia=null;
+                    $scope.formAdminData.ethnicity=null;
+                    $scope.formAdminData.ageto="";
+                    $scope.formAdminData.heartconds=null;
+                    $scope.formAdminData.surgerydelaycount="";
+                    $scope.formAdminData.usertype=null;
+                    $scope.formAdminData.surveystatus=null;
+                    $scope.formAdminData.conditioncalld=null;
+                    $scope.formAdminData.surgeryheld=null;
+                    $scope.formAdminData.surgerydelay=null;
+                    $scope.formAdminData.trvlsurg=null;
+                    $scope.formAdminData.anxietycond=null;
+                    $scope.deleteMessage='';
+                    $scope.EditMessage="";
+                    $scope.ErrorMessage="";
                 }
                 $http({
                     url: 'heartkid/reportcount',
@@ -488,7 +554,8 @@ alert("fromvalue"+fromvalue);
 
                 //EDIT FUCNTION
                 $scope.editsavedetails = function() {
-
+alert("personal details");
+                    $scope.formData.updateddate="admin";
                     $http({
                         url: 'heartkid/personalinfo',
                         method: "POST",
