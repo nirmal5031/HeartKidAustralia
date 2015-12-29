@@ -1,0 +1,98 @@
+<div class="col-lg-12" ng-controller="modifyheartkiduser">
+    <div class="col-md-12 formborder">
+
+        <div id="personal_details">
+
+            <div class="errormessage" style="margin-left:30px;color:red;"></div>
+            <div class="myform">Personal Info</div>
+            <br class="col-md-12 formcontent">
+            <div class="progress progress-striped active">
+
+                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
+                    <span class="show">0/6 Complete</span>
+                </div>
+            </div>
+            <fieldset>
+                <h4 class="headervalue">Please select who you are?</h4>
+
+                <select  name="userType" ng-model="formAdminData.usertype" class="textfeildname yellow arrowupdown"  style="width:47%; margin-left:15px; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="user for user in usertypeArray" >
+                    <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                </select>
+                <h4 class="headervalue">Please enter the details below</h4>
+                <div class="control">
+                    <label class=" col-sm-2">First Name <em>*</em></label>
+                    <input type="text" name="firstname" id="frstname"  value="" class="textfeildname yellow" ng-model="formAdminData.firstname"/>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Last Name</label>
+                    <input type="text"  name="lastname" value="" class="textfeildname yellow" ng-model="formAdminData.lastname"/>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Title</label>
+                    <select  name="titleselect" ng-model="formAdminData.title" class="textfeildname yellow arrowupdown"  style="width:12%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="title for title in titleArray">
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                    </select>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Date of Birth<em>*</em></label>
+
+                    <input type="text" id="datepicker" readonly="true" class="textfeildname yellow" ng-model="formAdminData.birthdate" style="width:12%;" >
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">PostCode<em>*</em></label>
+                    <input type="text" name="postcode" maxlength="4"  minlength="4" ng-change="keydownpstcde()" value="" id="postcde"  class="textfeildname" style="width: 75px;" ng-model="formAdminData.postcode"/>
+                </div>
+
+                <div class="control">
+                    <label class=" col-sm-2">State<em>*</em></label>
+                    <select  name="state" ng-model="formAdminData.state" class="textfeildname yellow arrowupdown"  style="width:27%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="title for title in statelistArray">
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                    </select>
+                </div>
+                <h4 class="headervalue">Contact Details</h4>
+                <div class="control">
+                    <table><tr><td><input type="checkbox" name="checkboxG4" id="checkboxG3" ng-change="conctagree()" ng-model="formAdminData.conctagree" ng-true-value="yes" ng-false-value="no" class="css-checkbox" />
+                        <label for="checkboxG3" class="css-label2" style="width: 100%;"><b>Do you agree to be contacted ?</b></label></td></tr></table>
+                </div>
+                <div class="control" style="margin-right: 5%;" ng-hide="showcontactvia">
+                    <div class=" col-sm-2"  style="width: 7.5%">Via<em>*</em></div>
+                    <table><tr><td><input type="checkbox" name="checkboxG4" id="checkboxG4" class="css-checkbox" ng-model="formAdminData.contctviaphone" ng-change="contctviaphone()"  ng-true-value="yes" ng-false-value="no"/>
+                        <label for="checkboxG4" class="css-label" >Phone</label></td>
+                        <td><input type="checkbox" name="checkboxG5" id="checkboxG5" class="css-checkbox" checked="checked" ng-model="formAdminData.contctviaemail"  ng-change="contctviaemail()" ng-true-value="yes" ng-false-value="no"/>
+                            <label for="checkboxG5"    style="margin-left: 35%;" class="css-label">Email </label>
+                        </td></tr>
+                    </table>
+                    <br/>
+                </div>
+                <div class="control" ng-show="showcontactviaphone">
+                    <label class=" col-sm-2">Phone</label>
+                    <input type="text"  name="phone" value=""   class="textfeildname yellow" ng-model="formAdminData.phone" style="width: 25%;"/>
+                </div>
+                <div class="control" ng-show="showcontactviaemail">
+                    <label class=" col-sm-2">eMail</label>
+                    <input type="text"  name="email" value=""   class="textfeildname yellow" ng-model="formAdminData.email" style="width: 50%;"/>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Ethnicity <em>*</em></label>
+                    <select  name="ethnicity" ng-model="formAdminData.ethnicity" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="ethnicity for ethnicity in ethnicityArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                    </select>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Country of birth <em>*</em></label>
+                    <select  name="lstofcountryArray" ng-model="formAdminData.countrybirth" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="country for country in lstofcountryArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                    </select>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2">Language Spoken<em>*</em></label>
+                    <select  name="language" ng-model="formAdminData.language" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="lang for lang in languageArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                    </select>   </div>
+                <div style="margin-bottom: 5%;"></div>
+            </fieldset>
+
+        </div>
+    </div>
+</div>

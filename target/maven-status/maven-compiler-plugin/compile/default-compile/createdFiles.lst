@@ -18,9 +18,9 @@ com\heartkid\oauth\OAuth2ServerConfiguration$ResourceServerConfiguration.class
 com\heartkid\service\EditHearkidUserService.class
 com\heartkid\oauth\WebSecurityConfiguration.class
 com\heartkid\oauth\RevokeTokenController.class
-com\heartkid\service\HeartkidExportService.class
 com\heartkid\repository\HeartkidRepository.class
 com\heartkid\repository\SearchRepository.class
+com\heartkid\service\HeartKidRegistrationService.class
 com\heartkid\repository\HeartkidLoginRepository.class
 com\heartkid\repository\ProductivityEduRepository.class
 com\heartkid\repository\PersonalInfoRepository.class

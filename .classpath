@@ -26,5 +26,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/535222/.m2/repository/org/apache/poi/poi/3.9/poi-3.9.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/535222/.m2/repository/org/springframework/boot/spring-boot-starter-test/1.2.7.RELEASE/spring-boot-starter-test-1.2.7.RELEASE.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
