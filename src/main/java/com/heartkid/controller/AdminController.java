@@ -188,7 +188,30 @@ public class AdminController {
 		
 		return reportcount;
 	}
-
+	
+	@RequestMapping(value="heartkid/reportbarcount", method=RequestMethod.GET)
+		public  List patientcount(){
+			LOGGER.info("bar Report Screen for the request-----> ::" );
+			List reportcount=new ArrayList();
+			List reportccount=new ArrayList();
+			List reportLovedcount=new ArrayList();
+			try
+			{
+			 reportcount = heartkidrepository.patientbarcount();
+			 reportccount = heartkidrepository.carerbarcount();
+			 reportLovedcount = heartkidrepository.lovedbarcount();
+			}
+			 catch (Exception ex) {
+			      //return "Error creating the entry;
+			    }
+			
+			ArrayList bargraph = new ArrayList();
+			bargraph.add(reportcount);
+			bargraph.add(reportccount);
+			bargraph.add(reportLovedcount);
+			return bargraph;	
+		}
+	
 	RegisterDtoEntity getuserdetails = new RegisterDtoEntity();
 
 	@RequestMapping(value = "heartkid/getuserdetails/{id}", method = RequestMethod.GET)
