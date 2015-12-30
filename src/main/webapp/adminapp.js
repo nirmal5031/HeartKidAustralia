@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('loginApp', ['ui.router','angularUtils.directives.dirPagination','nvd3ChartDirectives'])
+        .module('loginApp', ['ui.router','angularUtils.directives.dirPagination','nvd3ChartDirectives','angularCharts'])
         .service('dataService', function() {
 
             // private variable
