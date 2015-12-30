@@ -77,7 +77,7 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
     @Test(expected = DataIntegrityViolationException.class)
     public void updateRegistrationInformation() {
 
-        RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.updateRegistrationRecord(new RequestBuilder().defaultValues());
+        RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
 
         assertEquals(registerDtoEntity.getTitle(), "Mr");
 
@@ -86,14 +86,14 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
     @Test(expected = InvalidDataAccessApiUsageException.class)
     public void returnErrorForNullUpdateRegistrationInformation() {
 
-        assertNull(heartKidRegistrationService.updateRegistrationRecord(null));
+        assertNull(heartKidRegistrationService.saveRegistrationInformation(null));
 
     }
 
     @Test(expected = DataIntegrityViolationException.class)
     public void returnErrorForInvalidUpdateRegistrationInformation() {
 
-        heartKidRegistrationService.updateRegistrationRecord(new RequestBuilder().build());
+        heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().build());
 
     }
 
