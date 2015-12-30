@@ -1,16 +1,5 @@
 package com.heartkid.oauth;
 
-import java.io.IOException;
-import java.util.Date;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,9 +32,14 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.*;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Date;
+
 @Configuration
 public class OAuth2ServerConfiguration {
-	private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ServerConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ServerConfiguration.class);
 
     private static final String RESOURCE_ID = "restservice";
 
@@ -96,11 +89,11 @@ public class OAuth2ServerConfiguration {
                     this.authenticationManager);
             // @formatter:on
         }
-      
+
         @Override
         public void configure(ClientDetailsServiceConfigurer clients)
                 throws Exception {
-            clients.jdbc(dataSource);         
+            clients.jdbc(dataSource);
         }
 
     }
@@ -111,15 +104,13 @@ public class OAuth2ServerConfiguration {
             ResourceServerConfigurerAdapter {
 
         @Autowired
-        private CustomAuthenticator customFilter = new CustomAuthenticator();
-
-        @Autowired
         @Qualifier("tokenStore")
         public TokenStore tokenStore;
-
         @Autowired
         @Qualifier("dataSource")
         public DataSource dataSource;
+        @Autowired
+        private CustomAuthenticator customFilter = new CustomAuthenticator();
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
@@ -129,27 +120,27 @@ public class OAuth2ServerConfiguration {
                     .authenticationManager(customFilter).tokenStore(tokenStore);
             // @formatter:on
         }
-        
+
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-            .antMatchers("/heartkid/deleteadminuser/**")
-            .authenticated()
-            .antMatchers("/heartkid/fetchadminuser/**")
-            .authenticated()
-            .antMatchers("/heartkid/getuserdetails/**")
-            .authenticated()
-            .antMatchers("/heartkid/createadminuser")
-            .authenticated()
-            .antMatchers("/heartkid/deleterecord/**")
-            .authenticated()
-            .antMatchers("/heartkid/downloadExcel")
-            .authenticated()
-            .antMatchers("/heartkid/getrecord")
-            .authenticated()
-          
+                    .antMatchers("/heartkid/deleteadminuser/**")
+                    .authenticated()
+                    .antMatchers("/heartkid/fetchadminuser/**")
+                    .authenticated()
+                    .antMatchers("/heartkid/getuserdetails/**")
+                    .authenticated()
+                    .antMatchers("/heartkid/createadminuser")
+                    .authenticated()
+                    .antMatchers("/heartkid/deleterecord/**")
+                    .authenticated()
+                    .antMatchers("/heartkid/downloadExcel")
+                    .authenticated()
+                    .antMatchers("/heartkid/getrecord")
+                    .authenticated()
+
                     .antMatchers("/heartkid/tokenvalidate")
                     .authenticated()
                     .antMatchers("/token/revoke")
@@ -174,7 +165,7 @@ public class OAuth2ServerConfiguration {
         private DataSource dataSource;
 
         public void doFilter(ServletRequest request, ServletResponse response,
-                FilterChain filterChain) throws ServletException, IOException {
+                             FilterChain filterChain) throws ServletException, IOException {
 
             Authentication authentication = SecurityContextHolder.getContext()
                     .getAuthentication();
@@ -188,7 +179,7 @@ public class OAuth2ServerConfiguration {
                     OAuth2AccessToken accessToken = tokenStore
                             .getAccessToken(oAuth);
 
-                DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
+                    DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
                             accessToken);
 
                     df.setExpiration(new Date(System.currentTimeMillis()

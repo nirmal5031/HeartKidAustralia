@@ -20,6 +20,7 @@ public class HeartkidControllerTest extends RestControllerTest {
     public static final String REFERENCE_NO_GENERATOR_URL = "/heartkid/referencegen";
     public static final String PERSONAL_INFO_URL = "/heartkid/personalinfo";
     public static final String OUT_HOSPITAL_URL = "/heartkid/outhospital";
+    public static final String UPDATE_RECORD = "/heartkid/updaterecord";
 
     @Before
     public void setUp() throws Exception {
@@ -68,7 +69,6 @@ public class HeartkidControllerTest extends RestControllerTest {
                 .andExpect(status().isMethodNotAllowed());
     }
 
-    
 
     @Test
     public void savePersonalInformation() throws Exception {
@@ -150,5 +150,37 @@ public class HeartkidControllerTest extends RestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isMethodNotAllowed());
 
+    }
+
+    @Test
+    public void returnBadRequestUpdateInformationForEmpty() throws Exception {
+
+        mockMvc.perform(post(UPDATE_RECORD)
+                .content(json(""))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void returnBadRequestUpdateInformationViolation() throws Exception {
+
+        mockMvc.perform(post(UPDATE_RECORD)
+                .content(json("-1"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void returnErrorUpdateInformationForGET() throws Exception {
+
+        MvcResult result = mockMvc.perform(get(UPDATE_RECORD)
+                .content(json(new RequestBuilder().updateValues()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertNotNull(result.getResponse().getContentAsString());
     }
 }

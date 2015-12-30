@@ -1,11 +1,7 @@
 package com.heartkid.oauth;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,18 +10,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.heartkid.controller.HeartkidController;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
 
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-    	Authentication auth = null;
+        Authentication auth = null;
         List<GrantedAuthority> grantedAuths = null;
         String heartkidnumber = authentication.getName();
         String password = authentication.getCredentials().toString();
-       
+
         grantedAuths = new ArrayList<GrantedAuthority>();
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
         auth = new UsernamePasswordAuthenticationToken(heartkidnumber, password, grantedAuths);

@@ -1,228 +1,196 @@
 package com.heartkid.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jersey.repackaged.com.google.common.collect.Lists;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.heartkid.model.entity.CreateAdminUser;
-import com.heartkid.model.entity.LoginEntity;
 import com.heartkid.model.entity.RegisterDtoEntity;
-import com.heartkid.repository.CreateAdminRepository;
-import com.heartkid.repository.HeartkidRepository;
-import com.heartkid.service.LoginService;
+import com.heartkid.service.AdminService;
 import com.heartkid.service.SearchService;
 import com.heartkid.util.EncrptDecryptPassword;
 import com.heartkid.util.ExcelBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class AdminController {
-	@Autowired
-	private CreateAdminRepository createadminrepository;
-	@Autowired
-	private ExcelBuilder excelView;
-	@Autowired
-	private SearchService searchservice;
-	@Autowired
-	private HeartkidRepository repository;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(HeartkidController.class);
 
-	List<RegisterDtoEntity> searchdto = new ArrayList<RegisterDtoEntity>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(HeartkidController.class);
 
-	@RequestMapping(value = "heartkid/getrecord", method = RequestMethod.POST)
-	public List<RegisterDtoEntity> getRecordHeartkid(@RequestBody RegisterDtoEntity searchentity) {
-		try {
-			LOGGER.info("Search referen" + searchentity.getReferencenumber());
-			LOGGER.info("Search userti" + searchentity.getUsertype());
+    List<RegisterDtoEntity> searchdto = new ArrayList<RegisterDtoEntity>();
+    List<CreateAdminUser> listadminuser = new ArrayList<CreateAdminUser>();
+    List<CreateAdminUser> fetchadminuser = new ArrayList<CreateAdminUser>();
+    RegisterDtoEntity getuserdetails = new RegisterDtoEntity();
 
-			searchdto = searchservice.searchheartkid(searchentity);
+    @Autowired
+    private ExcelBuilder excelView;
 
-		} catch (Exception ex) {
-			LOGGER.info("ERROR in SEARCH" + ex.toString());
-		}
-		return searchdto;
-	}
+    @Autowired
+    private SearchService searchservice;
 
-	@RequestMapping(value = "heartkid/getrecordinexcel", method = RequestMethod.POST)
-	public List<RegisterDtoEntity> getRecordHeartkidExcel(@RequestBody RegisterDtoEntity searchentity) {
+    @Autowired
+    private AdminService adminService;
 
-		try {
-			LOGGER.info("Search referen" + searchentity.getReferencenumber());
-			LOGGER.info("Search userti" + searchentity.getUsertype());
-			searchdto = searchservice.searchheartkid(searchentity);
-		} catch (Exception ex) {
-			LOGGER.info("ERROR in SEARCH" + ex.toString());
-		}
+    @RequestMapping(value = "heartkid/getrecord", method = RequestMethod.POST)
+    public List<RegisterDtoEntity> getRecordHeartkid(@RequestBody RegisterDtoEntity searchentity) {
+        try {
+            LOGGER.info("Search referen" + searchentity.getReferencenumber());
+            LOGGER.info("Search userti" + searchentity.getUsertype());
 
-		return searchdto;
-	}
+            searchdto = searchservice.searchheartkid(searchentity);
 
-	@RequestMapping(value = "heartkid/downloadExcel", method = RequestMethod.POST)
-	public ModelAndView downloadExcel(@RequestBody RegisterDtoEntity registerdto) {
+        } catch (Exception ex) {
+            LOGGER.info("ERROR in SEARCH" + ex.toString());
+        }
+        return searchdto;
+    }
 
-		try {
-			searchdto = searchservice.searchheartkid(registerdto);
-			LOGGER.info("searchdto" + searchdto.get(0).getReferencenumber());
-			// return a view which will be resolved by an excel view resolver
-			if (searchdto.isEmpty()) {
-				LOGGER.info("SEARCH DTO is EMPTY" + searchdto.isEmpty());
-			} else {
-				LOGGER.info("IS not empty");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    @RequestMapping(value = "heartkid/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel(@RequestBody RegisterDtoEntity registerdto) {
 
-		return new ModelAndView(excelView, "listheartkidusers", searchdto);
-	}
+        try {
+            searchdto = searchservice.searchheartkid(registerdto);
+            LOGGER.info("searchdto" + searchdto.get(0).getReferencenumber());
+            // return a view which will be resolved by an excel view resolver
+            if (searchdto.isEmpty()) {
+                LOGGER.info("SEARCH DTO is EMPTY" + searchdto.isEmpty());
+            } else {
+                LOGGER.info("IS not empty");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	@RequestMapping(value = "heartkid/deleterecord/{deleterecordref}", method = RequestMethod.GET)
-	public String deleteUsersByRefNumber(@PathVariable(value = "deleterecordref") String deleterecordref) {
-		try {
-			LOGGER.info("delete record---" + deleterecordref);
-			repository.deleteUsersByRefNumber(deleterecordref);
-		} catch (Exception ex) {
-			return "Error creating the entry: " + ex.toString();
-		}
+        return new ModelAndView(excelView, "listheartkidusers", searchdto);
+    }
 
-		return "User record Deleted successfully ! (Reference Id is = " + deleterecordref + ")";
-	}
+    @RequestMapping(value = "heartkid/deleterecord/{deleterecordref}", method = RequestMethod.GET)
+    public String deleteUsersByRefNumber(@PathVariable(value = "deleterecordref") String deleterecordref) {
+        try {
+            LOGGER.info("delete record---" + deleterecordref);
+            adminService.deleteUserByReferenceNumber(deleterecordref);
+        } catch (Exception ex) {
+            return "Error creating the entry: " + ex.toString();
+        }
 
-	@RequestMapping(value = "heartkid/createadminuser", method = RequestMethod.POST)
-	public String createAdminUser(@RequestBody CreateAdminUser createuser) {
+        return "User record Deleted successfully ! (Reference Id is = " + deleterecordref + ")";
+    }
 
-		String status = null;
-		int userexist = 0;
-		try {
-			if (createuser != null) {
-				userexist = createadminrepository.adminuserexist(createuser.getUsername());
-				LOGGER.info("=====userexist====" + userexist);
-			}
-			if (userexist == 0) {
-				String encpass = EncrptDecryptPassword.encrypt(createuser.getPassword());
-				if (encpass != null)
-					createuser.setPassword(encpass);
-				createadminrepository.save(createuser);
-				status = "success";
-			} else {
-				status = "useridexist";
-			}
-		} catch (Exception ex) {
-			status = "fail";
-			LOGGER.info("ERROR in Creating user" + ex.toString());
-		}
+    @RequestMapping(value = "heartkid/createadminuser", method = RequestMethod.POST)
+    public String createAdminUser(@RequestBody CreateAdminUser createuser) {
 
-		return status;
-	}
+        String status = null;
+        int userexist = 0;
+        try {
+            if (createuser != null) {
+                userexist = adminService.doesUserExist(createuser.getUsername());
+                LOGGER.info("=====userexist====" + userexist);
+            }
+            if (userexist == 0) {
+                String encpass = EncrptDecryptPassword.encrypt(createuser.getPassword());
+                if (encpass != null)
+                    createuser.setPassword(encpass);
+                adminService.saveAdminUser(createuser);
+                status = "success";
+            } else {
+                status = "useridexist";
+            }
+        } catch (Exception ex) {
+            status = "fail";
+            LOGGER.info("ERROR in Creating user" + ex.toString());
+        }
+
+        return status;
+    }
+
+    @RequestMapping(value = "heartkid/listadminuser", method = RequestMethod.GET)
+    public List<CreateAdminUser> listAdminUser() {
+
+        return adminService.findAllUser();
+
+    }
 
 
-	List<CreateAdminUser> listadminuser = new ArrayList<CreateAdminUser>();
+    @RequestMapping(value = "heartkid/deleteadminuser/{delusername}", method = RequestMethod.GET)
+    public int deleteAdminUser(@PathVariable(value = "delusername") String delusername) {
+        int response = 0;
+        try {
+            response = adminService.deleteUseradmin(delusername);
+            LOGGER.info("Delete response ----" + response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
 
-	@RequestMapping(value = "heartkid/listadminuser", method = RequestMethod.GET)
-	public List<CreateAdminUser> listAdminUser() {
+    @RequestMapping(value = "heartkid/fetchadminuser/{username}", method = RequestMethod.GET)
+    public List<CreateAdminUser> fetchAdminUser(@PathVariable(value = "username") String username) {
+        try {
+            LOGGER.info("FETCH ADMIN USER" + username);
 
-		listadminuser = (List<CreateAdminUser>) createadminrepository.findAll();
+            fetchadminuser = adminService.findAdminUser(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fetchadminuser;
+    }
 
-		return listadminuser;
+    @RequestMapping(value = "heartkid/reportcount", method = RequestMethod.GET)
+    public String registrationCount1() {
+        String reportcount;
+        String carerCountNo;
+        String LovedoneNo;
+        try {
+            String regcountnumber = adminService.getPatientcount();
+            String carercount = adminService.getCarercount();
+            String Lovedone = adminService.getLovedcount();
+            reportcount = regcountnumber;
+            carerCountNo = carercount;
+            LovedoneNo = Lovedone;
+            reportcount = reportcount.concat(",");
+            reportcount = reportcount.concat(carerCountNo.concat(","));
+            reportcount = reportcount.concat(LovedoneNo);
+        } catch (Exception ex) {
+            return "Error creating the entry: " + ex.toString();
+        }
 
-	}
+        return reportcount;
+    }
 
-	@RequestMapping(value = "heartkid/deleteadminuser/{delusername}", method = RequestMethod.GET)
-	public int deleteAdminUser(@PathVariable(value = "delusername") String delusername) {
-		int response = 0;
-		try {
+    @RequestMapping(value = "heartkid/reportbarcount", method = RequestMethod.GET)
+    public List patientcount() {
+        LOGGER.info("bar Report Screen for the request-----> ::");
+        List reportcount = new ArrayList();
+        List reportccount = new ArrayList();
+        List reportLovedcount = new ArrayList();
+        try {
+            reportcount = adminService.getPatientbarcount();
+            reportccount = adminService.getCarerbarcount();
+            reportLovedcount = adminService.getLovedbarcount();
+        } catch (Exception ex) {
+            //return "Error creating the entry;
+        }
 
-			response = createadminrepository.deleteUsersadmin(delusername);
-			LOGGER.info("Delete response ----" + response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return response;
-	}
+        ArrayList bargraph = new ArrayList();
+        bargraph.add(reportcount);
+        bargraph.add(reportccount);
+        bargraph.add(reportLovedcount);
+        return bargraph;
+    }
 
-	List<CreateAdminUser> fetchadminuser = new ArrayList<CreateAdminUser>();
+    @RequestMapping(value = "heartkid/getuserdetails/{id}", method = RequestMethod.GET)
+    public RegisterDtoEntity getUserDetails(@PathVariable(value = "id") String id) {
+        try {
+            long d = Long.parseLong(id);
+            getuserdetails = adminService.findUser(d);
 
-	@RequestMapping(value = "heartkid/fetchadminuser/{username}", method = RequestMethod.GET)
-	public List<CreateAdminUser> fetchAdminUser(@PathVariable(value = "username") String username) {
-		try {
-			LOGGER.info("FETCH ADMIN USER" + username);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return getuserdetails;
+    }
 
-			fetchadminuser = (List<CreateAdminUser>) createadminrepository.findOne(username);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return fetchadminuser;
-	}
-
-	@RequestMapping(value = "heartkid/reportcount", method = RequestMethod.GET)
-	public String registrationCount1() {
-		String reportcount;
-		String carerCountNo;
-		String LovedoneNo;
-		try {
-			String regcountnumber = repository.patientcount();
-			String carercount = repository.carercount();
-			String Lovedone = repository.lovedcount();
-			reportcount = regcountnumber;
-			carerCountNo = carercount;
-			LovedoneNo = Lovedone;
-			reportcount = reportcount.concat(",");
-			reportcount = reportcount.concat(carerCountNo.concat(","));
-			reportcount = reportcount.concat(LovedoneNo);
-		} 
-		catch (Exception ex) {
-			return "Error creating the entry: " + ex.toString();
-		}
-		
-		return reportcount;
-	}
-	
-	@RequestMapping(value="heartkid/reportbarcount", method=RequestMethod.GET)
-		public  List patientcount(){
-			LOGGER.info("bar Report Screen for the request-----> ::" );
-			List reportcount=new ArrayList();
-			List reportccount=new ArrayList();
-			List reportLovedcount=new ArrayList();
-			try
-			{
-			 reportcount = heartkidrepository.patientbarcount();
-			 reportccount = heartkidrepository.carerbarcount();
-			 reportLovedcount = heartkidrepository.lovedbarcount();
-			}
-			 catch (Exception ex) {
-			      //return "Error creating the entry;
-			    }
-			
-			ArrayList bargraph = new ArrayList();
-			bargraph.add(reportcount);
-			bargraph.add(reportccount);
-			bargraph.add(reportLovedcount);
-			return bargraph;	
-		}
-	
-	RegisterDtoEntity getuserdetails = new RegisterDtoEntity();
-
-	@RequestMapping(value = "heartkid/getuserdetails/{id}", method = RequestMethod.GET)
-	public RegisterDtoEntity getUserDetails(@PathVariable(value = "id") String id) {
-		try {
-			long d = Long.parseLong(id);
-			getuserdetails = repository.findOne(d);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return getuserdetails;
-	}
 }

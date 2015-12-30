@@ -197,4 +197,17 @@ public class RequestBuilder {
         registerDtoEntity.setReferencenumber("ABCD1234");
         return registerDtoEntity;
     }
+
+    public RegisterDtoEntity updateValues() {
+        RegisterDtoEntity registerDtoEntity = new RegisterDtoEntity(1,"Patient", "Test", "Test", "Mr.",
+                "2020", "NSW", "Completed", "Yes", "Yes", "Yes", "0423564098", "test@qantas.com.au",
+                null, "Australia", "English", null, "Yes", "Yes", "Yes", "5",
+                "Test", "Yes", "No", "No", "Yes", null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null);
+        registerDtoEntity.setReferencenumber("ABCD1234");
+        registerDtoEntity.setUpdateddate("31/12/2015");
+        return registerDtoEntity;
+    }
 }

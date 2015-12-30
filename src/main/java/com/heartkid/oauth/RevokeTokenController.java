@@ -1,7 +1,5 @@
 package com.heartkid.oauth;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
+
 @RestController
 public class RevokeTokenController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(RevokeTokenController.class);
-
     public static final String ENDPOINT_ID = "token";
+    private static final Logger LOGGER = LoggerFactory.getLogger(RevokeTokenController.class);
 
     @Autowired
     @Qualifier("tokenStore")
@@ -37,7 +36,7 @@ public class RevokeTokenController {
     @RequestMapping(value = "token/revoke", method = RequestMethod.DELETE)
     public void revoke(@RequestHeader(value = "Authorization") String authToken) {
         String token = authToken.substring(authToken.indexOf(" ")).trim();
-      
+
         boolean success = tokenServices().revokeToken(token);
         if (!success) {
             throw new InvalidTokenException("Invalid access token: " + token);

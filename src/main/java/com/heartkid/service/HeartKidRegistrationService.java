@@ -29,8 +29,4 @@ public class HeartKidRegistrationService {
     public RegisterDtoEntity saveRegistrationInformation(RegisterDtoEntity registerDtoEntity) {
         return heartkidRepository.save(registerDtoEntity);
     }
-
-    public RegisterDtoEntity updateRegistrationRecord(RegisterDtoEntity registerDtoEntity) {
-        return heartkidRepository.save(registerDtoEntity);
-    }
 }
