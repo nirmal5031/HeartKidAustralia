@@ -1,0 +1,175 @@
+<div class="col-lg-12" ng-controller="burdendiseaseController">
+    <div class="col-md-12 formborder">
+
+        <div id="personal_details">
+
+            <div class="errormessage" style="margin-left:30px;color:red;"></div>
+            <div class="myform">Burden of Disease</div>
+            <br class="col-md-12 formcontent">
+            <div class="progress progress-striped active" style="margin-bottom: 2%">
+
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                    <span class="show">3/7 Complete</span>
+                </div>
+            </div>
+
+            <fieldset>
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Productivity</div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">Do you currently work? <em>*</em></label>
+                    <select  name="curntwork" ng-model="formData.curntwork" ng-change="curentlywork()" class="textfeildname yellow arrowupdown"  style="width:15%;" ng-options="curntwork for curntwork in yesnoArray" required>
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control" style="margin-right: 5%;" ng-show="currentworkdetails">
+                    <div class=" col-sm-2"  style="width: 7.5%">as</div>
+                    <div style="float: left;margin-right: 5%">
+                        <input type="radio" ng-model="formData.worktime" value="asparttime">
+                        Part time </div><div style="float: left;">
+                    <input type="radio" ng-model="formData.worktime" value="asfulltime">
+                    Full time</div>
+                    <br/>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">Do you currently receive disability benefits? </label>
+                    <select  name="disabilityben" ng-model="formData.disabilityben"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="disabilityben for disabilityben in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">Do you feel that living with your heart condition has impacted your career?  </label>
+
+                    <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="chdlivingimpact(node.id)"
+                                ng-model="formData.chdlivingimpc" ng-class="getchdimpaClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''">
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;"> Have you have to make changes in your work due to your CHD diagnosis (you / your child)? </label>
+                    <select  name="changeimpactchd" ng-model="formData.changeimpactchd"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="changeimpactchd for changeimpactchd in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How do you feel this has impacted in your ability to work / career development / progression? </label>
+
+
+                    <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td name="missedschool" style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                                ng-click="chdimpactwork(node.id)"
+                                ng-model="formData.chdimpactwork" ng-class="chdimpactworkClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''">
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many days missed of work / school last year due to symptoms relating to your heart condition? <em>*</em></label>
+
+                    <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="missschooldays(node.id)"
+                                ng-model="formData.missschooldays" ng-class="missschooldaysClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" required>
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span ng-show="userForm.missedschool.$dirty && userForm.missedschool.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">This field is mandatory</span>
+
+                </div>
+                <div class="control" ng-show="showcarerdetails">
+                    <label class=" col-sm-2" style="width: 100%;">As a carer, how many days have you had to take off work caring for your loved one with CHD in last 12 months ? </label>
+                    <select  name="carermisseddays" ng-model="formData.carermisseddays"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="carermisseddays for carermisseddays in scale1to10" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Educational challenges</div>
+
+                <div class="control">
+                    <label class=" col-sm-2"  style="width: 100%;">Have you / the person you care for experienced educational challenges? </label>
+                    <select  name="eductnchallng" ng-model="formData.eductnchallng" ng-change="eductnchallng()" class="textfeildname arrowupdown yellow"  style="width:15%; " ng-options="eductnchallng for eductnchallng in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+
+                <div class="control" ng-show="showschoolgrdchal">
+                    <label class=" col-sm-2"  style="width: 100%;">Has this meant falling behind in school grades ? </label>
+                    <select  name="schoolgrd" ng-model="formData.schoolgrd"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="schoolgrd for schoolgrd in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control" ng-show="showschoolgrdchal">
+                    <label class=" col-sm-2"  style="width: 100%;">Has this been formally assessed?  </label>
+                    <select  name="formalassess" ng-model="formData.formalassess" ng-change="eductnchallng()" class="textfeildname arrowupdown yellow"  style="width:15%; " ng-options="formalassess for formalassess in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control"  ng-show="showschoolgrdchal">
+                    <label class=" col-sm-2" style="width: 100%;">Do you feel this has impacted you / your child’s / the person you care for in relation to your Quality of Life?  </label>
+                    <textarea type="textarea"  name ="impactQol"  class="" style="width: 75%;"  ng-model="formData.impactQol"></textarea>
+
+                </div>
+
+                <div class="control">
+                    <label class=" col-sm-2"  style="width: 100%;">Has your heart condition affected you involvement level in school / work / community?  </label>
+                    <select  name="condimpactschl"  ng-model="formData.condimpactschl" ng-change="condimpactschl()" class="arrowupdown textfeildname yellow"  style="width:15%; " ng-options="condimpactschl for condimpactschl in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+
+                </div>
+                <div class="control"  ng-show="showcondimpactschooldesc">
+                    <label class=" col-sm-2" style="width: 100%;">Describe the impact? </label>
+                    <textarea type="textarea"  name ="condimpactschooldesc"  class="" style="width: 75%;"  ng-model="formData.condimpactschooldesc"></textarea>
+
+                </div>
+                <div style="margin-bottom: 5%;"></div>
+
+                <div class="col-xs-6 col-xs-offset-3">
+                    <a ui-sref="form.burden-1" class="btn btn-block btn-info">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span>Previous
+                    </a>
+                </div>
+
+                <div class="col-xs-6 col-xs-offset-3 col-xs-7">
+
+                    <a ui-sref="form.burden-2" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="savesurveyregistration()">
+                        Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                    </a></br>
+                </div>
+
+
+            </fieldset>
+        </div></div></div>
+

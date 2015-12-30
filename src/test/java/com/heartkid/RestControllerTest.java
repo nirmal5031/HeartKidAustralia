@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.util.Arrays;
-//import java.util.function.Predicate;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
@@ -34,24 +34,25 @@ public abstract class RestControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-   /* @Autowired
-    void setConverters(HttpMessageConverter<?>[] converters) {
-        mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(
-                new Predicate<HttpMessageConverter<?>>() {
-                    @Override
-                    public boolean test(HttpMessageConverter<?> hmc) {
-                        return hmc instanceof MappingJackson2HttpMessageConverter;
-                    }
-                }).findAny().get();
 
+    @Autowired
+    protected void setConverters(HttpMessageConverter<?>[] converters) {
+
+        for (HttpMessageConverter<?> httpMessageConverter : Arrays.asList(converters)) {
+            if (httpMessageConverter instanceof MappingJackson2HttpMessageConverter) {
+                this.mappingJackson2HttpMessageConverter = httpMessageConverter;
+            }
+        }
         Assert.assertNotNull("the JSON message converter must not be null",
-                mappingJackson2HttpMessageConverter);
-    }*/
+                this.mappingJackson2HttpMessageConverter);
+
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        mappingJackson2HttpMessageConverter.write(
+        this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
 }
+

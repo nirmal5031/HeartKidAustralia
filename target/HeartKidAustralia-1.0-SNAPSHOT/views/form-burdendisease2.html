@@ -1,0 +1,253 @@
+<div class="col-lg-12" ng-controller="burdendiseaseController">
+    <div class="col-md-12 formborder">
+        <div id="condition_describe" style="display:block;">
+            <div class="myform">Burden of Disease</div>
+            <br class="col-md-12 formcontent">
+            <div class="progress progress-striped active">
+
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    <span class="show">4/6 Complete</span>
+                </div>
+            </div>
+            <fieldset>
+                <div ng-show="showcarerdetails" style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Carer impact</div>
+
+                <div class="control" ng-show="showcarerdetails">
+                    <label class=" col-sm-2"  style="width: 100%;">	Do you have a two parent family model?</label>
+                    <select  name="familymodel" ng-model="formData.familymodel" class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="familymodel for familymodel in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+
+                <div class="control" ng-show="showcarerdetails">
+                    <label class=" col-sm-2"  style="width: 100%;">Has this changed due to emotional impact of your / caring for someone with a Congenital Heart diagnosis</label>
+                    <select  name="emotimpct" ng-model="formData.emotimpct" class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="emotimpct for emotimpct in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control" ng-show="showcarerdetails">
+                    <label class=" col-sm-2"  style="width: 100%;">How do rate the impact of having CHD in your life on your relationship with your partner / other children / friends and family members ?</label>
+                    <select   ng-model="formData.relationimpact"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="relationimpact for relationimpact in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+                </div>
+                <div class="control" ng-show="showcarerdetails">
+                    <label class=" col-sm-2"  style="width: 100%;">How many siblings / children do you have?</label>
+
+                    <table class="table bs-example" style="width: auto;  padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                                ng-click="siblicksel(node.id)"
+                                ng-model="formData.siblingchld" ng-class="getClasssiblicksel(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''">
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="control" ng-show="showimpactsiblingwitchd" >
+                    <label class=" col-sm-2"  style="width: 100%;">How do you rate the impact of having a sibling with CHD? </label>
+
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                                ng-click="siblickselCHDimpct(node.id)"
+                                ng-model="formData.siblingchldimpct" ng-class="getClasssiblickselCHDimpct(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''">
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid; ">Costs involved</div>
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%; margin-bottom: 2%;">	How much out of pocket expenses would you say you have spent per year in managing you disease you would not have had to spend if you did not have CHD in your life? </label>
+                    <select   ng-model="formData.moneyspentinyear"  class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="moneyspentinyear for moneyspentinyear in costinvolvedArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+                </div></br>
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Quality of your care in the health system</div>
+
+
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">How would you rate you experience in hospital when you had your first surgery? <em>*</em></label>
+
+                    <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" name="frstsurgeryexp" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                                ng-click="frstsurgerysel(node.id)"
+                                ng-model="formData.frstsurgerysel" ng-class="getClassfrstsurgerysel(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" required>
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span ng-show="userForm.frstsurgeryexp.$dirty && userForm.frstsurgeryexp.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">This field is mandatory</span>
+
+                </div>
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">How many times have you been in hospital since your first surgery? <em>*</em> </label>
+
+                    <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5" name="timesaftrsurgery"
+                                ng-click="hosptlsurgerysel(node.id)"
+                                ng-model="formData.hosptlsurgery" ng-class="getClasshosptlsurgery(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" required>
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span ng-show="userForm.timesaftrsurgery.$dirty && userForm.timesaftrsurgery.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">This field is mandatory</span>
+
+                </div><div class="control"  >
+                <label class=" col-sm-2"  style="width: 100%;">Did you receive education support during your hospitalisation? </label>
+
+                <table class="table bs-example" style="padding: 4px;  margin-top: 2%;">
+
+                    <tbody>
+                    <tr style=" padding: 4px; " >
+                        <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                            ng-click="educsupporthospsel(node.id)"
+                            ng-model="formData.educsupporthosp" ng-class="getClasseducsupporthosp(node.id)"   ng-mouseenter="myClass='redclass'"
+                            ng-mouseleave="myClass = ''">
+                            {{node.rate}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div><div class="control"  >
+                <label class=" col-sm-2"  style="width: 100%;">At what age did you transition from paediatric care to adult care?  <em>*</em></label>
+
+                <table class="table bs-example" style="  padding: 4px;  margin-top: 2%;" required>
+
+                    <tbody>
+                    <tr style=" padding: 4px; " >
+                        <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5" name="paediatricadult"
+                            ng-click="transpaedtoadultsel(node.id)"
+                            ng-model="formData.transpaedtoadult" ng-class="getClasstranspaedtoadult(node.id)"   ng-mouseenter="myClass='redclass'"
+                            ng-mouseleave="myClass = ''" required>
+                            {{node.rate}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span ng-show="userForm.paediatricadult.$dirty && userForm.paediatricadult.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">This field is mandatory</span>
+
+            </div>
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">How would you rate that transition? <em>*</em></label>
+
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" name="ratetransistion" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="ratetransitionsel(node.id)"
+                                ng-model="formData.ratetransition" ng-class="getClassratetransition(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" required>
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span ng-show="userForm.ratetransistion.$dirty && userForm.ratetransistion.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">This field is mandatory</span>
+
+
+                </div>
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">How well did you feel supported during this change? </label>
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="feelsupportsel(node.id)"
+                                ng-model="formData.feelsupport" ng-class="getClassfeelsupport(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''">
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">Were you offered support from a patient organisation like HeartKids? </label>
+
+                    <select  name="heartkidsupport" ng-model="formData.heartkidsupport" class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="support for support in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+
+                </div>
+                <div class="control" >
+                    <label class=" col-sm-2"  style="width: 100%;">Where you offered support from and of the following? </label></div>
+                <div class="control">
+                    <table class="radiobuttonstyling"><tr><td  ><b>Social Worker</b></td><td style=""><input type="radio" value="yes" ng-model="formData.socworker" name="radiog_dark" id="radio4" class="css-checkbox" /><label for="radio4" class="css-label-radio radGroup2">Yes</label></td><td><input type="radio" name="radiog_dark" id="radio5" class="css-checkbox" /><label for="radio5" class="css-label-radio radGroup2">No</label></td></tr></table>
+                </div>
+
+                <div class="control">
+                    <table class="radiobuttonstyling"><tr><td  ><b>Psychologist</b></td><td style=""><input type="radio" value="yes" ng-model="formData.pstcologist" name="psycologist" id="radio1" class="css-checkbox" /><label for="radio1" class="css-label-radio radGroup2">Yes</label></td><td><input type="radio" ng-model="formData.pstcologist" name="psycologist" id="radio2" class="css-checkbox"  value="no"/><label for="radio2" class="css-label-radio radGroup2">No</label></td></tr></table>
+
+                </div>
+
+                <div class="control">
+
+                    <table class="radiobuttonstyling"><tr><td  ><b>Family support services</b></td><td style=""><input type="radio" value="yes" ng-model="formData.familysuprt" name="familysuprt" id="radio6" class="css-checkbox" /><label for="radio6" class="css-label-radio radGroup2">Yes</label></td><td><input type="radio" ng-model="formData.familysuprt" name="familysuprt" id="radio7" class="css-checkbox" value="no"/><label for="radio7" class="css-label-radio radGroup2">No</label></td></tr></table>
+                </div>
+
+                <div class="control">
+
+                    <table class="radiobuttonstyling"><tr><td  ><b>A dedicated CHD nurse post discharge</b></td><td style=""><input type="radio" ng-model="formData.dedicatednurse" name="dedicatednurse" id="radio8" class="css-checkbox" value="yes"/><label for="radio8" class="css-label-radio radGroup2">Yes</label></td><td><input type="radio"  ng-model="formData.dedicatednurse" name="dedicatednurse" id="radio9" class="css-checkbox" checked="checked" value="no"/><label for="radio9" class="css-label-radio radGroup2">No</label></td></tr></table>
+                </div>
+
+                <div class="control"  >
+                    <label class=" col-sm-2"  style="width: 100%;">Would you have like to have a dedicated CHD nurse involved with your care? </label>
+
+
+                    <select  name="dedicatedCHDnurse" ng-model="formData.dedicatedCHDnurse" ng-change="dedicatedCHDnurse()" class="textfeildname yellow arrowupdown"  style="width:15%; " ng-options="dednurse for dednurse in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+                </div>
+                </br>
+
+                <div class="col-xs-6 col-xs-offset-3">
+                    <a ui-sref="form.burden-add" class="btn btn-block btn-info">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span>Previous
+                    </a>
+                </div>
+                <div class="col-xs-6 col-xs-offset-3 col-xs-7" >
+                    <a ui-sref="form.burden-3" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="savesurveyregistration()">
+                        Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                    </a>
+                </div>
+
+            </fieldset>
+
+            <!--/container-->
+        </div></div></div>

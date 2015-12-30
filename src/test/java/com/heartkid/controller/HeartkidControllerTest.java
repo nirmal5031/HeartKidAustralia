@@ -19,10 +19,6 @@ public class HeartkidControllerTest extends RestControllerTest {
     public static final String REGISTRATION_COUNT_URL = "/heartkid/regcount";
     public static final String REFERENCE_NO_GENERATOR_URL = "/heartkid/referencegen";
     public static final String PERSONAL_INFO_URL = "/heartkid/personalinfo";
-    public static final String DISEASE_QUANT_URL = "/heartkid/diseasequant";
-    public static final String BURDEN_DISEASE_URL = "/heartkid/burdendisease";
-    public static final String PRODUCT_EDUCATION_URL = "/heartkid/producteducation";
-    public static final String QUALITY_CARE_URL = "/heartkid/qualitycare";
     public static final String OUT_HOSPITAL_URL = "/heartkid/outhospital";
 
     @Before
@@ -72,45 +68,7 @@ public class HeartkidControllerTest extends RestControllerTest {
                 .andExpect(status().isMethodNotAllowed());
     }
 
-    @Test
-    public void saveDiseaseQuantInformation() throws Exception {
-
-        mockMvc.perform(post(DISEASE_QUANT_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveDiseaseQuantInformationForEmpty() throws Exception {
-
-        mockMvc.perform(post(DISEASE_QUANT_URL)
-                .content(json(""))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveDiseaseQuantInformationViolation() throws Exception {
-
-        mockMvc.perform(post(DISEASE_QUANT_URL)
-                .content(json("-1"))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnErrorSaveDiseaseQuantInformationForGET() throws Exception {
-
-        mockMvc.perform(get(DISEASE_QUANT_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
-
-    }
+    
 
     @Test
     public void savePersonalInformation() throws Exception {
@@ -148,126 +106,6 @@ public class HeartkidControllerTest extends RestControllerTest {
     public void returnErrorSavePersonalInformationForGET() throws Exception {
 
         mockMvc.perform(get(PERSONAL_INFO_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
-
-    }
-
-    @Test
-    public void saveBurdenDiseaseInformation() throws Exception {
-
-        mockMvc.perform(post(BURDEN_DISEASE_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveBurdenDiseaseInformationForEmpty() throws Exception {
-
-        mockMvc.perform(post(BURDEN_DISEASE_URL)
-                .content(json(""))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveBurdenDiseaseInformationViolation() throws Exception {
-
-        mockMvc.perform(post(BURDEN_DISEASE_URL)
-                .content(json("-1"))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnErrorSaveBurdenDiseaseInformationForGET() throws Exception {
-
-        mockMvc.perform(get(BURDEN_DISEASE_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
-
-    }
-
-    @Test
-    public void saveProductEducationInformation() throws Exception {
-
-        mockMvc.perform(post(PRODUCT_EDUCATION_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveProductEducationInformationForEmpty() throws Exception {
-
-        mockMvc.perform(post(PRODUCT_EDUCATION_URL)
-                .content(json(""))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveProductEducationInformationViolation() throws Exception {
-
-        mockMvc.perform(post(PRODUCT_EDUCATION_URL)
-                .content(json("-1"))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnErrorSaveProductEducationInformationForGET() throws Exception {
-
-        mockMvc.perform(get(PRODUCT_EDUCATION_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
-
-    }
-
-    @Test
-    public void saveQualityCareInformation() throws Exception {
-
-        mockMvc.perform(post(QUALITY_CARE_URL)
-                .content(json(new RequestBuilder().defaultValues()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveQualityCareInformationForEmpty() throws Exception {
-
-        mockMvc.perform(post(QUALITY_CARE_URL)
-                .content(json(""))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnBadRequestSaveQualityCareInformationViolation() throws Exception {
-
-        mockMvc.perform(post(QUALITY_CARE_URL)
-                .content(json("-1"))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void returnErrorSaveQualityCareInformationForGET() throws Exception {
-
-        mockMvc.perform(get(QUALITY_CARE_URL)
                 .content(json(new RequestBuilder().defaultValues()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isMethodNotAllowed());

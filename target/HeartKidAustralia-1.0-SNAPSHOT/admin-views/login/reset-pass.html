@@ -1,0 +1,27 @@
+<div class="col-md-6 col-md-offset-3" style="width: 100%">
+    <h2 style="color: #0044cc;margin-bottom: 6%;">Reset Password</h2>
+    <h3 style="color: #ad0404">{{resetMessage}}</h3>
+    <div class="control">
+    <label class=" col-sm-2">Old Password<em>*</em></label>
+    <input type="password" name="   oldpassword" id="oldpasswrd"  class="textfeildname yellow" style="width: 30%;"  ng-model="formAdminData.password"  />
+
+</div>
+<div class="control">
+    <label class=" col-sm-2">New Password<em>*</em></label>
+    <input type="password" name="password" id="passwrd"  class="textfeildname yellow"  style="width: 30%;" ng-model="formAdminData.newpassword"  />
+
+</div>
+<div class="control">
+    <label class=" col-sm-2">Confirm New Password<em>*</em></label>
+    <input type="password" name='confirm_password'  id="confrmpasswrd" style="width: 30%;" ng-model="formAdminData.confirm_new_password"   class="textfeildname yellow"   />
+
+</div>
+<br>
+    <br>
+    <div class="col-xs-6 col-xs-offset-3 col-xs-7">
+
+        <a class="btn btn-block btn-info" ng-click="resetpassword()" >
+            Reset Password  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a></br>
+    </div>
+    </div>

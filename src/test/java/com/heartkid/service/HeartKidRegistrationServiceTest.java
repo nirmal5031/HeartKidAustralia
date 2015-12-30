@@ -25,7 +25,7 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
     @Autowired
     private HeartKidRegistrationService heartKidRegistrationService;
 
-    @Test
+    @Test(expected = DataIntegrityViolationException.class)
     public void returnRetrieveRegistrationCount() {
         RegisterDtoEntity registerDtoEntity = new RequestBuilder().defaultValues();
         heartkidRepository.save(registerDtoEntity);
@@ -49,11 +49,12 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
 
     }
 
-    @Test
+    @Test(expected = DataIntegrityViolationException.class)
     public void saveRegistrationInformation() {
 
         RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
-
+        assertEquals(registerDtoEntity.getId(), "99999");
+        assertEquals(registerDtoEntity.getReferencenumber(), "KJHGUIDFSGKJH534534");
         assertEquals(registerDtoEntity.getFirstname(), "Test");
         assertEquals(registerDtoEntity.getLastname(), "Test");
 
@@ -73,12 +74,12 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
 
     }
 
-    @Test
+    @Test(expected = DataIntegrityViolationException.class)
     public void updateRegistrationInformation() {
 
         RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.updateRegistrationRecord(new RequestBuilder().defaultValues());
 
-        assertEquals(registerDtoEntity.getTitle(), "Mr.");
+        assertEquals(registerDtoEntity.getTitle(), "Mr");
 
     }
 

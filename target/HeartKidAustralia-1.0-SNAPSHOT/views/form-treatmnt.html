@@ -1,0 +1,85 @@
+<div class="col-lg-12" ng-controller="burdendiseaseController">
+    <div class="col-md-12 formborder">
+        <div id="personal_details">
+            <div class="errormessage" style="margin-left:30px;color:red;"></div>
+            <div id="trtmnt_info"><div class="myform">Disease quantification:</div>
+                <br class="col-md-12 formcontent">
+                <div class="progress progress-striped active">
+
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+                        <span class="show">1/6 Complete</span>
+                    </div>
+                </div>
+                <fieldset>
+                    <div class="row" style="padding-top:16px;">
+
+                        <div class="col-md-12">
+
+                            <div class="txtcntnt">
+
+                                <p class="conctfrmt"><b class="hearticon">&#9829;</b>&nbsp;&nbsp;Need another reason stated to continue to help us</p>
+                                <p class="conctfrmt"><b class="hearticon">&#9829;</b>&nbsp;&nbsp;We would like to advocate for you and your family member to government</p>
+                                <p class="conctfrmt"><b class="hearticon">&#9829;</b>&nbsp;&nbsp;No personal or identifiable information will be used</p>
+
+
+                                <div class="col-md-12"><div style="color:#026ab3; margin-bottom: 3%; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;"> Describe the condition </div>
+
+                                    <p class="conctfrmt" ng-class="{ 'has-error': userForm.yesnoselect.$dirty && userForm.yesnoselect.$error.required }">&nbsp;&nbsp;Do you know what your specific condition is called? <em>*</em></p>
+                                    <select  name="yesnoselect" ng-model="formData.conditioncalld" ng-change="change_condition()" class="textfeildname yellow arrowupdown" style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="yesno for yesno in yesnoArray" required>
+                                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                                    </select>
+                                    <span ng-show="userForm.yesnoselect.$dirty && userForm.yesnoselect.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Select Specific Condition</span>
+
+                                    <p class="conctfrmt" ng-class="{ 'has-error': userForm.heartcondsselect.$dirty && userForm.heartcondsselect.$error.required }" ng-show="knowncondition">&nbsp;&nbsp;What congenital heart condition were you diagnosed with? <em>*</em></p>
+                                    <select  ng-show="knowncondition" name="heartcondsselect" ng-model="formData.heartconds" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="heartconds for heartconds in heartcondsArray" ng-required="formData.conditioncalld=='Yes'">
+                                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                                    </select>
+                                    <span ng-show="userForm.heartcondsselect.$dirty && userForm.heartcondsselect.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Please Select heart Condition</span>
+
+                                    <p class="conctfrmt" ng-class="{ 'has-error': userForm.yesnoselect.$dirty && userForm.yesnoselect.$error.required }">&nbsp;&nbsp;Have you had corrective surgery on your heart? <em>*</em></p>
+                                    <select  name="yesnoselect" ng-model="formData.surgeryheld" ng-change="surgeryheldchange()" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="yesno for yesno in yesnoArray" required >
+                                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                                    </select>
+                                    <p class="conctfrmt" ng-show="surgerydelayed">&nbsp;&nbsp;If you had surgery, was it delayed? </p>
+                                    <select ng-change="surgdelayed()" ng-show="surgerydelayed " name="yesnoselect" ng-model="formData.surgerydelay"  class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="yesno for yesno in yesnoArray" ng-required="formData.surgeryheld=='Yes'">
+                                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                                    </select>
+                                    <div class="conctfrmt" ng-show="surgerydelayedcount">
+                                        <label  class=" col-sm-2" style="width: 100%;">How many delays to the corrective surgery did you experience ? </label>
+                                        </br>
+                                    </div>
+
+                                    <div ng-show="surgerydelayedcount" >
+                                        <table class="table bs-example" style="padding: 4px; margin-top: 2%;" >
+                                            <tbody>
+                                            <tr style="padding: 4px;">
+                                                <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                                    ng-click="Surgerydelaycount(node.id)"
+                                                    ng-model="formData.surgerydelaycount" ng-class="SurgerydelaycountClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                                    ng-mouseleave="myClass = ''" ng-required="formData.surgerydelay=='Yes'">
+                                                    {{node.rate}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p class="conctfrmt" ng-show="surgerydelayed">&nbsp;&nbsp;Did you have to travel > 50km for surgery?</p>
+                                    <select ng-show="surgerydelayed" name="yesnoselect" ng-model="formData.trvlsurg" class="textfeildname yellow arrowupdown"  style="width:25%; -moz-appearance: none;-webkit-appearance: none;appearance:none;" ng-options="yesno for yesno in yesnoArray" >
+                                        <option value="">--Select--</option> <!-- not selected / blank option -->
+                                    </select>
+                                </div> </div> </div>
+                    </div>   </br></br>
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <a ui-sref="form.profile" class="btn btn-block btn-info">
+                            <span class="glyphicon glyphicon-circle-arrow-left"></span>Previous
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-xs-offset-3 col-xs-7">
+
+                        <a ui-sref="form.burden-1" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="savesurveyregistration()">
+                            Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                        </a></br>
+                    </div>
+                </fieldset>
+            </div></div></div></div>
+

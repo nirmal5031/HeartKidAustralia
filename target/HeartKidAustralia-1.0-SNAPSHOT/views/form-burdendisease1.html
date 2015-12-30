@@ -1,0 +1,120 @@
+<div class="col-lg-12" ng-controller="burdendiseaseController">
+    <div class="col-md-12 formborder">
+
+        <div id="personal_details">
+            <div class="myform">Burden of Disease</div>
+            <br class="col-md-12 formcontent">
+            <div class="progress progress-striped active" style="margin-bottom: 3%">
+
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+                    <span class="show">2/6 Complete</span>
+                </div>
+            </div>
+
+            <fieldset>
+                <div class="txtcntnt">
+                    <p class="conctfrmt"><b class="hearticon">&#9829;</b>	Please help us quantify how living with your disease impacts your life</p>
+                    <p class="conctfrmt"><b class="hearticon">&#9829;	</b>We want doctors and government to know what you deal with</p>
+                    <p class="conctfrmt"><b class="hearticon">&#9829;</b>	This will help us to make sure the services and support that is needed is in place for everyone.</p></div>
+
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Doctor Visits</div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many times have you seen your heart doctor (cardiologist) in the last 3 years ? <em>*</em></label>
+                    </br>
+
+
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes"
+                                ng-click="nodeclick(node.id)"
+                                ng-model="formData.heartdocvisit" ng-class="getClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" >
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many times have you seen your local doctor (GP) in the last 3 years ? <em>*</em></label>
+                    <select  name="localdoctor-count" ng-model="formData.localdoctorvisit" class="textfeildname yellow arrowupdown"  style="width:25%; " ng-options="ldcount for ldcount in scale1to20" required>
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">How many times did you have to go to the Emergency Department last year ?  <em>*</em></label>
+
+                    <table class="table bs-example" style=" padding: 4px;  margin-top: 2%;">
+
+                        <tbody>
+                        <tr style=" padding: 4px; " >
+                            <td style="" class="col-md-1 barstyle {{myClass}}" ng-repeat="node in nodes1to5"
+                                ng-click="emergdept(node.id)"
+                                ng-model="formData.emergdeptvisit" ng-class="getenerClass(node.id)"   ng-mouseenter="myClass='redclass'"
+                                ng-mouseleave="myClass = ''" >
+                                {{node.rate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">Are you / do you care for a person over the age of 16?<em>*</em></label>
+                    <select  name="careage16" ng-model="formData.careage16" class="textfeildname yellow arrowupdown" ng-change="childtoadultdoc()"  style="width:25%;" ng-options="yesno for yesno in yesnoArray" required >
+                        <option value="">&#45;&#45;Select&#45;&#45;</option> &lt;!&ndash; not selected / blank option &ndash;&gt;
+                    </select>
+                    <span ng-show="userForm.careage16.$dirty && userForm.careage16.$error.required" class="help-block" style="margin: auto;width: 55%;padding: 10px;">Do you care for a person over the age of 16 is mandatory</span>
+
+                </div>
+
+                <div class="control" ng-show="showchildtoheartdoc">
+                    <label class=" col-sm-2" style="width: 100%;">Did you move from your child heart doctor to an adult doctor? </label>
+                    <select  name="childtoadultdoc" ng-model="formData.childtoadultdoc" class="textfeildname yellow arrowupdown"  style="width:25%; " ng-options="chldad for chldad in yesnoArray" >
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div style="color:#026ab3; font-size:20px; font-weight:bold; padding:4px; border-bottom:2px #026ab3 solid;">Mental Health Assesment</div>
+
+
+                <div class="control">
+                    <label class=" col-sm-2" style="width: 100%;">Have you experience any anxiety about your heart condition? <em>*</em></label>
+                    <select  name="anxietycond" ng-model="formData.anxietycond" class="textfeildname yellow arrowupdown" ng-change="anxietycond()" style="width:25%; " ng-options="anxietycond for anxietycond in yesnoArray" required>
+                        <option value="">--Select--</option> <!-- not selected / blank option -->
+
+                    </select>
+                </div>
+                <div class="control"  ng-show="anxietycondimpact">
+                    <label class=" col-sm-2" style="width: 100%;">What do you feel has been the impact of your heart condition on your level of anxiety / depression? </label>
+                    <textarea type="textarea"  name ="anxietycondimpact"  class="" style="width: 100%;"  ng-model="formData.anxietycondimpact"></textarea>
+
+                </div>
+
+
+                <div style="margin-bottom: 5%;"></div>
+
+
+                <div class="col-xs-6 col-xs-offset-3">
+                    <a ui-sref="form.treatment" class="btn btn-block btn-info">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span>Previous
+                    </a>
+                </div>
+
+                <div class="col-xs-6 col-xs-offset-3 col-xs-7">
+
+                    <a ui-sref="form.burden-add" class="btn btn-block btn-info" ng-disabled="userForm.$invalid" ng-click="savesurveyregistration()">
+                        Next  <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                    </a></br>
+                </div>
+                <div style="margin-bottom: 3%;"></div>
+            </fieldset>
+        </div>
+    </div></div>
