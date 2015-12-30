@@ -11,7 +11,7 @@ public class Dategenerator {
 	
 		
 	public String dategenerator() {
-	   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	   //get current date time with Date()
 	   Date date = new Date();
 	   String dateval = dateFormat.format(date);
