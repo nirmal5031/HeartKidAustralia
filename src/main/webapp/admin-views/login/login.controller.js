@@ -5,12 +5,6 @@ angular.module('loginApp')
 
 
         var loginflagvalue = sessionStorage.getItem('loginflag');
-           /* if(resetSuccess!="")
-            {
-                alert("setting error value--->");
-                $scope.vm.error = resetSuccess;
-            }*/
-
         var Message = $stateParams.Message;
        if($stateParams.Message != null)
 

@@ -2,6 +2,8 @@ package com.heartkid.oauth;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RevokeTokenController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(RevokeTokenController.class);
 
     public static final String ENDPOINT_ID = "token";
 
@@ -34,18 +37,13 @@ public class RevokeTokenController {
     @RequestMapping(value = "token/revoke", method = RequestMethod.DELETE)
     public void revoke(@RequestHeader(value = "Authorization") String authToken) {
         String token = authToken.substring(authToken.indexOf(" ")).trim();
-       /* System.out.println("Revoking token..." + tokenServices());
-        System.out.println("Revoking token..." + tokenStore);
-        System.out.println("Revoking token..." + dataSource);
-
-        System.out.println("Revoking token...token=" + token);
-*/
+      
         boolean success = tokenServices().revokeToken(token);
         if (!success) {
             throw new InvalidTokenException("Invalid access token: " + token);
         }
 
-        System.out.println("Successfully revoked token");
+        LOGGER.info("Successfully revoked token");
     }
 
 }

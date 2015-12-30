@@ -35,15 +35,10 @@ public class ExcelBuilder extends AbstractExcelView {
     protected void buildExcelDocument(Map<String, Object> model,
             HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-    	System.out.println("INSIDE ECEL BUILD ___++++++++++::::::::::::::::::");
-        // get data model which is passed by the Spring container
-       // List<Book> listBooks = (List<Book>) model.get("listBooks");
+        
          List<RegisterDtoEntity> listHeartkidUser = (List<RegisterDtoEntity>)model.get("listheartkidusers");
-        // create a new Excel sheet
-        HSSFSheet sheet = workbook.createSheet("HeartKid User Report");
+        HSSFSheet sheet = workbook.createSheet("HeartKidReport");
         sheet.setDefaultColumnWidth(30);
-         
-        // create style for header cells
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
         font.setFontName("Arial");
@@ -53,7 +48,6 @@ public class ExcelBuilder extends AbstractExcelView {
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
          
-        // create header row
         HSSFRow header = sheet.createRow(0);
          
         header.createCell(0).setCellValue("Reference Number");
@@ -79,37 +73,30 @@ public class ExcelBuilder extends AbstractExcelView {
         header.createCell(6).setCellValue("Post Code");
         header.getCell(6).setCellStyle(style);
         
-        
         header.createCell(7).setCellValue("State");
         header.getCell(7).setCellStyle(style);
-        
-        
+                
         header.createCell(8).setCellValue("eMail");
         header.getCell(8).setCellStyle(style);
-        
-        
+                
         header.createCell(9).setCellValue("Contact Agree");
         header.getCell(9).setCellStyle(style);
-        
-        
+                
         header.createCell(10).setCellValue("Contact via Phone");
         header.getCell(10).setCellStyle(style);
         
         header.createCell(11).setCellValue("Contact via email");
         header.getCell(11).setCellStyle(style);
         
-        
         header.createCell(12).setCellValue("Phone");
         header.getCell(12).setCellStyle(style);
         
         header.createCell(13).setCellValue("ethnicity");
         header.getCell(13).setCellStyle(style);
-        
-        
+                
         header.createCell(14).setCellValue("Country");
         header.getCell(14).setCellStyle(style);
-        
-        
+                
         header.createCell(15).setCellValue("Language");
         header.getCell(15).setCellStyle(style);
         
@@ -146,16 +133,16 @@ public class ExcelBuilder extends AbstractExcelView {
         header.createCell(26).setCellValue("Condition Called");
         header.getCell(26).setCellStyle(style);
         
-        header.createCell(26).setCellValue("CHD work impact");
-        header.getCell(26).setCellStyle(style);
+        header.createCell(27).setCellValue("CHD work impact");
+        header.getCell(27).setCellStyle(style);
         
+       
         header.createCell(28).setCellValue("Child to Adult doc");
         header.getCell(28).setCellStyle(style);
         
         header.createCell(29).setCellValue("Anxiety Cond");
         header.getCell(29).setCellStyle(style);
-        
-        
+                
         header.createCell(30).setCellValue("Cond Impact");
         header.getCell(30).setCellStyle(style);
         
@@ -188,12 +175,10 @@ public class ExcelBuilder extends AbstractExcelView {
         
         header.createCell(40).setCellValue("ImpactQol");
         header.getCell(40).setCellStyle(style);
-        
-        
+                
         header.createCell(41).setCellValue("ConditionImpactSchl");
         header.getCell(41).setCellStyle(style);
-        
-        
+                
         header.createCell(42).setCellValue("ImpactSchool Desc");
         header.getCell(42).setCellStyle(style);
         
@@ -322,7 +307,7 @@ public class ExcelBuilder extends AbstractExcelView {
            aRow.createCell(24).setCellValue(searchreport.getEmergdeptvisit());
            aRow.createCell(25).setCellValue(searchreport.getCareage16());
            aRow.createCell(26).setCellValue(searchreport.getConditioncalld());
-           aRow.createCell(27).setCellValue(searchreport.getConditioncalld());
+           aRow.createCell(27).setCellValue(searchreport.getChdimpactwork());
            aRow.createCell(28).setCellValue(searchreport.getChildtoadultdoc());
            aRow.createCell(29).setCellValue(searchreport.getAnxietycond());
            aRow.createCell(30).setCellValue(searchreport.getAnxietycondimpact());

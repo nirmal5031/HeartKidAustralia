@@ -3,6 +3,8 @@ package com.heartkid.oauth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,14 +14,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.heartkid.service.DirectoryService;
-
+import com.heartkid.controller.HeartkidController;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-
- 
-    @Autowired
-    DirectoryService directoryService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
 
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
@@ -32,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
         auth = new UsernamePasswordAuthenticationToken(heartkidnumber, password, grantedAuths);
 
-        System.out.println("Login Credential : " + heartkidnumber + password);
+        LOGGER.info("Heartkid Number Access : " + heartkidnumber);
 
         return auth;
     }

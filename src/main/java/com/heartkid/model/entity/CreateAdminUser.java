@@ -13,13 +13,13 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class CreateAdminUser {
 	
-	   @Id
+	    @Id
 	    @NotNull
 	    @Column(name = "USERNAME")
 	private String username;
 	private String firstname;
 	private String lastname;
-		private String emailid;
+	private String emailid;
 	private String phone;
 	private String status;
 	private String userrole;
@@ -27,9 +27,7 @@ public class CreateAdminUser {
 	private String password;
 	private int loginflag;
 
-	
 	public CreateAdminUser(){
-		
 	}
 	
 	public int getLoginflag() {
@@ -40,8 +38,6 @@ public class CreateAdminUser {
 		this.loginflag = loginflag;
 	}
 
-	
-	
 	public String getFirstname() {
 		return firstname;
 	}

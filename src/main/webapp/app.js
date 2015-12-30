@@ -290,12 +290,7 @@ angular.module('formApp', ['ui.router'])
         $scope.personalInfoSubmit = function(e) {
 
             var formstatus = "incomplete";
-            var contactagree = $scope.formData.contctviaphone;
-            var contactagreephone = $scope.formData.phone;
-
-
-
-                $scope.formData.surveystatus = formstatus;
+    $scope.formData.surveystatus = formstatus;
                 $http({
                     url: 'heartkid/personalinfo',
                     method: "POST",
@@ -304,9 +299,7 @@ angular.module('formApp', ['ui.router'])
                     .then(function (response) {
                         var data = $.parseJSON(angular.toJson(response.data));
                         $scope.formData.id = data.id;
-
-
-                    },
+   },
                     function (status) {
                         $state.go('form.generror');
 
@@ -711,11 +704,11 @@ angular.module('formApp', ['ui.router'])
             }
         }
 
-        $scope.savetreatmentform = function(){
+        $scope.savesurveyregistration = function(){
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
-                url: 'heartkid/diseasequant',
+                url: 'heartkid/personalinfo',
                 method: "POST",
                 data:$scope.formData
             })
@@ -728,7 +721,7 @@ angular.module('formApp', ['ui.router'])
         }
 
 
-        $scope.saveburdendiseaseform = function(){
+      /*  $scope.saveburdendiseaseform = function(){
             var formstatus = "incomplete";
             $scope.formData.surveystatus = formstatus;
             $http({
@@ -785,7 +778,7 @@ angular.module('formApp', ['ui.router'])
                     });
         }
 
-
+*/
 
         $scope.saveouthospitalform = function(){
 

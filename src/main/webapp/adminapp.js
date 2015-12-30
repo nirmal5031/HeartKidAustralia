@@ -65,11 +65,7 @@
                     templateUrl: 'admin-views/register/register.view.html'
 
                 })
-                .state('form.edituser', {
-                    url: '/edit',
-                    controller: 'HomeController',
-                    templateUrl: 'admin-views/home/edit.view.html'
-                })
+
                 .state('/modify', {
                     url: '/home',
                     templateUrl: 'admin-views/modify/modify.view.html'

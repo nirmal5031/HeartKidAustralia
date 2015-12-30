@@ -15,23 +15,23 @@
             };
         })
 
-        .directive("passwordVerify", function() {
+        .directive("passwordVerify", function () {
             return {
                 require: "ngModel",
                 scope: {
                     passwordVerify: '='
                 },
-                link: function(scope, element, attrs, ctrl) {
-                    scope.$watch(function() {
+                link: function (scope, element, attrs, ctrl) {
+                    scope.$watch(function () {
                         var combined;
 
                         if (scope.passwordVerify || ctrl.$viewValue) {
                             combined = scope.passwordVerify + '_' + ctrl.$viewValue;
                         }
                         return combined;
-                    }, function(value) {
+                    }, function (value) {
                         if (value) {
-                            ctrl.$parsers.unshift(function(viewValue) {
+                            ctrl.$parsers.unshift(function (viewValue) {
                                 var origin = scope.passwordVerify;
                                 if (origin !== viewValue) {
                                     ctrl.$setValidity("passwordVerify", false);
@@ -47,64 +47,47 @@
             };
         })
 
-        .controller('HomeController',['$scope', '$http','$state','$window','dataService','$rootScope','$anchorScroll','$location', function($scope,$http,$state,$window,dataService,$rootScope,$anchorScroll,$location) {
+        .controller('HomeController', ['$scope', '$http', '$state', '$window', 'dataService', '$rootScope', '$anchorScroll', '$location', '$timeout', function ($scope, $http, $state, $window, dataService, $rootScope, $anchorScroll, $location, $timeout) {
 
+            $scope.callAtTimeout = function () {
+                $scope.logoutadmin();
+            }
+            $timeout(function () {
+                $scope.callAtTimeout();
+            }, 1700000);
             var accessToken = sessionStorage.getItem('tokenId');
             var adminuser = sessionStorage.getItem('adminuser');
             $scope.adminuser = adminuser;
-            $scope.sexArray = ["Male","Female"];
+            $scope.sexArray = ["Male", "Female"];
             $scope.yesnoArray = ["Yes", "No"];
             $scope.yesnoArraycaps = ["yes", "no"];
             $scope.usertypeArray = ["Patient", "Carer"];
-            $scope.titleArray = ["Mr","Mrs","Miss","Mrs","Dr","Prof"];
-            $scope.sexArray = ["Male","Female"];
-            $scope.conttypeArray = ["Phone","Email"];
-            $scope.ethnicityArray = ["Caucasian","Aborigional / Tores Strait Island","Mouri","Asian","Indian","Black/Afican American","European","None of the above"];
-            $scope.lstofcountryArray = ["Australia","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","China","Colombia","Comoros","Congo","Congo {Democratic Rep}","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland {Republic}","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar, {Burma}","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican","Other"];
-            $scope.languageArray = ["English","Chinese","Italian","Vietnamese","Greek","Cantonese","Arabic","Mandarin","Macedonian","French","Spanish","Other"];
-            $scope.statelistArray = ["New South Wales","Australian Capital Territory","Victoria","Queensland","South Australia","Western Australia","Tasmania","Northern Territory","Other"] ;
-            $scope.heartcondsArray = ["Atrial septal defect","Ventricular septal defect","Atrioventricular septal defect","Patent ductus arteriosus","Pulmonary vein anomaly","Tricuspid atresia","Ebstein’s anomaly ","Dysplastic tricuspid valve","Pulmonary stenosis","Pulmonary atresia","Tetralogy of Fallot","Abnormal mitral valve","Aortic stenosis","Coarctation of the aorta or interrupted aorta","Truncus arteriosus","Bicuspid aortic valve","Hypoplastic left heart syndrome","Transposition of the great arteries","Congenitally corrected transposition of the great arteries","Double-outlet right ventricle","Double-inlet left ventricle","Double-inlet right ventricle","Atrial isomerism (left or right)","None of the above"];
+            $scope.titleArray = ["Mr", "Mrs", "Miss", "Mrs", "Dr", "Prof"];
+            $scope.sexArray = ["Male", "Female"];
+            $scope.conttypeArray = ["Phone", "Email"];
+            $scope.ethnicityArray = ["Caucasian", "Aborigional / Tores Strait Island", "Mouri", "Asian", "Indian", "Black/Afican American", "European", "None of the above"];
+            $scope.lstofcountryArray = ["Australia", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican", "Other"];
+            $scope.languageArray = ["English", "Chinese", "Italian", "Vietnamese", "Greek", "Cantonese", "Arabic", "Mandarin", "Macedonian", "French", "Spanish", "Other"];
+            $scope.statelistArray = ["New South Wales", "Australian Capital Territory", "Victoria", "Queensland", "South Australia", "Western Australia", "Tasmania", "Northern Territory", "Other"];
+            $scope.heartcondsArray = ["Atrial septal defect", "Ventricular septal defect", "Atrioventricular septal defect", "Patent ductus arteriosus", "Pulmonary vein anomaly", "Tricuspid atresia", "Ebstein’s anomaly ", "Dysplastic tricuspid valve", "Pulmonary stenosis", "Pulmonary atresia", "Tetralogy of Fallot", "Abnormal mitral valve", "Aortic stenosis", "Coarctation of the aorta or interrupted aorta", "Truncus arteriosus", "Bicuspid aortic valve", "Hypoplastic left heart syndrome", "Transposition of the great arteries", "Congenitally corrected transposition of the great arteries", "Double-outlet right ventricle", "Double-inlet left ventricle", "Double-inlet right ventricle", "Atrial isomerism (left or right)", "None of the above"];
 
             $scope.myNumber = 100;
-            $scope.getNumber = function(num) {
+            $scope.getNumber = function (num) {
                 return new Array(num);
             }
-            console.log(accessToken);
-            /* $scope.$watch('$viewContentLoaded', function(){
-
-             $http({
-             url: 'heartkid/tokenvalidate',
-             method: "GET",
-             headers: {
-             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-             'Authorization': 'Bearer ' + accessToken
-             }
-
-             })
-             .then(function (response) {
-
-             sessionStorage.setItem('isTokenValid',true);
-
-             },
-             function (response) { // optional
-             sessionStorage.setItem('isTokenValid',false);
-
-             })
-             });*/
 
             var istokenvalid = sessionStorage.getItem('isTokenValid');
 
-            if(accessToken == null) {
+            if (accessToken == null) {
                 $state.go('/login');
             }
             else {
                 var userroletype = sessionStorage.getItem('userrole');
 
-                if(userroletype != "" && userroletype == "Admin")
-                {
-                    $scope.admin=true;
-                }else{
-                    $scope.admin=false;
+                if (userroletype != "" && userroletype == "Admin") {
+                    $scope.admin = true;
+                } else {
+                    $scope.admin = false;
                 }
                 $scope.userroleArray = ["Admin", "Coordinator"];
                 $scope.showModal = false;
@@ -139,7 +122,7 @@
                                 if (exporttoexcel) {
                                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                     saveAs(blob, 'HeartKid_Results' + date + '.xls');
-                                    $scope.ErrorMessage = "Record exported successfully (HeartKid_Results"+date+".xls)";
+                                    $scope.ErrorMessage = "Record exported successfully (HeartKid_Results" + date + ".xls)";
 
                                 } else {
                                     $scope.ErrorMessage = "Please refine your search and try again";
@@ -149,7 +132,7 @@
                             else {
                                 var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                                 saveAs(blob, 'HeartKid_Results' + date + '.xls');
-                                $scope.ErrorMessage = "Record exported successfully (HeartKid_Results)"+date+".xls";
+                                $scope.ErrorMessage = "Record exported successfully (HeartKid_Results" + date + ".xls";
 
 
                             }
@@ -177,68 +160,45 @@
 
 
                 $scope.searchheartkid = function () {
-                    $scope.deleteMessage="";
-                    $scope.EditMessage="";
-                    $scope.ErrorMessage="";
-                    if($scope.formAdminData.surgerydelaycount=="")
-                    {
-                        $scope.formAdminData.surgerydelaycount=null;
+                    $scope.deleteMessage = "";
+                    $scope.EditMessage = "";
+                    $scope.ErrorMessage = "";
+                    if ($scope.formAdminData.surgerydelaycount == "") {
+                        $scope.formAdminData.surgerydelaycount = null;
                     }
-                    if($scope.formAdminData.conditioncalld =='No')
-                    {
-                        $scope.formAdminData.conditioncalld =null;
+                    if ($scope.formAdminData.conditioncalld == 'No') {
+                        $scope.formAdminData.conditioncalld = null;
                     }
-                    if($scope.formAdminData.surgeryheld=='No')
-                    {
-                        $scope.formAdminData.surgeryheld =null;
+                    if ($scope.formAdminData.surgeryheld == 'No') {
+                        $scope.formAdminData.surgeryheld = null;
                     }
-                    if($scope.formAdminData.surgerydelay=='No')
-                    {
-                        $scope.formAdminData.surgerydelay =null;
+                    if ($scope.formAdminData.surgerydelay == 'No') {
+                        $scope.formAdminData.surgerydelay = null;
                     }
-                    if($scope.formAdminData.anxietycond=='No')
-                    {
-                        $scope.formAdminData.anxietycond =null;
+                    if ($scope.formAdminData.anxietycond == 'No') {
+                        $scope.formAdminData.anxietycond = null;
                     }
-                    if($scope.formAdminData.trvlsurg=='No')
-                    {
-                        $scope.formAdminData.trvlsurg =null;
-                    }
-                   /* if($scope.formAdminData.agefrom == "")
-                    {
-                        $scope.formAdminData.age=null;
+                    if ($scope.formAdminData.trvlsurg == 'No') {
+                        $scope.formAdminData.trvlsurg = null;
                     }
 
-                    if($scope.formAdminData.agefrom != "" || $scope.formAdminData.agefrom != null)
-                    {
-                        ($scope.formAdminData.ageto==null) || ($scope.formAdminData.ageto == '')
-                        {
+                    if ($scope.formAdminData.agefrom == "") {
+                        $scope.formAdminData.ageto = "";
+                        $scope.formAdminData.age = "empty-empty";
+                    }
+                    else {
+                        if ($scope.formAdminData.ageto == "") {
                             $scope.formAdminData.ageto = $scope.formAdminData.agefrom;
                         }
-                     alert("age from to to"+$scope.formAdminData.age+"----------"+$scope.formAdminData.agefrom);
-                        $scope.formAdminData.age=$scope.formAdminData.agefrom+"-"+$scope.formAdminData.ageto;
-                    }*/
-                    if($scope.formAdminData.agefrom == "")
-                    {
-                        $scope.formAdminData.ageto ="";
-                        $scope.formAdminData.age ="empty-empty";
-                    }
-                    else{
-                        if($scope.formAdminData.ageto == "")
-                        {
-                            $scope.formAdminData.ageto =$scope.formAdminData.agefrom;
-                        }
-                        $scope.formAdminData.age =$scope.formAdminData.agefrom+"-"+$scope.formAdminData.ageto;
+                        $scope.formAdminData.age = $scope.formAdminData.agefrom + "-" + $scope.formAdminData.ageto;
                     }
 
 
-                    if($scope.formAdminData.contactvia == 'Phone')
-                    {
-                        $scope.formAdminData.contctviaphone='yes';
+                    if ($scope.formAdminData.contactvia == 'Phone') {
+                        $scope.formAdminData.contctviaphone = 'yes';
                     }
-                    if($scope.formAdminData.contactvia == 'Email')
-                    {
-                        $scope.formAdminData.contctviaemail='yes';
+                    if ($scope.formAdminData.contactvia == 'Email') {
+                        $scope.formAdminData.contctviaemail = 'yes';
                     }
                     $http({
                         url: 'heartkid/getrecord',
@@ -283,25 +243,25 @@
                 }
 
                 $scope.clearall = function () {
-                    $scope.formAdminData.referencenumber="";
-                    $scope.formAdminData.agefrom="";
-                    $scope.formAdminData.sex=null;
-                    $scope.formAdminData.state=null;
-                    $scope.formAdminData.contactvia=null;
-                    $scope.formAdminData.ethnicity=null;
-                    $scope.formAdminData.ageto="";
-                    $scope.formAdminData.heartconds=null;
-                    $scope.formAdminData.surgerydelaycount="";
-                    $scope.formAdminData.usertype=null;
-                    $scope.formAdminData.surveystatus=null;
-                    $scope.formAdminData.conditioncalld=null;
-                    $scope.formAdminData.surgeryheld=null;
-                    $scope.formAdminData.surgerydelay=null;
-                    $scope.formAdminData.trvlsurg=null;
-                    $scope.formAdminData.anxietycond=null;
-                    $scope.deleteMessage='';
-                    $scope.EditMessage="";
-                    $scope.ErrorMessage="";
+                    $scope.formAdminData.referencenumber = "";
+                    $scope.formAdminData.agefrom = "";
+                    $scope.formAdminData.sex = null;
+                    $scope.formAdminData.state = null;
+                    $scope.formAdminData.contactvia = null;
+                    $scope.formAdminData.ethnicity = null;
+                    $scope.formAdminData.ageto = "";
+                    $scope.formAdminData.heartconds = null;
+                    $scope.formAdminData.surgerydelaycount = "";
+                    $scope.formAdminData.usertype = null;
+                    $scope.formAdminData.surveystatus = null;
+                    $scope.formAdminData.conditioncalld = null;
+                    $scope.formAdminData.surgeryheld = null;
+                    $scope.formAdminData.surgerydelay = null;
+                    $scope.formAdminData.trvlsurg = null;
+                    $scope.formAdminData.anxietycond = null;
+                    $scope.deleteMessage = '';
+                    $scope.EditMessage = "";
+                    $scope.ErrorMessage = "";
                 }
                 $http({
                     url: 'heartkid/reportcount',
@@ -310,7 +270,7 @@
 
                 })
 
-                    .then(function(response) {
+                    .then(function (response) {
                         var data = $.parseJSON(angular.toJson(response.data));
 
                         /* var value = isNumber(data);
@@ -324,32 +284,39 @@
                         //alert($scope.reportcount);
                         $scope.string = $scope.reportcount;
                         $scope.arrString = $scope.string.split(',');
-                        $scope.reportData = [{key: "Patient",y: $scope.arrString[0]}, {key: "carer",y: $scope.arrString[1]}, {key: "Loved one",y: $scope.arrString[2]}];
-                        $scope.xFunction = function() {
-                            return function(d) {
+                        $scope.reportData = [{key: "Patient", y: $scope.arrString[0]}, {
+                            key: "carer",
+                            y: $scope.arrString[1]
+                        }, {key: "Loved one", y: $scope.arrString[2]}];
+                        $scope.xFunction = function () {
+                            return function (d) {
                                 return d.key;
                             };
                         }
-                        $scope.yFunction = function() {
-                            return function(d) {
+                        $scope.yFunction = function () {
+                            return function (d) {
                                 return d.y;
                             };
                         }
 
-                        $scope.descriptionFunction = function() {
-                            return function(d) {
+                        $scope.descriptionFunction = function () {
+                            return function (d) {
                                 return d.key;
                             }
                             //}
                         }
                     },
-                    function(response) {
+                    function (response) {
                         $state.go('form.generror');
                     })
-                $scope.deleteuser = function (index,deluser) {
+                $scope.deleteuser = function (index, deluser) {
 
                     $http({
                         url: 'heartkid/deleterecord/' + deluser,
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         method: "GET"
                     })
                         .then(function (response) {
@@ -369,6 +336,10 @@
                     $http({
                         url: 'heartkid/createadminuser',
                         method: "POST",
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         data: $scope.formAdminData
                     })
                         .then(function (response) {
@@ -433,36 +404,13 @@
                     }
                 }
 
-                $scope.checktoken = function () {
-
-                    var accessToken = sessionStorage.getItem('tokenId');
-                    $http({
-                        url: 'heartkid/tokenvalidate',
-                        method: "GET",
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                            'Authorization': 'Basic ' + accessToken
-                        }
-
-                    })
-                        .then(function (response) {
-                            //
-
-                        },
-                        function (response) { // optional
-                            // failed
-                            alert("Error respomse----->" + response.data);
-                        })
-                }
-
-                $scope.listadminuser = function()
-                {
+                $scope.listadminuser = function () {
                     $http({
                         url: 'heartkid/listadminuser',
                         method: "GET",
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                            'Authorization': 'Basic ' + accessToken
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
                         }
 
                     })
@@ -475,17 +423,17 @@
                             alert("Error respomse----->" + response.data);
                         })
                 }
-                $scope.deleteuseradmin = function()
-                {
+                $scope.deleteuseradmin = function () {
                     var username = $scope.formAdminData.delusername;
 
                     $http({
-                        url: 'heartkid/fetchadminuser/'+username,
+                        url: 'heartkid/fetchadminuser/' + username,
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         method: "GET"
-                        /* headers: {
-                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                         'Authorization': 'Basic ' + accessToken
-                         }*/
+
 
                     })
 
@@ -500,44 +448,46 @@
                         })
 
                 }
-                $scope.deleteadminuser = function(index,username)
-                {
+                $scope.deleteadminuser = function (index, username) {
                     $http({
-                        url: 'heartkid/deleteadminuser/'+username,
+                        url: 'heartkid/deleteadminuser/' + username,
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         method: "GET"
                     })
 
                         .then(function (response) {
                             var data = angular.fromJson(response.data);
 
-                            if(data==1)
-                            {
-                                $scope.deletionMessage= "User deleted successfully  - Username : "+username;
+                            if (data == 1) {
+                                $scope.deletionMessage = "User deleted successfully  - Username : " + username;
                                 $scope.users.splice(index, 1);
                             }
-                            else{
-                                $scope.deletionMessage= "Error in deleting user. Please try again later! ";
+                            else {
+                                $scope.deletionMessage = "Error in deleting user. Please try again later! ";
 
                             }
                         },
                         function (response) {
-                            $scope.deletionMessage= "Error in deleting user. Please try again later! ";
+                            $scope.deletionMessage = "Error in deleting user. Please try again later! ";
                         })
 
                 }
 
-                $scope.getuserdetails = function(editID)
-                {
+                $scope.getuserdetails = function (editID) {
                     $scope.showNumber = 'personal';
                     $scope.activeMenu = 'personal';
                     $scope.edituserdetailshow = 'true';
                     $http({
-                        url: 'heartkid/getuserdetails/'+editID,
+                        url: 'heartkid/getuserdetails/' + editID,
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         method: "GET"
-                        /* headers: {
-                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                         'Authorization': 'Basic ' + accessToken
-                         }*/
+
                     })
                         .then(function (response) {
 
@@ -556,17 +506,21 @@
 
 
                 //EDIT FUCNTION
-                $scope.editsavedetails = function() {
-                    $scope.formData.updateddate="admin";
+                $scope.editsavedetails = function () {
+                    $scope.formData.updateddate = "admin";
                     $http({
                         url: 'heartkid/personalinfo',
                         method: "POST",
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
                         data: $scope.formData
                     })
                         .then(function (response) {
                             var data = $.parseJSON(angular.toJson(response.data));
                             $scope.searchheartkid();
-                             $scope.EditMessage = "Data Saved Successfully for reference number : "+$scope.formData.referencenumber;
+                            $scope.EditMessage = "Data Saved Successfully for reference number : " + $scope.formData.referencenumber;
 
 
                         },
@@ -575,13 +529,11 @@
                             $scope.EditMessage = "Error in saving data. Please close and login again";
                         })
                 }
-$scope.closeedittable = function()
-{
-    $scope.edituserdetailshow = 'false';
-    $scope.EditMessage = "";
-}
-                $scope.editMenu = function(menu)
-                {
+                $scope.closeedittable = function () {
+                    $scope.edituserdetailshow = 'false';
+                    $scope.EditMessage = "";
+                }
+                $scope.editMenu = function (menu) {
                     $scope.showNumber = menu;
                     $scope.activeMenu = menu;
                 }

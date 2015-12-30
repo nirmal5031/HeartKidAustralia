@@ -1,5 +1,7 @@
 package com.heartkid.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,26 +19,25 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     LoginEntity loginEntity =new LoginEntity();
+    
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
 	 @RequestMapping(value = Constants.LOGIN_REST_API+"/{heartkidnum}/{password}", method = RequestMethod.POST)
-	    public LoginEntity validateUser(/*@RequestBody LoginDetail loginDetail)*/
+	    public LoginEntity validateUser(
 	    		 @PathVariable("heartkidnum") final String heartkidnum,
 	             @PathVariable("password") final String password){
 	      
 	       loginEntity = loginService.validateUser(heartkidnum, password);
-	       System.out.println("login status--->"+loginEntity.getStatus()+"-----ERROR MESSAGE-----"+loginEntity.getStatus());
-	       int loginflag  =  loginEntity.getLoginflag();
-	       System.out.println("Login entity flag is "+loginflag);
-	       //  UserValidation.validateUser(loginDetail.getHeartkidNumber());
+	       LOGGER.info("login status--->"+loginEntity.getStatus()+"-----Login Status-----"+loginEntity.getStatus());
 	        return loginEntity;
 	    }
 	 
 	 @RequestMapping(value="heartkid/resetnewpassword", method=RequestMethod.POST)
-		public  LoginEntity Resetnewpassword(@RequestBody LoginEntity loginentity){
-		System.out.println("loginentity.get"+loginentity.getPassword()+"---new password----"+loginentity.getNewpassword()+"username---"+loginentity.getUsername());
+		public  LoginEntity ResetNewPassword(@RequestBody LoginEntity loginentity){
 		LoginEntity response = null;
 		try
 		{
+			LOGGER.info("Resetting password for User-"+loginentity.getUsername());
 			String pass = loginentity.getPassword();
 					String newpass= loginentity.getNewpassword();
 					String username= loginentity.getUsername();

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.pojomatic.annotations.AutoProperty;
@@ -804,8 +803,5 @@ public class RegisterDtoEntity {
 		this.referencenumber = referencenumber;
 	}
 
-	/*
-	 * public RegisterPojo(String lname) { this.lname = lname; }
-	 */
-
+	
 }

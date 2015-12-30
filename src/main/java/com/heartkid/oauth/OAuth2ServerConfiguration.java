@@ -11,6 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -44,6 +46,7 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 public class OAuth2ServerConfiguration {
+	private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ServerConfiguration.class);
 
     private static final String RESOURCE_ID = "restservice";
 
@@ -127,17 +130,26 @@ public class OAuth2ServerConfiguration {
             // @formatter:on
         }
         
-      /*  public void configure(WebSecurity web) throws Exception {
-            web
-                .ignoring()
-                    .antMatchers("/heartkid/register/**");
-        }*/
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                
+            .antMatchers("/heartkid/deleteadminuser/**")
+            .authenticated()
+            .antMatchers("/heartkid/fetchadminuser/**")
+            .authenticated()
+            .antMatchers("/heartkid/getuserdetails/**")
+            .authenticated()
+            .antMatchers("/heartkid/createadminuser")
+            .authenticated()
+            .antMatchers("/heartkid/deleterecord/**")
+            .authenticated()
+            .antMatchers("/heartkid/downloadExcel")
+            .authenticated()
+            .antMatchers("/heartkid/getrecord")
+            .authenticated()
+          
                     .antMatchers("/heartkid/tokenvalidate")
                     .authenticated()
                     .antMatchers("/token/revoke")
@@ -161,9 +173,6 @@ public class OAuth2ServerConfiguration {
         @Qualifier("dataSource")
         private DataSource dataSource;
 
-        // @Autowired FilterChainProxy filterChainProxy;
-
-        // @Override
         public void doFilter(ServletRequest request, ServletResponse response,
                 FilterChain filterChain) throws ServletException, IOException {
 
@@ -179,14 +188,7 @@ public class OAuth2ServerConfiguration {
                     OAuth2AccessToken accessToken = tokenStore
                             .getAccessToken(oAuth);
 
-                  /*  System.out.println("isExpired.........................."
-                            + accessToken.isExpired());
-                    System.out.println("isExpired.........................."
-                            + accessToken.getValue());
-                    System.out.println("isExpired.........................."
-                            + accessToken.getExpiresIn());
-
-                    */DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
+                DefaultOAuth2AccessToken df = new DefaultOAuth2AccessToken(
                             accessToken);
 
                     df.setExpiration(new Date(System.currentTimeMillis()

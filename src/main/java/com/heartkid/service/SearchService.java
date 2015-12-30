@@ -9,13 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.heartkid.model.entity.RegisterDtoEntity;
-import com.heartkid.repository.SearchRepository;
+import com.heartkid.repository.HeartkidRepository;
 
 @Service
 public class SearchService {
 
 	@Autowired
-	SearchRepository searchrepository;
+	HeartkidRepository searchrepository;
 
 	List<RegisterDtoEntity> searchvalue = new ArrayList<RegisterDtoEntity>();
 	String referencenumber;
@@ -91,9 +91,6 @@ public class SearchService {
 				searchvalue = searchrepository.findbysearchheartkid(referencenumber, countrybirth, surveystatus,
 						surgeryheld, surgerydelay, trvlsurg, anxietycond, state, surgerydelaycount, heartconds,
 						usertype, conditioncalld, ethnicity, sex, age1, age2, contctviaemail, contctviaemail);
-				// searchvalue =
-				// searchrepository.findbysearchheartkid(referencenumber,usertype,surgeryheld,surgerydelay);
-
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
