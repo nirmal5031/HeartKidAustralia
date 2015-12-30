@@ -98,6 +98,11 @@
                     controller: 'HomeController',
                     templateUrl: 'admin-views/home/reports.view.html'
                 })
+                .state('form.barreports', {
+                    url: '/barreports',
+                    controller: 'HomeController',
+                    templateUrl: 'admin-views/home/barreports.view.html'
+                })
             $urlRouterProvider.otherwise('/login');
         });
 
