@@ -275,15 +275,7 @@
                     .then(function (response) {
                         var data = $.parseJSON(angular.toJson(response.data));
 
-                        /* var value = isNumber(data);
-
-                         if(value==false)
-                         {
-                         $state.go('form.generror');
-                         }
-                         else {*/
                         $scope.reportcount = data;
-                        //alert($scope.reportcount);
                         $scope.string = $scope.reportcount;
                         $scope.arrString = $scope.string.split(',');
                         $scope.reportData = [{key: "Patient", y: $scope.arrString[0]}, {
@@ -305,12 +297,154 @@
                             return function (d) {
                                 return d.key;
                             }
-                            //}
-                        }
+                         }
                     },
                     function (response) {
                         $state.go('form.generror');
                     })
+                    $http({
+         url: 'heartkid/reportbarcount',
+         method: "GET",
+         async: false
+
+     }) 
+     
+    
+     .then(function(response) {
+                     
+         $scope.reportbarcount = response.data;
+           
+     $scope.config = {
+    title: 'HeartKid',
+    tooltips: true,
+    labels: true,
+    mouseover: function() {},
+    mouseout: function() {},
+    click: function() {},
+    legend: {
+      display: true,
+      }
+  };
+
+     var parray
+     var carray
+     var larray
+    
+     function get_bar_values()
+     {
+      	 var xx=get_months();
+    	var all_data=[]
+    	   	
+    	for(var dd=0;dd<xx.length;dd++)
+    		{
+       		var y_array=[]
+    		var pbar_val=get_pvalues(xx[dd])
+    		var cbar_val=get_cvalues(xx[dd])
+    	
+    		var lbar_val=get_lvalues(xx[dd])
+    		y_array.push(pbar_val)
+    		y_array.push(cbar_val)
+    		y_array.push(lbar_val)
+    		all_data.push({x:xx[dd].substring(0, 3),y:y_array})
+    		}
+    	 return all_data;
+     }
+     
+     
+     function get_pvalues(a_month)
+     {
+    	 var pvals=$scope.reportbarcount[0]
+    		 if(pvals.length==0)
+    		 {
+    		  return 0;
+    		 }
+    	 
+    	 for(var ii=0;ii<pvals.length;ii++)
+    		 {
+    		 if(a_month.substring(0, 3)==pvals[ii][2].substring(0, 3))
+    			 {
+    			 return pvals[ii][1];
+    			 }
+    		 }
+    	 return 0;
+     }
+     
+     function get_cvalues(a_month)
+     {
+    	
+      	 if(typeof $scope.reportbarcount[1]==null)
+    		 {
+    		 return 0;
+    		 }
+         var cvals=$scope.reportbarcount[1]
+         if(cvals.length==0)
+		 {
+		  return 0;
+		 }
+    	 for(var ii=0;ii<cvals.length;ii++)
+    		 {
+    		 if(a_month.substring(0, 2)==cvals[ii][2].substring(0, 2))
+    			 {
+    			 return cvals[ii][1];
+    			 }
+    		 }
+    	 return 0; 
+    	 
+     }
+     
+     function get_lvalues(a_month)
+     {
+    	 
+    	
+    	 if(typeof $scope.reportbarcount[2]==null)
+		 {
+		 return 0;
+		 }
+    	 
+         var lvals=$scope.reportbarcount[2]
+         if(lvals.length==0)
+		 {
+		  return 0;
+		 }
+    	 for(var ii=0;ii<lvals.length;ii++)
+    		 {
+    		 if(a_month.substring(0, 2)==lvals[ii][2].substring(0, 2))
+    			 {
+    			 return lvals[ii][1];
+    			 }
+    		 }
+    	 return 0;
+     }
+        
+     var month_array=[]
+     for(var i_rec=0 ; i_rec< $scope.reportbarcount.length;i_rec++)
+    	 {
+    	 var a_rec=$scope.reportbarcount[i_rec]
+     	 }
+     
+     var d = new Date();
+   
+     $scope.data = {
+    		    series: ['Patient', 'Carer', 'Loved One'],
+    		    data: get_bar_values()
+    		  };
+      })      
+    function get_months()
+    {
+     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+     var today = new Date();
+     var d;
+     var month=[];
+
+     for(var i = 5; i >= 0; i -= 1) {
+       d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+       month.push(monthNames[d.getMonth()])
+      }
+     return month;
+   
+     }
+
                 $scope.deleteuser = function (index, deluser) {
 
                     $http({
