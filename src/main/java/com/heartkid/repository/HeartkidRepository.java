@@ -31,6 +31,16 @@ public interface HeartkidRepository extends CrudRepository<RegisterDtoEntity, Lo
 	@Query("select count(usertype) as pga from RegisterDtoEntity u where  usertype='Filling this form on behalf of your passed loved one'")
 	String lovedcount();
 	
+	@Query("select usertype, count(usertype),monthname(registrationdate),year(registrationdate),registrationdate from RegisterDtoEntity u where usertype in('Patient') group by monthname(registrationdate),year(registrationdate) order by cast(registrationdate as date) asc ")
+	public List patientbarcount();
+	
+	@Query("select usertype, count(usertype),monthname(registrationdate),year(registrationdate),registrationdate from RegisterDtoEntity u where usertype='Carer' group by monthname(registrationdate),year(registrationdate) order by cast(registrationdate as date) asc ")
+	public List carerbarcount();
+
+	@Query("select usertype, count(usertype),monthname(registrationdate),year(registrationdate),registrationdate from RegisterDtoEntity u where usertype like '%loved one%' group by monthname(registrationdate),year(registrationdate) order by cast(registrationdate as date) asc ")
+	public List lovedbarcount();
+
+	
 	@Query("select count(u) from RegisterDtoEntity u")
 	int registationcount ();
 	
