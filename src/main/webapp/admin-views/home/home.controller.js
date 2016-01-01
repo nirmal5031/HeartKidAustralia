@@ -273,9 +273,9 @@
                 })
 
                     .then(function (response) {
-                        var data = $.parseJSON(angular.toJson(response.data));
+                      //  var data = $.parseJSON(angular.toJson(response.data));
 
-                        $scope.reportcount = data;
+                        $scope.reportcount = response.data;
                         $scope.string = $scope.reportcount;
                         $scope.arrString = $scope.string.split(',');
                         $scope.reportData = [{key: "Patient", y: $scope.arrString[0]}, {
