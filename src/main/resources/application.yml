@@ -3,7 +3,7 @@ server.contextPath: "/heartkidaustralia"
 server.port: 8080
 
 spring:
- profiles.active: test
+ profiles.active: production
 ---
 spring:
   profiles: test
