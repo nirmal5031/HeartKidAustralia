@@ -30,6 +30,9 @@ public class LoginController {
     public LoginEntity ResetNewPassword(@RequestBody LoginEntity loginentity) {
         LoginEntity response = null;
         try {
+            if(loginentity == null){
+                return null;
+            }
             LOGGER.info("Resetting password for User-" + loginentity.getUsername());
             String pass = loginentity.getPassword();
             String newpass = loginentity.getNewpassword();

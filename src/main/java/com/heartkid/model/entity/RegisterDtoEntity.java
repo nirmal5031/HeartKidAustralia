@@ -792,8 +792,9 @@ public class RegisterDtoEntity {
         return referencenumber;
     }
 
-    public void setReferencenumber(String referencenumber) {
+    public RegisterDtoEntity setReferencenumber(String referencenumber) {
         this.referencenumber = referencenumber;
+        return null;
     }
 
 

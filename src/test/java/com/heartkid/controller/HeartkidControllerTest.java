@@ -1,14 +1,16 @@
 package com.heartkid.controller;
 
 import com.heartkid.RestControllerTest;
-import com.heartkid.model.entity.RegisterDtoEntity;
+import com.heartkid.service.HeartKidRegistrationService;
 import com.heartkid.util.RequestBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,6 +24,9 @@ public class HeartkidControllerTest extends RestControllerTest {
     public static final String OUT_HOSPITAL_URL = "/heartkid/outhospital";
     public static final String UPDATE_RECORD = "/heartkid/updaterecord";
 
+    @Autowired
+    HeartKidRegistrationService heartKidRegistrationService;
+
     @Before
     public void setUp() throws Exception {
         initializeMockMvc();
@@ -29,16 +34,22 @@ public class HeartkidControllerTest extends RestControllerTest {
 
     @Test
     public void returnRegistrationCount() throws Exception {
+
+        heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
+
         mockMvc.perform(get(REGISTRATION_COUNT_URL)).andExpect(status().isOk());
     }
 
     @Test
     public void returnRegistrationCountNotNull() throws Exception {
+
+        heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
+
         MvcResult result = mockMvc.perform(get(REGISTRATION_COUNT_URL))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        assertNotNull(result.getResponse().getContentAsString());
+        assertNotEquals(result.getResponse().getContentAsString(), "0");
     }
 
     @Test
@@ -73,13 +84,13 @@ public class HeartkidControllerTest extends RestControllerTest {
     @Test
     public void savePersonalInformation() throws Exception {
 
-        RegisterDtoEntity registerDtoEntity = new RequestBuilder().defaultValues();
-
-        mockMvc.perform(post(PERSONAL_INFO_URL)
+        final MvcResult result = mockMvc.perform(post(PERSONAL_INFO_URL)
                 .content(json(new RequestBuilder().defaultValues()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
 
+        assertNotEquals(result.getResponse().getContentAsString(), "[]");
     }
 
     @Test
@@ -115,10 +126,13 @@ public class HeartkidControllerTest extends RestControllerTest {
     @Test
     public void saveOutHospitalInformation() throws Exception {
 
-        mockMvc.perform(post(OUT_HOSPITAL_URL)
+        final MvcResult result = mockMvc.perform(post(OUT_HOSPITAL_URL)
                 .content(json(new RequestBuilder().defaultValues()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertNotEquals(result.getResponse().getContentAsString(), "[]");
 
     }
 

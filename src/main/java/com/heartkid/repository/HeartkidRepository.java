@@ -20,7 +20,7 @@ public interface HeartkidRepository extends CrudRepository<RegisterDtoEntity, Lo
 
     @Modifying
     @Query("delete from RegisterDtoEntity u where  u.referencenumber = :deleterecordref")
-    void deleteUsersByRefNumber(@Param(value = "deleterecordref") final String deleterecordref);
+    int deleteUsersByRefNumber(@Param(value = "deleterecordref") final String deleterecordref);
 
     @Query("select count(usertype) as pga from RegisterDtoEntity u where  usertype='patient'")
     String patientcount();

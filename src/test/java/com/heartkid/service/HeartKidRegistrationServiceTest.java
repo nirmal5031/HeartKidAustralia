@@ -31,7 +31,6 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
         heartkidRepository.save(registerDtoEntity);
 
         assertNotNull(heartKidRegistrationService.retrieveRegistrationCount());
-
     }
 
     @Test

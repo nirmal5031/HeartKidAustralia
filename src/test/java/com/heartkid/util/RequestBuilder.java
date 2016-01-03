@@ -1,7 +1,6 @@
 package com.heartkid.util;
 
 import com.heartkid.model.entity.RegisterDtoEntity;
-import org.springframework.stereotype.Service;
 
 public class RequestBuilder {
 
@@ -80,11 +79,11 @@ public class RequestBuilder {
     private String surveystatus;
     private String registrationdate;
 
-    public RequestBuilder(){
+    public RequestBuilder() {
 
     }
 
-    public RequestBuilder(long id, String referencenumber,String usertype, String firstname, String lastname, String title,
+    public RequestBuilder(long id, String referencenumber, String usertype, String firstname, String lastname, String title,
                           String postcode, String state, String surveystatus, String conctagree,
                           String contctviaphone, String contctviaemail, String phone, String email,
                           String ethnicity, String countrybirth, String language, String conditioncalld,
@@ -168,7 +167,7 @@ public class RequestBuilder {
     }
 
     public RegisterDtoEntity build() {
-        return new RegisterDtoEntity(id,usertype, firstname, lastname, title,
+        return new RegisterDtoEntity(id, usertype, firstname, lastname, title,
                 postcode, state, surveystatus, conctagree,
                 contctviaphone, contctviaemail, phone, email,
                 ethnicity, countrybirth, language, conditioncalld,
@@ -187,19 +186,20 @@ public class RequestBuilder {
     }
 
     public RegisterDtoEntity defaultValues() {
-        RegisterDtoEntity registerDtoEntity = new RegisterDtoEntity(1,"Patient", "Test", "Test", "Mr.",
+        RegisterDtoEntity registerDtoEntity = new RegisterDtoEntity(1, "Patient", "Test", "Test", "Mr.",
                 "2020", "NSW", "Completed", "Yes", "Yes", "Yes", "0423564098", "test@qantas.com.au",
-                null, "Australia", "English", null, "Yes", "Yes", "Yes", "5",
+                null, "Australia", "English", null, "Yes", "Yes", "Yes", "55",
                 "Test", "Yes", "No", "No", "Yes", null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null);
         registerDtoEntity.setReferencenumber("ABCD1234");
+        registerDtoEntity.setAge("5-6");
         return registerDtoEntity;
     }
 
     public RegisterDtoEntity updateValues() {
-        RegisterDtoEntity registerDtoEntity = new RegisterDtoEntity(1,"Patient", "Test", "Test", "Mr.",
+        RegisterDtoEntity registerDtoEntity = new RegisterDtoEntity(1, "Patient", "Test", "Test", "Mr.",
                 "2020", "NSW", "Completed", "Yes", "Yes", "Yes", "0423564098", "test@qantas.com.au",
                 null, "Australia", "English", null, "Yes", "Yes", "Yes", "5",
                 "Test", "Yes", "No", "No", "Yes", null, null, null, null, null, null, null, null,

@@ -19,16 +19,16 @@ public class AdminService {
     @Autowired
     private HeartkidRepository heartkidRepository;
 
-    public void deleteUserByReferenceNumber(final String referenceNumber) {
-        heartkidRepository.deleteUsersByRefNumber(referenceNumber);
+    public int deleteUserByReferenceNumber(final String referenceNumber) {
+        return heartkidRepository.deleteUsersByRefNumber(referenceNumber);
     }
 
     public int doesUserExist(final String userName) {
         return createadminrepository.adminUserExist(userName);
     }
 
-    public void saveAdminUser(final @RequestBody CreateAdminUser createuser) {
-        createadminrepository.save(createuser);
+    public CreateAdminUser saveAdminUser(final CreateAdminUser createuser) {
+        return createadminrepository.save(createuser);
     }
 
     public List<CreateAdminUser> findAllUser() {

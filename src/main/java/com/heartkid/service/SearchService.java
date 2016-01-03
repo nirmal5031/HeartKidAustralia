@@ -56,22 +56,28 @@ public class SearchService {
                 ethnicity = searchentity.getEthnicity();
                 sex = searchentity.getSex();
                 age = searchentity.getAge();
-                if (age == " - ") {
-                    System.out.println("NULLE");
-                    age1 = null;
-                    age2 = null;
-                } else {
-                    String[] agesplit = age.split("-", 0);
-                    String ageval1 = agesplit[0];
-                    String ageval2 = agesplit[1];
-                    if (ageval1.equalsIgnoreCase("empty")) {
+                if(age != null) {
+                    if (age == " - ") {
+                        System.out.println("NULLE");
                         age1 = null;
                         age2 = null;
-
                     } else {
-                        age1 = ageval1;
-                        age2 = ageval2;
+                        String[] agesplit = age.split("-", 0);
+                        String ageval1 = agesplit[0];
+                        String ageval2 = agesplit[1];
+                        if (ageval1.equalsIgnoreCase("empty")) {
+                            age1 = null;
+                            age2 = null;
+
+                        } else {
+                            age1 = ageval1;
+                            age2 = ageval2;
+                        }
                     }
+                }
+                else{
+                    age1 = null;
+                    age2 = null;
                 }
             }
 

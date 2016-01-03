@@ -53,7 +53,7 @@ public class AdminController {
 
         try {
             searchdto = searchservice.searchheartkid(registerdto);
-            LOGGER.info("searchdto" + searchdto.get(0).getReferencenumber());
+
             // return a view which will be resolved by an excel view resolver
             if (searchdto.isEmpty()) {
                 LOGGER.info("SEARCH DTO is EMPTY" + searchdto.isEmpty());
@@ -69,14 +69,19 @@ public class AdminController {
 
     @RequestMapping(value = "heartkid/deleterecord/{deleterecordref}", method = RequestMethod.GET)
     public String deleteUsersByRefNumber(@PathVariable(value = "deleterecordref") String deleterecordref) {
+        int result = 0;
         try {
             LOGGER.info("delete record---" + deleterecordref);
-            adminService.deleteUserByReferenceNumber(deleterecordref);
+            result = adminService.deleteUserByReferenceNumber(deleterecordref);
         } catch (Exception ex) {
             return "Error creating the entry: " + ex.toString();
         }
-
-        return "User record Deleted successfully ! (Reference Id is = " + deleterecordref + ")";
+        if(result == 1) {
+            return "User record Deleted successfully ! (Reference Id is = " + deleterecordref + ")";
+        }
+        else{
+            return "Invalid Reference Number - " + deleterecordref ;
+        }
     }
 
     @RequestMapping(value = "heartkid/createadminuser", method = RequestMethod.POST)
