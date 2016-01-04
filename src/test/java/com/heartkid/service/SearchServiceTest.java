@@ -20,11 +20,14 @@ public class SearchServiceTest extends ServiceTest {
 
     @Test
     public void searchRecord() throws Exception {
-
+        heartkidRepository.deleteAll();
         RegisterDtoEntity registerDtoEntity = new RequestBuilder().defaultValues();
         heartkidRepository.save(registerDtoEntity);
 
-        assertThat(searchService.searchheartkid(registerDtoEntity), hasSize(1));
+        RegisterDtoEntity searchRegisterDtoEntity = new RegisterDtoEntity();
+        searchRegisterDtoEntity.setReferencenumber("ABCD1234");
+
+        assertThat(searchService.searchheartkid(searchRegisterDtoEntity), hasSize(1));
     }
 
     @Test

@@ -25,7 +25,7 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
     @Autowired
     private HeartKidRegistrationService heartKidRegistrationService;
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test
     public void returnRetrieveRegistrationCount() {
         RegisterDtoEntity registerDtoEntity = new RequestBuilder().defaultValues();
         heartkidRepository.save(registerDtoEntity);
@@ -48,12 +48,12 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
 
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test
     public void saveRegistrationInformation() {
 
-        RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
-        assertEquals(registerDtoEntity.getId(), "99999");
-        assertEquals(registerDtoEntity.getReferencenumber(), "KJHGUIDFSGKJH534534");
+        final RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
+
+        assertEquals(registerDtoEntity.getReferencenumber(), "ABCD1234");
         assertEquals(registerDtoEntity.getFirstname(), "Test");
         assertEquals(registerDtoEntity.getLastname(), "Test");
 
@@ -66,34 +66,11 @@ public class HeartKidRegistrationServiceTest extends ServiceTest {
 
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
-    public void returnErrorForInvalidRegistrationInformation() {
-
-        heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().build());
-
-    }
-
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test
     public void updateRegistrationInformation() {
 
-        RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().defaultValues());
-
-        assertEquals(registerDtoEntity.getTitle(), "Mr");
-
-    }
-
-    @Test(expected = InvalidDataAccessApiUsageException.class)
-    public void returnErrorForNullUpdateRegistrationInformation() {
-
-        assertNull(heartKidRegistrationService.saveRegistrationInformation(null));
-
-    }
-
-    @Test(expected = DataIntegrityViolationException.class)
-    public void returnErrorForInvalidUpdateRegistrationInformation() {
-
-        heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().build());
-
+        final RegisterDtoEntity registerDtoEntity = heartKidRegistrationService.saveRegistrationInformation(new RequestBuilder().updateValues());
+        assertEquals(registerDtoEntity.getUpdateddate(), "31/12/2015");
     }
 
 }

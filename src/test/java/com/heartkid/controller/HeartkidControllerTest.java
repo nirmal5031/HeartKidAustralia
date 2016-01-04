@@ -189,12 +189,10 @@ public class HeartkidControllerTest extends RestControllerTest {
     @Test
     public void returnErrorUpdateInformationForGET() throws Exception {
 
-        MvcResult result = mockMvc.perform(get(UPDATE_RECORD)
+        mockMvc.perform(get(UPDATE_RECORD)
                 .content(json(new RequestBuilder().updateValues()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isMethodNotAllowed())
                 .andReturn();
-
-        assertNotNull(result.getResponse().getContentAsString());
     }
 }
